@@ -47,6 +47,7 @@ export const StyledGlobals = createGlobalStyle`
     
   }
 
+
   main {
     padding-top: 2rem;
     display: flex;
