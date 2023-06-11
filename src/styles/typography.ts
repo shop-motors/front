@@ -132,7 +132,7 @@ export const StyledTypography = createGlobalStyle`
 
 .font-input-placeholder {
     font-size: var(--font-size-7);
-    font-weight: var(--font-weigth-2);
+    font-weight: var(--font-weigth-4);
 }
 
 .font-input-label {
