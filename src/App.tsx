@@ -14,12 +14,6 @@ export const App = () => {
     <BrowserRouter>
       <StyledGlobals />
       <ToastConfig />
-      <Button
-        onClick={() => userSell()}
-        size="default"
-        color="gray6"
-        content={"Cadastre-se"}
-      />
       <PageRoutes />
     </BrowserRouter>
   );

@@ -6,7 +6,18 @@ export const StyledGlobals = createGlobalStyle`
     margin: 0;
     box-sizing: border-box;
       }
+      
+      a{
+        cursor: pointer;
+      }
 
+      span{
+        cursor: pointer;
+      }
+
+      button{
+        cursor: pointer;
+      }
   :root {
     --border-radius-1: .5rem;
     --border-radius-2: .3125rem;
