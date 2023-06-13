@@ -1,6 +1,6 @@
 import { StyledButton } from "./style";
 
-interface iButtonProps {
+export interface iButtonProps {
   content: string | React.ReactNode;
   size: "default" | "large";
   color:
