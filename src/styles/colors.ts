@@ -19,9 +19,9 @@ export const StyledColors = createGlobalStyle`
         --color-gray-9: #F8F9FA;
         --color-gray-10: #FDFDFD;
         
-        --color-whiteFixed: #ffffff;
+        --color-white: #ffffff;
 
-        --color-alert1: #e60000;
+        --color-alert1: #CD2B31;
         --color-alert2: #FDD8D8;
         --color-alert3: #FFE5E5;
 
