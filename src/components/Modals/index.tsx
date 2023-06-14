@@ -1,19 +1,17 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useContext } from 'react';
 import StyledModalDiv from './style';
-import { Button, iButtonProps } from '../Buttons/index';
+import { Button } from '../Buttons/index';
+import { ModalProps } from '../../pages/contexts/modalContext/contextTypes';
+import { ModalButtonContext } from '../../pages/contexts/modalContext';
 
-interface ModalProps extends iButtonProps {
-  children: ReactNode;
-  buttonText: string;
-}
 
-const Modal: React.FC<ModalProps> = ({ children, buttonText, size, color }) => {
-  const [modal, setModal] = useState(false);
-
+const Modal: React.FC<ModalProps> = ({ children, content, size, color }) => {
+  const { modal, setModal } = useContext(ModalButtonContext);
+  
   return (
     <div>
       <Button 
-        content={buttonText} 
+        content={content} 
         size={size} 
         color={color} 
         onClick={() => setModal(!modal)} />

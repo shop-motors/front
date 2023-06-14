@@ -1,6 +1,7 @@
 import { Card } from "../../components/Cards";
 import { Footer } from "../../components/Footer";
 import { HeaderPage } from "../../components/Header";
+import Modal from "../../components/Modals";
 import { NavBar } from "../../components/Nav";
 import { DivContainer } from "./style";
 
@@ -9,7 +10,7 @@ export const Home = () => {
     <DivContainer>
       <NavBar />
       <HeaderPage />
-      <Card />
+        <Card />
       <Footer />
     </DivContainer>
   );
