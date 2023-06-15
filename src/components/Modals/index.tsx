@@ -1,19 +1,20 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useContext } from 'react';
 import StyledModalDiv from './style';
+import { Button } from '../Buttons/index';
+import { ModalProps } from '../../pages/contexts/modalContext/contextTypes';
+import { ModalButtonContext } from '../../pages/contexts/modalContext';
 
-interface ModalProps {
-  children: ReactNode;
-  buttonText: string;
-}
 
-const Modal: React.FC<ModalProps> = ({ children, buttonText }) => {
-  const [modal, setModal] = useState(false);
-
+const Modal: React.FC<ModalProps> = ({ children, content, size, color }) => {
+  const { modal, setModal } = useContext(ModalButtonContext);
+  
   return (
     <div>
-      <button onClick={() => setModal(!modal)}>
-        {buttonText}
-      </button>
+      <Button 
+        content={content} 
+        size={size} 
+        color={color} 
+        onClick={() => setModal(!modal)} />
       {modal && (
         <StyledModalDiv className='modalContent'>
           {children}
@@ -24,4 +25,5 @@ const Modal: React.FC<ModalProps> = ({ children, buttonText }) => {
 };
 
 export default Modal;
+
 
