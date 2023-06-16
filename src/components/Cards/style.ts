@@ -98,3 +98,20 @@ export const DivPrice = styled.div`
     }
   }
 `;
+
+//-------------------------------------------------------
+
+export const UlCardAdmin = styled.ul`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-x: scroll;
+  margin-left: 40px;
+  width: 90%;
+  margin-left: 60px;
+  gap: 50px;
+
+  .LiCard {
+  }
+`;
