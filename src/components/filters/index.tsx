@@ -1,5 +1,4 @@
-import { Button } from "../Buttons";
-import { DivInputs, DivMain, LikmPrice, UlFilters } from "./style";
+import { DivMain, LikmPrice, UlFilters } from "./style";
 
 export const Filters = () => {
   return (

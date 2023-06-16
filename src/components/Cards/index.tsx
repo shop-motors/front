@@ -1,5 +1,6 @@
 import ImgCar from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1 (1).png";
 import { Button } from "../Buttons";
+import Modal from "../Modals";
 import { Filters } from "../filters";
 import {
   ContainerDiv,
@@ -17,7 +18,9 @@ export const Card = () => {
   return (
     <DivMain>
       <ContainerDiv>
-        <Filters />
+     
+          <Filters />
+      
         <UlCard>
           <LiCard>
             <img src={ImgCar} alt="imagem de carro" />
@@ -279,7 +282,7 @@ export const Card = () => {
       </DivBtnFilter>
       <DivPagination>
         <span>1 de 2</span>
-        <button>Seguinte</button>
+        <button>Seguinte </button>
       </DivPagination>
     </DivMain>
   );

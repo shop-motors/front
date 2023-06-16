@@ -17,4 +17,4 @@ z-index: 5;
 }
 `;
 
-export default StyledModalDiv
+export default StyledModalDiv;

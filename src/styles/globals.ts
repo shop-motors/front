@@ -54,7 +54,8 @@ export const StyledGlobals = createGlobalStyle`
     transform: translateY(-0.3125rem);
   }
 
-  body {
+  body::-webkit-scrollbar {
+    display: none;
     
   }
 
