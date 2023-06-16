@@ -11,8 +11,10 @@ export const Container = styled.form`
   background-color: var(--color-gray-10);
   text-align: left;
 
-  h3 {
-    margin-bottom: 1.5rem;
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
   
   @media (min-width: 600px) {

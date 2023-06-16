@@ -3,17 +3,68 @@ import { Input } from "../../Input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Buttons";
+import { registerSchema } from "./registerSchema";
+import { apiCEP } from "../../../services/api";
+import { useState } from "react";
+import { InputGroup } from "../../Input/style";
+
+interface iFormResgister {
+  name: string;
+  email: string;
+  cpf: string;
+  phone: string;
+  birth_date: string;
+  description: string;
+  zip_code: string;
+  state: string;
+  city: string;
+  street: string;
+  number: string;
+  complement: string;
+  password: string;
+  confirmPassword: string;
+}
 
 export const FormRegister = () => {
+  const [isSeller, setIsSeller] = useState(false);
+  const [selectedButton, setSelectedButton] = useState(true);
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver("") });
+    formState: { errors, isDirty, isValid },
+    setValue,
+    setFocus,
+  } = useForm<iFormResgister>({ resolver: yupResolver(registerSchema) });
+
+  const setAddress = async (event: React.FocusEvent<HTMLInputElement>) => {
+    try {
+      const cepValue = event.target.value.replace(/\D/g, "");
+
+      const response = await apiCEP.get(cepValue + "/json/");
+
+      const { cep, logradouro, localidade, uf } = response.data;
+
+      setValue("zip_code", cep);
+      setValue("state", uf);
+      setValue("street", logradouro);
+      setValue("city", localidade);
+
+      setFocus("number");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <Form title="Cadastro" onSubmit={handleSubmit(() => console.log())}>
+    <Form
+      title="Cadastro"
+      onSubmit={handleSubmit((data) =>
+        console.log({ ...data, is_seller: isSeller })
+      )}
+    >
       <h3 className="font-body-2-50">Informações Pessoais</h3>
+
       <Input
         label="Nome"
         register={register("name")}
@@ -40,9 +91,9 @@ export const FormRegister = () => {
       />
       <Input
         label="Data de Nascimento"
-        register={register("birth_data")}
+        register={register("birth_date")}
         placeholder="00/00/00"
-        error={errors.birth_data && errors.birth_data.message}
+        error={errors.birth_date && errors.birth_date.message}
       />
       <Input
         label="Descrição"
@@ -50,59 +101,101 @@ export const FormRegister = () => {
         placeholder="Digitar descrição"
         error={errors.description && errors.description.message}
       />
+
       <h3 className="font-body-2-50">Infomações de endereço</h3>
+
       <Input
         label="CEP"
         register={register("zip_code")}
         placeholder="00000.000"
+        onBlur={setAddress}
         error={errors.zip_code && errors.zip_code.message}
       />
-      <Input
-        label="Estado"
-        register={register("state")}
-        placeholder="Digitar Estado"
-        error={errors.state && errors.state.message}
-      />
-      <Input
-        label="Cidade"
-        register={register("city")}
-        placeholder="Digitar cidade"
-        error={errors.city && errors.city.message}
-      />
+
+      <InputGroup>
+        <Input
+          label="Estado"
+          register={register("state")}
+          placeholder="Digitar Estado"
+          error={errors.state && errors.state.message}
+        />
+        <Input
+          label="Cidade"
+          register={register("city")}
+          placeholder="Digitar cidade"
+          error={errors.city && errors.city.message}
+        />
+      </InputGroup>
+
       <Input
         label="Rua"
         register={register("street")}
         placeholder="Digitar rua"
         error={errors.street && errors.street.message}
       />
-      <Input
-        label="Numero"
-        register={register("number")}
-        placeholder="Digitar número"
-        error={errors.number && errors.number.message}
-      />
-      <Input
-        label="Complemento"
-        register={register("complement")}
-        placeholder="Ex: apart 307"
-        error={errors.complement && errors.complement.message}
-      />
+
+      <InputGroup>
+        <Input
+          label="Numero"
+          register={register("number")}
+          placeholder="Digitar número"
+          error={errors.number && errors.number.message}
+        />
+        <Input
+          label="Complemento"
+          register={register("complement")}
+          placeholder="Ex: apart 307"
+          error={errors.complement && errors.complement.message}
+        />
+      </InputGroup>
+
       <h3 className="font-body-2-50">Tipo de conta</h3>
-      //buttons
+
+      <InputGroup>
+        <Button
+          color={selectedButton ? "brand1" : "gray8"}
+          content="Anunciante"
+          type="button"
+          size="large"
+          onClick={() => {
+            setIsSeller(true);
+            setSelectedButton(true);
+          }}
+        />
+        <Button
+          color={!selectedButton ? "brand1" : "gray8"}
+          content="Cliente"
+          type="button"
+          size="large"
+          onClick={() => {
+            setIsSeller(false);
+            setSelectedButton(false);
+          }}
+        />
+      </InputGroup>
+
       <Input
         label="Senha"
         register={register("password")}
-        placeholder="00/00/00"
+        placeholder="Digitar Senha"
+        type="password"
         error={errors.password && errors.password.message}
       />
       <Input
         label="Confirmar Senha"
         register={register("confirmPassword")}
-        placeholder="00/00/00"
+        placeholder="Confirmar Senha"
+        type="password"
         error={errors.confirmPassword && errors.confirmPassword.message}
       />
 
-      <Button type="submit" color="brand1" size="default" content="Finalizar Cadastro" />
+      <Button
+        type="submit"
+        color="brand1"
+        size="large"
+        content="Finalizar Cadastro"
+        disabled={!isDirty || !isValid}
+      />
     </Form>
   );
 };
