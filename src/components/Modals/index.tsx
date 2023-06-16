@@ -3,24 +3,28 @@ import StyledModalDiv from './style';
 import { Button } from '../Buttons/index';
 import { ModalProps } from '../../pages/contexts/modalContext/contextTypes';
 import { ModalButtonContext } from '../../pages/contexts/modalContext';
+import { ModalComponent } from './style';
 
 
 const Modal: React.FC<ModalProps> = ({ children, content, size, color }) => {
   const { modal, setModal } = useContext(ModalButtonContext);
   
   return (
-    <div>
-      <Button 
+    <ModalComponent>
+      <Button
         content={content} 
         size={size} 
         color={color} 
         onClick={() => setModal(!modal)} />
       {modal && (
         <StyledModalDiv className='modalContent'>
-          {children}
+          <div className='divContent'>
+            <button onClick={()=>setModal(false)}>X</button>
+            {children}
+          </div>
         </StyledModalDiv>
       )}
-    </div>
+    </ModalComponent>
   );
 };
 
