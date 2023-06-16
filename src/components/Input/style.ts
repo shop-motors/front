@@ -19,6 +19,7 @@ export const InputStyles = styled.input<IErrorProps>`
   border: 0.125rem solid var(--color-gray-7) !important;
   border-radius: .25rem;
   padding: 1rem 0.75rem;
+  margin-bottom: 1.5rem;
   border-color: ${({ error }) => error && "var(--color-alert1) !important"};
 
   :focus {

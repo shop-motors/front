@@ -29,6 +29,7 @@ export interface iButtonProps {
       | "border_blue"
       | "disable";
     onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+    type: "button" | "submit" | "reset" | undefined
   }
 
   export interface ModalProps extends iButtonProps {
