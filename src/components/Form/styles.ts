@@ -8,7 +8,14 @@ export const Container = styled.form`
   padding: 2.75rem 1.75rem;
   width: 100%;
   max-width: 21.4375rem;
-  background-color: #f5f5f5;
+  background-color: var(--color-gray-10);
+  text-align: left;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
   
   @media (min-width: 600px) {
     max-width: 25.75rem;
