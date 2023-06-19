@@ -5,7 +5,7 @@ export const DivContainer = styled.div`
   flex-direction: row;
   align-items: center;
   text-align: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   padding: 14px;
   position: fixed;
@@ -51,6 +51,27 @@ export const DivButtons = styled.div`
       border-radius: 3px;
       background-color: var(--color-gray-10);
     }
+  }
+`;
+
+export const DivContainerProfile = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px;
+  position: fixed;
+  top: 0px;
+  background-color: var(--color-gray-9);
+
+  .containerProfile {
+    display: flex;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+    justify-content: space-between;
   }
 `;
 

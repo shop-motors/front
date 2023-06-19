@@ -1,12 +1,28 @@
 import styled from "styled-components";
 
+export const DivMain = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const ContainerDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+`;
+
 export const UlCard = styled.ul`
   display: flex;
   align-items: center;
   flex-direction: row;
   overflow-x: scroll;
   width: 100vw;
-  margin-left: 7px;
 
   ::-webkit-scrollbar {
     width: 5px;
@@ -33,6 +49,7 @@ export const LiCard = styled.li`
   width: 80%;
   max-width: 250px;
   margin: 3rem 0 0 1.5rem;
+  height: 300px;
   img {
     background-color: var(--color-gray-7);
   }
@@ -111,7 +128,37 @@ export const UlCardAdmin = styled.ul`
   width: 90%;
   margin-left: 60px;
   gap: 50px;
+`;
 
-  .LiCard {
+export const DivBtnFilter = styled.div`
+  display: flex;
+  margin-top: 40px;
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+export const DivPagination = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+  margin-top: 50px;
+
+  span {
+    color: var(--color-gray-3);
+  }
+  span:hover {
+    color: var(--color-gray-2);
+  }
+
+  button {
+    border: none;
+    color: var(--color-brand-2);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 30px;
+    background-color: var(--color-white);
   }
 `;

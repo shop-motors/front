@@ -5,8 +5,13 @@ export const StyledProducts = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 2400px;
-  background-color: var(--color-gray-6);
+  height: auto;
+  background-color: var(--color-gray-5);
+
+  .content {
+    background-color: red;
+    min-height: 2000px;
+  }
 
   .backgroundBlue {
     width: 100%;
@@ -14,6 +19,7 @@ export const StyledProducts = styled.main`
     background-color: var(--color-brand-1);
     display: flex;
     justify-content: center;
+
     margin-top: 40px;
   }
 
@@ -156,11 +162,13 @@ export const StyledProducts = styled.main`
   //-------------------------------------------------------
   .coments {
     background-color: var(--color-gray-10);
-    width: 58%;
-    height: 670px;
+    overflow: scroll;
+    width: 58%; /* 
+    height: 670px; */
     padding: 30px;
     color: var(--color-gray-2);
     border-radius: 4px;
+    background-color: yellow;
 
     .comentProfile {
       display: flex;

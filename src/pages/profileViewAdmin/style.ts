@@ -6,7 +6,7 @@ export const StyledProducts = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 2400px;
+  height: 100vh;
   background-color: var(--color-gray-6);
 
   .backgroundBlue {

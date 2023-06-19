@@ -1,9 +1,11 @@
-import { NavBarProfile } from "../../components/Nav";
+import { NavBar, NavBarProfile } from "../../components/Nav";
 import { StyledProducts } from "./style";
 import imgCar from "../../images/car.png";
 import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
 import { CardAdmin } from "../../components/Cards";
+import { Footer } from "../../components/Footer";
+import { ModalAdvertiser } from "../../components/Modals";
 
 export const AdvertiserPage = () => {
   return (
@@ -24,7 +26,7 @@ export const AdvertiserPage = () => {
             voluptate! Magnam, voluptatum.
           </small>
           <Button
-            /* onClick={() => userSell()} */
+            onClick={() => ModalAdvertiser()}
             size="default"
             color="border_blue"
             content={"Criar anúncio"}
@@ -34,6 +36,7 @@ export const AdvertiserPage = () => {
       <div className="cards">
         <CardAdmin />
       </div>
+      <Footer />
     </StyledProducts>
   );
 };

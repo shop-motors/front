@@ -2,7 +2,7 @@ import { InputHTMLAttributes } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { Container, InputStyles } from "./style";
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+/* interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   placeholder: string;
   register: UseFormRegisterReturn<string>;
@@ -29,4 +29,4 @@ export const Input = ({
       {error && <small>{error}</small>}
     </Container>
   );
-};
+}; */

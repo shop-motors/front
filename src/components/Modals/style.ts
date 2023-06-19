@@ -1,4 +1,4 @@
-import styled from "styled-components";
+/* import styled from "styled-components";
 
 const StyledModalDiv = styled.div`
 width: 100vw;
@@ -17,4 +17,18 @@ z-index: 5;
 }
 `;
 
-export default StyledModalDiv
+export default StyledModalDiv; */
+
+import styled from "styled-components";
+
+const StyledModalAdvertiserDiv = styled.main`
+  .modalDiv {
+    background-color: red;
+    width: 500px;
+    height: 500px;
+    position: fixed;
+    top: 0px;
+  }
+`;
+
+export default StyledModalAdvertiserDiv;
