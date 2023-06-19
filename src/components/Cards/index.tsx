@@ -277,7 +277,7 @@ export const Card = () => {
 
       
       <DivBtnFilter>
-      <Modal type="button" size="default" color="brand1" content="Filtros">
+      <Modal device="mobile" type="button" size="default" color="brand1" content="Filtros">
           <Filters />
       </Modal>
       </DivBtnFilter>

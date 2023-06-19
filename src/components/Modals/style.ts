@@ -1,4 +1,6 @@
+
 import styled from "styled-components";
+import { iDevice } from '../../pages/contexts/modalContext/contextTypes';
 const StyledModalDiv = styled.div`
   position: absolute;
   top: 0;
@@ -29,9 +31,10 @@ const StyledModalDiv = styled.div`
     }
   }
 `;
-export const ModalComponent = styled.div`
-  @media (min-width: 768px) {
+export const ModalComponent = styled.div<iDevice>`
+  @media (${({device}) => device === 'desktop' ? 'max-width: 767px' : 'min-width: 768px'}) {
     display: none;
   }
 `;
+
 export default StyledModalDiv;

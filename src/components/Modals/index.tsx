@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import StyledModalDiv from "./style";
 import { Button } from "../Buttons/index";
-import { ModalProps } from "../../pages/contexts/modalContext/contextTypes";
+import { ModalProps} from '../../pages/contexts/modalContext/contextTypes';
 import { ModalButtonContext } from "../../pages/contexts/modalContext";
 import { ModalComponent } from "./style";
 
-const Modal: React.FC<ModalProps> = ({ children, content, size, color }) => {
+const Modal: React.FC<ModalProps> = ({ children, content, size, color, device }) => {
   const { modal, setModal } = useContext(ModalButtonContext);
   return (
-    <ModalComponent>
+    <ModalComponent device={device}>
       <Button
         content={content}
         size={size}
