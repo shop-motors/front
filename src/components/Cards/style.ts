@@ -13,7 +13,7 @@ export const ContainerDiv = styled.div`
   width: 100vw;
 
   @media (min-width: 768px) {
-    flex-direction: row;
+    flex-direction: row-reverse;
   }
 `;
 

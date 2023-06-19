@@ -18,9 +18,6 @@ export const Card = () => {
   return (
     <DivMain>
       <ContainerDiv>
-     
-          <Filters />
-      
         <UlCard>
           <LiCard>
             <img src={ImgCar} alt="imagem de carro" />
@@ -275,11 +272,11 @@ export const Card = () => {
             </DivLi>
           </LiCard>
         </UlCard>
+        <Filters />
+        <DivBtnFilter>
+          <Button size="default" color="brand1" content={"Filtros"} />
+        </DivBtnFilter>
       </ContainerDiv>
-
-      <DivBtnFilter>
-        <Button size="default" color="brand1" content={"Filtros"} />
-      </DivBtnFilter>
       <DivPagination>
         <span>1 de 2</span>
         <button>Seguinte </button>
