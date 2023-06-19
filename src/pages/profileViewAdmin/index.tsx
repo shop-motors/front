@@ -4,6 +4,7 @@ import ImgProfile from "../../images/leia.jpeg";
 import { CardAdmin } from "../../components/Cards";
 import { Footer } from "../../components/Footer";
 import Modal from "../../components/Modals";
+import { useContext } from "react";
 
 export const AdvertiserPage = () => {
   return (
