@@ -14,12 +14,13 @@ const Modal: React.FC<ModalProps> = ({ children, content, size, color }) => {
       <Button
         content={content} 
         size={size} 
+        type='button'
         color={color} 
         onClick={() => setModal(!modal)} />
       {modal && (
         <StyledModalDiv className='modalContent'>
           <div className='divContent'>
-            <button onClick={()=>setModal(false)}>X</button>
+            <button type="button" className='buttonCloseModal' onClick={()=>setModal(false)}>X</button>
             {children}
           </div>
         </StyledModalDiv>

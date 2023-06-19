@@ -18,9 +18,6 @@ export const Card = () => {
   return (
     <DivMain>
       <ContainerDiv>
-        <Modal content="Teste" color="gray0" size="default">
-          <Filters />
-        </Modal>
         <UlCard>
           <LiCard>
             <img src={ImgCar} alt="imagem de carro" />
@@ -277,9 +274,12 @@ export const Card = () => {
         </UlCard>
       </ContainerDiv>
 
-      <DivBtnFilter>
-        <Button size="default" color="brand1" content={"Filtros"} />
-      </DivBtnFilter>
+      <Modal type="button" size="default" color="brand1" content="Filtros">
+          <Filters />
+      </Modal>
+      {/* <DivBtnFilter>
+        <Button type="button" size="default" color="brand1" content="Filtros" />
+      </DivBtnFilter> */}
       <DivPagination>
         <span>1 de 2</span>
         <button>Seguinte</button>

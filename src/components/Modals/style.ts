@@ -18,15 +18,25 @@ const StyledModalDiv = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50%;
-    height: 50%;
+    width: 80%;
+    height: 80%;
+    background-color: white;
+    z-index: 71;
+
+    & .buttonCloseModal{
+        background: inherit;
+        border: none;
+        font-size: 20px;
+        margin-left: 10px;
+        margin-top: 5px;
+    }
 }
 
 
 
 `;
 export const ModalComponent = styled.div`
-@media(min-width: 991px){
+@media(min-width: 768px){
     display:none;
 }
 `
