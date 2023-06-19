@@ -274,12 +274,12 @@ export const Card = () => {
         </UlCard>
       </ContainerDiv>
 
+      
+      <DivBtnFilter>
       <Modal type="button" size="default" color="brand1" content="Filtros">
           <Filters />
       </Modal>
-      {/* <DivBtnFilter>
-        <Button type="button" size="default" color="brand1" content="Filtros" />
-      </DivBtnFilter> */}
+      </DivBtnFilter>
       <DivPagination>
         <span>1 de 2</span>
         <button>Seguinte</button>
