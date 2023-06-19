@@ -2,11 +2,12 @@ import { InputHTMLAttributes } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { Container, InputStyles } from "./style";
 
-/* interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   placeholder: string;
   register: UseFormRegisterReturn<string>;
   error: string | undefined;
+  onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
 }
 
 export const Input = ({
@@ -14,6 +15,7 @@ export const Input = ({
   placeholder,
   register,
   error,
+  onBlur,
   ...rest
 }: IInputProps) => {
   return (
@@ -25,8 +27,9 @@ export const Input = ({
         {...register}
         placeholder={placeholder}
         error={error}
+        onBlur={onBlur}
       />
       {error && <small>{error}</small>}
     </Container>
   );
-}; */
+};

@@ -1,44 +1,36 @@
-/* import React, { useContext } from "react";
+import React, { useContext } from "react";
 import StyledModalDiv from "./style";
 import { Button } from "../Buttons/index";
 import { ModalProps } from "../../pages/contexts/modalContext/contextTypes";
 import { ModalButtonContext } from "../../pages/contexts/modalContext";
-import StyledModalAdvertiserDiv from "./style";
+import { ModalComponent } from "./style";
 
-export const Modal: React.FC<ModalProps> = ({
-  children,
-  content,
-  size,
-  color,
-}) => {
+const Modal: React.FC<ModalProps> = ({ children, content, size, color }) => {
   const { modal, setModal } = useContext(ModalButtonContext);
-
   return (
-    <div>
+    <ModalComponent>
       <Button
         content={content}
         size={size}
+        type="button"
         color={color}
         onClick={() => setModal(!modal)}
       />
       {modal && (
-        <StyledModalDiv className="modalContent">{children}</StyledModalDiv>
+        <StyledModalDiv className="modalContent">
+          <div className="divContent">
+            <button
+              type="button"
+              className="buttonCloseModal"
+              onClick={() => setModal(false)}
+            >
+              X
+            </button>
+            {children}
+          </div>
+        </StyledModalDiv>
       )}
-    </div>
-  );
-}; */
-
-import StyledModalAdvertiserDiv from "./style";
-
-export const ModalAdvertiser = () => {
-  return (
-    <StyledModalAdvertiserDiv>
-      <h1>Click</h1>
-      <div className="modalDiv">
-        <form></form>
-      </div>
-    </StyledModalAdvertiserDiv>
+    </ModalComponent>
   );
 };
-
-export default ModalAdvertiser;
+export default Modal;

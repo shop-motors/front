@@ -1,11 +1,9 @@
 import { NavBar, NavBarProfile } from "../../components/Nav";
 import { StyledProducts } from "./style";
-import imgCar from "../../images/car.png";
-import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
 import { CardAdmin } from "../../components/Cards";
 import { Footer } from "../../components/Footer";
-import { ModalAdvertiser } from "../../components/Modals";
+import Modal from "../../components/Modals";
 
 export const AdvertiserPage = () => {
   return (
@@ -25,12 +23,15 @@ export const AdvertiserPage = () => {
             architecto debitis. Ipsam consectetur quo dolore commodi dolorum
             voluptate! Magnam, voluptatum.
           </small>
-          <Button
-            onClick={() => ModalAdvertiser()}
+
+          <Modal
             size="default"
             color="border_blue"
-            content={"Criar anúncio"}
-          />
+            content="Criar Anúncio"
+            type="button"
+          >
+            <h1>teste</h1>
+          </Modal>
         </div>
       </div>
       <div className="cards">
