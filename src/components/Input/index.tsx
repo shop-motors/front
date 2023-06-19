@@ -7,7 +7,7 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   register: UseFormRegisterReturn<string>;
   error: string | undefined;
-  onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined 
+  onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
 }
 
 export const Input = ({
