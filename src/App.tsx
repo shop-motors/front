@@ -4,14 +4,16 @@ import { PageRoutes } from "./routes";
 import { ToastConfig } from "./components/ToastConfig";
 import { StyledGlobals } from "./styles/globals";
 import { ModalButtonProvider } from "./pages/contexts/modalContext/index";
+import { UserProviders } from "./contexts/userContexts";
 
 export const App = () => {
   return (
     <ModalButtonProvider>
       <BrowserRouter>
-        <StyledGlobals />
         <ToastConfig />
-        <PageRoutes />
+        <UserProviders>
+          <PageRoutes />
+        </UserProviders>
       </BrowserRouter>
     </ModalButtonProvider>
   );

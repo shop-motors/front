@@ -38,6 +38,7 @@ const buttonVariants = {
     font-size: var(--font-size-8);
     width: 100%;
     height: 38px;
+    padding: 8px;
     :hover {
       width: 100%;
       height: 48px;

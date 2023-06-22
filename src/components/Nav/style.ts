@@ -8,7 +8,17 @@ export const DivContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 14px;
-  background-color: var(--color-gray-10);
+  position: fixed;
+  top: 0px;
+  background-color: var(--color-gray-9);
+
+  .containerProfile {
+    display: flex;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+    justify-content: space-between;
+  }
 `;
 
 export const DivTitle = styled.div`
@@ -44,6 +54,27 @@ export const DivButtons = styled.div`
   }
 `;
 
+export const DivContainerProfile = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px;
+  position: fixed;
+  top: 0px;
+  background-color: var(--color-gray-9);
+
+  .containerProfile {
+    display: flex;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+    justify-content: space-between;
+  }
+`;
+
 export const ButtonMenu = styled.div`
   button {
     border: none;
@@ -53,3 +84,23 @@ export const ButtonMenu = styled.div`
     display: none;
   }
 `;
+
+export const DivButtonsProfile = styled.div`
+  .imgProfile {
+    display: flex;
+    align-items: center;
+    width: 230px;
+    padding-left: 35px;
+    object-fit: fill;
+    gap: 10px;
+  }
+
+  img {
+    object-fit: fill;
+    width: 43px;
+    height: 43px;
+    border-radius: 50px;
+  }
+`;
+
+export default DivButtonsProfile;

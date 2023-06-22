@@ -56,7 +56,6 @@ export const StyledGlobals = createGlobalStyle`
 
   body::-webkit-scrollbar {
     display: none;
-    
   }
 
 
@@ -145,10 +144,17 @@ export const StyledGlobals = createGlobalStyle`
 }
 
 
+::-webkit-scrollbar-track { 
+  background-color: #fff;
+}
 
+::-webkit-scrollbar {
+  width: .4375rem;
+  height: .4375rem;
+}
 
-
-::-webkit-scrollbar-track { background-color: var(--color-gray-20) }
-::-webkit-scrollbar { width: .4375rem; height: .4375rem;}
-::-webkit-scrollbar-thumb { background: var(--color-primary-50); border-radius: var(--border-radius-1)}
+::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: var(--border-radius-1);
+}
 `;

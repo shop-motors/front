@@ -6,12 +6,14 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   placeholder: string;
   error: string | undefined;
+  onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
 }
 
 export const Input = ({
   label,
   placeholder,
   error,
+  onBlur,
   ...rest
 }: IInputProps) => {
   return (
@@ -22,6 +24,7 @@ export const Input = ({
         {...rest}
         placeholder={placeholder}
         error={error}
+        onBlur={onBlur}
       />
       {error && <small>{error}</small>}
     </Container>

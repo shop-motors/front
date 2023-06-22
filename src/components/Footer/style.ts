@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DivMainFooter = styled.div`
+export const DivMainFooter = styled.footer`
   background-color: var(--color-gray-0);
   width: 100%;
   margin-top: 30px;

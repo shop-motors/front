@@ -5,6 +5,9 @@ export interface iModalButtonContext{
 export interface iModalButtonProvider{
     children: React.ReactNode;
 }
+export interface iDevice {
+  device: 'desktop' | 'mobile';
+}
 export interface iButtonProps {
     content: string | React.ReactNode;
     size: "default" | "large";
@@ -29,9 +32,12 @@ export interface iButtonProps {
       | "border_blue"
       | "disable";
     onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+    type: "button" | "submit" | "reset" | undefined,
+    disabled?: boolean
   }
 
   export interface ModalProps extends iButtonProps {
     children: React.ReactNode;
+    device: 'desktop' | 'mobile';
   }
   
