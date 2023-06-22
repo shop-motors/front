@@ -5,6 +5,7 @@ export interface iUserProviderProps {
 export interface IProviderValue {
   LoginUser: (formLogin: IUserLogin) => Promise<IuserResponse | undefined>;
   user: IuserResponse | null;
+  registerUser: (data: IUserRegister) => Promise<void>;
 }
 
 export interface IuserResp {
@@ -16,6 +17,24 @@ export interface IuserResp {
 export interface IuserResponse {
   token: string;
   user: IuserResp;
+}
+
+export interface IUserRegister {
+  name: string;
+  email: string;
+  cpf: string;
+  phone: string;
+  birth_date: string;
+  description: string;
+  zip_code: string;
+  state: string;
+  city: string;
+  street: string;
+  number: string;
+  complement: string;
+  password: string;
+  confirmPassword: string;
+  is_seller: boolean;
 }
 
 export interface IUserLogin {

@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import {
   IProviderValue,
   IUserLogin,
+  IUserRegister,
   IuserResponse,
   iUserProviderProps,
 } from "../interfaces/userInterface";
@@ -41,8 +42,24 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
     }
   };
 
+  const registerUser = async (data: IUserRegister) => {
+    try {
+      const response = await api.post("login", data)
+
+      console.log(response)
+
+      navigate("/login");
+
+      toast.success("Usuário criado!");
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Algo deu errado");
+    }
+  };
+
   return (
-    <UserContexts.Provider value={{ LoginUser, user }}>
+    <UserContexts.Provider value={{ LoginUser, user, registerUser }}>
       {children}
     </UserContexts.Provider>
   );
