@@ -11,6 +11,10 @@ export const Container = styled.form`
   background-color: var(--color-gray-10);
   text-align: left;
 
+  > h2 {
+    font-weight: 600;
+  }
+
   > div {
     display: flex;
     flex-direction: column;
