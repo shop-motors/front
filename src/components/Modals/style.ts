@@ -1,7 +1,22 @@
-
 import styled from "styled-components";
-import { iDevice } from '../../pages/contexts/modalContext/contextTypes';
+import { iDevice } from "../../pages/contexts/modalContext/contextTypes";
 const StyledModalDiv = styled.div`
+
+  width: 100vw;
+  height: 100vw;
+  z-index: 5;
+
+  & .modalContent {
+    z-index: 7;
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  @media (min-width: 768px) {
   position: absolute;
   top: 0;
   left: 0;
@@ -30,9 +45,12 @@ const StyledModalDiv = styled.div`
       margin-top: 5px;
     }
   }
+}
 `;
+
 export const ModalComponent = styled.div<iDevice>`
-  @media (${({device}) => device === 'desktop' ? 'max-width: 767px' : 'min-width: 768px'}) {
+  @media (${({ device }) => device === "desktop" ? "max-width: 767px" : "min-width: 768px"}
+     ){
     display: none;
   }
 `;

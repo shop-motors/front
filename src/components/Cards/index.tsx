@@ -1,7 +1,7 @@
 import ImgCar from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1 (1).png";
 import { Button } from "../Buttons";
-import { Filters } from "../filters";
 import Modal from "../Modals";
+import { Filters } from "../filters";
 import {
   ContainerDiv,
   DivBtnFilter,
@@ -273,17 +273,26 @@ export const Card = () => {
             </DivLi>
           </LiCard>
         </UlCard>
+        <div className="displayNone">
+          <Filters />
+        </div>
+
+        <DivBtnFilter>
+          <Modal
+            device="mobile"
+            type="button"
+            size="default"
+            color="brand1"
+            content="Filtros"
+          >
+            <Filters />
+          </Modal>
+        </DivBtnFilter>
       </ContainerDiv>
 
-      
-      <DivBtnFilter>
-      <Modal device="mobile" type="button" size="default" color="brand1" content="Filtros">
-          <Filters />
-      </Modal>
-      </DivBtnFilter>
       <DivPagination>
         <span>1 de 2</span>
-        <button>Seguinte</button>
+        <button>Seguinte </button>
       </DivPagination>
     </DivMain>
   );

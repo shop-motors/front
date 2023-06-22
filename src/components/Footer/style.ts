@@ -7,7 +7,6 @@ export const DivMainFooter = styled.footer`
 
   div {
     background-color: var(--color-gray-0);
-    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -30,7 +29,7 @@ export const DivMainFooter = styled.footer`
     color: var(--color-white);
   }
 
-  button {
+  a {
     width: 33px;
     height: 30px;
     margin-bottom: 10px;

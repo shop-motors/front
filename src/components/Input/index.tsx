@@ -5,7 +5,6 @@ import { Container, InputStyles } from "./style";
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   placeholder: string;
-  register: UseFormRegisterReturn<string>;
   error: string | undefined;
   onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
 }
@@ -13,7 +12,6 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
 export const Input = ({
   label,
   placeholder,
-  register,
   error,
   onBlur,
   ...rest
@@ -24,7 +22,6 @@ export const Input = ({
       <InputStyles
         className="font-input-placeholder"
         {...rest}
-        {...register}
         placeholder={placeholder}
         error={error}
         onBlur={onBlur}

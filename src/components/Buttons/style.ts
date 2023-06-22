@@ -38,6 +38,7 @@ const buttonVariants = {
     font-size: var(--font-size-8);
     width: 100%;
     height: 38px;
+    padding: 8px;
     :hover {
       width: 100%;
       height: 48px;
@@ -142,8 +143,8 @@ const buttonVariants = {
   `,
 
   border_blue: css`
-    color: var(--color-brand-1);
-    background-color: var(--color-gray-10);
+    color: var(--color-gray-10);
+    background-color: var(--color-brand-1);
     border: 0.125rem solid var(--color-brand-1);
   `,
 

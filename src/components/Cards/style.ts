@@ -11,9 +11,15 @@ export const ContainerDiv = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
+  & .displayNone {
+    display: none;
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  }
 
   @media (min-width: 768px) {
-    flex-direction: row;
+    flex-direction: row-reverse;
   }
 `;
 
