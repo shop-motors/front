@@ -7,6 +7,7 @@ import { registerSchema } from "./registerSchema";
 import { apiCEP } from "../../../services/api";
 import { useState } from "react";
 import { InputGroup } from "../../Input/style";
+import { Container } from "./style";
 
 interface iFormResgister {
   name: string;
@@ -57,145 +58,147 @@ export const FormRegister = () => {
   };
 
   return (
-    <Form
-      title="Cadastro"
-      onSubmit={handleSubmit((data) =>
-        console.log({ ...data, is_seller: isSeller })
-      )}
-    >
-      <h3 className="font-body-2-50">Informações Pessoais</h3>
+    <Container>
+      <Form
+        title="Cadastro"
+        onSubmit={handleSubmit((data) =>
+          console.log({ ...data, is_seller: isSeller })
+        )}
+      >
+        <h3 className="font-body-2-500">Informações Pessoais</h3>
 
-      <Input
-        label="Nome"
-        register={register("name")}
-        placeholder="Ex: Samuel Leão"
-        error={errors.name && errors.name.message}
-      />
-      <Input
-        label="E-mail"
-        register={register("email")}
-        placeholder="Ex: samuel@kenzie.com.br"
-        error={errors.email && errors.email.message}
-      />
-      <Input
-        label="CPF"
-        register={register("cpf")}
-        placeholder="000.000.000-00"
-        error={errors.cpf && errors.cpf.message}
-      />
-      <Input
-        label="Celular"
-        register={register("phone")}
-        placeholder="(DDD) 90000-0000"
-        error={errors.phone && errors.phone.message}
-      />
-      <Input
-        label="Data de Nascimento"
-        register={register("birth_date")}
-        placeholder="00/00/00"
-        error={errors.birth_date && errors.birth_date.message}
-      />
-      <Input
-        label="Descrição"
-        register={register("description")}
-        placeholder="Digitar descrição"
-        error={errors.description && errors.description.message}
-      />
-
-      <h3 className="font-body-2-50">Infomações de endereço</h3>
-
-      <Input
-        label="CEP"
-        register={register("zip_code")}
-        placeholder="00000.000"
-        onBlur={setAddress}
-        error={errors.zip_code && errors.zip_code.message}
-      />
-
-      <InputGroup>
         <Input
-          label="Estado"
-          register={register("state")}
-          placeholder="Digitar Estado"
-          error={errors.state && errors.state.message}
+          label="Nome"
+          register={register("name")}
+          placeholder="Ex: Samuel Leão"
+          error={errors.name && errors.name.message}
         />
         <Input
-          label="Cidade"
-          register={register("city")}
-          placeholder="Digitar cidade"
-          error={errors.city && errors.city.message}
-        />
-      </InputGroup>
-
-      <Input
-        label="Rua"
-        register={register("street")}
-        placeholder="Digitar rua"
-        error={errors.street && errors.street.message}
-      />
-
-      <InputGroup>
-        <Input
-          label="Numero"
-          register={register("number")}
-          placeholder="Digitar número"
-          error={errors.number && errors.number.message}
+          label="E-mail"
+          register={register("email")}
+          placeholder="Ex: samuel@kenzie.com.br"
+          error={errors.email && errors.email.message}
         />
         <Input
-          label="Complemento"
-          register={register("complement")}
-          placeholder="Ex: apart 307"
-          error={errors.complement && errors.complement.message}
+          label="CPF"
+          register={register("cpf")}
+          placeholder="000.000.000-00"
+          error={errors.cpf && errors.cpf.message}
         />
-      </InputGroup>
+        <Input
+          label="Celular"
+          register={register("phone")}
+          placeholder="(DDD) 90000-0000"
+          error={errors.phone && errors.phone.message}
+        />
+        <Input
+          label="Data de Nascimento"
+          register={register("birth_date")}
+          placeholder="00/00/00"
+          error={errors.birth_date && errors.birth_date.message}
+        />
+        <Input
+          label="Descrição"
+          register={register("description")}
+          placeholder="Digitar descrição"
+          error={errors.description && errors.description.message}
+        />
 
-      <h3 className="font-body-2-50">Tipo de conta</h3>
+        <h3 className="font-body-2-50">Infomações de endereço</h3>
 
-      <InputGroup>
+        <Input
+          label="CEP"
+          register={register("zip_code")}
+          placeholder="00000.000"
+          onBlur={setAddress}
+          error={errors.zip_code && errors.zip_code.message}
+        />
+
+        <InputGroup>
+          <Input
+            label="Estado"
+            register={register("state")}
+            placeholder="Digitar Estado"
+            error={errors.state && errors.state.message}
+          />
+          <Input
+            label="Cidade"
+            register={register("city")}
+            placeholder="Digitar cidade"
+            error={errors.city && errors.city.message}
+          />
+        </InputGroup>
+
+        <Input
+          label="Rua"
+          register={register("street")}
+          placeholder="Digitar rua"
+          error={errors.street && errors.street.message}
+        />
+
+        <InputGroup>
+          <Input
+            label="Numero"
+            register={register("number")}
+            placeholder="Digitar número"
+            error={errors.number && errors.number.message}
+          />
+          <Input
+            label="Complemento"
+            register={register("complement")}
+            placeholder="Ex: apart 307"
+            error={errors.complement && errors.complement.message}
+          />
+        </InputGroup>
+
+        <h3 className="font-body-2-50">Tipo de conta</h3>
+
+        <InputGroup>
+          <Button
+            color={selectedButton ? "brand1" : "gray8"}
+            content="Anunciante"
+            type="button"
+            size="large"
+            onClick={() => {
+              setIsSeller(true);
+              setSelectedButton(true);
+            }}
+          />
+          <Button
+            color={!selectedButton ? "brand1" : "gray8"}
+            content="Cliente"
+            type="button"
+            size="large"
+            onClick={() => {
+              setIsSeller(false);
+              setSelectedButton(false);
+            }}
+          />
+        </InputGroup>
+
+        <Input
+          label="Senha"
+          register={register("password")}
+          placeholder="Digitar Senha"
+          type="password"
+          error={errors.password && errors.password.message}
+        />
+        <Input
+          label="Confirmar Senha"
+          register={register("confirmPassword")}
+          placeholder="Confirmar Senha"
+          type="password"
+          error={errors.confirmPassword && errors.confirmPassword.message}
+        />
+
         <Button
-          color={selectedButton ? "brand1" : "gray8"}
-          content="Anunciante"
-          type="button"
+          type="submit"
+          color="brand1"
           size="large"
-          onClick={() => {
-            setIsSeller(true);
-            setSelectedButton(true);
-          }}
+          content="Finalizar Cadastro"
+          disabled={!isDirty || !isValid}
         />
-        <Button
-          color={!selectedButton ? "brand1" : "gray8"}
-          content="Cliente"
-          type="button"
-          size="large"
-          onClick={() => {
-            setIsSeller(false);
-            setSelectedButton(false);
-          }}
-        />
-      </InputGroup>
-
-      <Input
-        label="Senha"
-        register={register("password")}
-        placeholder="Digitar Senha"
-        type="password"
-        error={errors.password && errors.password.message}
-      />
-      <Input
-        label="Confirmar Senha"
-        register={register("confirmPassword")}
-        placeholder="Confirmar Senha"
-        type="password"
-        error={errors.confirmPassword && errors.confirmPassword.message}
-      />
-
-      <Button
-        type="submit"
-        color="brand1"
-        size="large"
-        content="Finalizar Cadastro"
-        disabled={!isDirty || !isValid}
-      />
-    </Form>
+      </Form>
+    </Container>
   );
 };

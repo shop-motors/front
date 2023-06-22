@@ -9,6 +9,7 @@ export const DivContainer = styled.div`
   width: 100%;
   padding: 14px;
   position: fixed;
+  z-index: 1;
   top: 0px;
   background-color: var(--color-gray-9);
 
