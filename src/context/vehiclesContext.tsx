@@ -8,15 +8,17 @@ import { apiKenzieCars } from "../services/api";
 export const VehiclesContext = createContext({} as IVehicles);
 
 export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
-  const [vehiclesList, setVehiclesList] = useState([]);
-
-  console.log(vehiclesList);
+  const [vehiclesList, setVehiclesList] = useState(Array());
 
   useEffect(() => {
     const vehiclesLoad = async () => {
       try {
-        const { data } = await apiKenzieCars.get("/advertiser");
-        setVehiclesList(data);
+        const { data } = await apiKenzieCars.get("/");
+        console.log(data);
+        var cars = [];
+        cars.push(data.chevrolet);
+        cars.push(data.fiat);
+        setVehiclesList(cars);
       } catch (error) {
         console.log(error);
       }

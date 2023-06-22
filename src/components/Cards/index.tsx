@@ -279,7 +279,13 @@ export const Card = () => {
       </ContainerDiv>
 
       <DivBtnFilter>
-        <Modal type="button" size="default" color="brand1" content="Filtros">
+        <Modal
+          device="mobile"
+          type="button"
+          size="default"
+          color="brand1"
+          content="Filtros"
+        >
           <Filters />
         </Modal>
       </DivBtnFilter>
@@ -294,7 +300,7 @@ export const Card = () => {
 //-------------------------------------------------------
 
 export const CardAdmin = () => {
-  const [vehiclesList, setVehiclesList] = useState([]);
+  const [vehiclesList, setVehiclesList] = useState(Array());
 
   console.log(vehiclesList);
 
@@ -303,13 +309,16 @@ export const CardAdmin = () => {
       try {
         const { data } = await apiKenzieCars.get("/");
         console.log(data);
-        setVehiclesList(data.chevrolet);
+        var cars = [...data.chevrolet, ...data.fiat, ...data.ford];
+        setVehiclesList(cars);
       } catch (error) {
         console.log(error);
       }
     };
     vehiclesLoad();
   }, []);
+
+  console.log(vehiclesList.length);
 
   return (
     <UlCardAdmin>

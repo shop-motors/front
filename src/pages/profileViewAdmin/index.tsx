@@ -5,6 +5,9 @@ import { CardAdmin } from "../../components/Cards";
 import { Footer } from "../../components/Footer";
 import Modal from "../../components/Modals";
 import { useContext } from "react";
+import { Input } from "../../components/Input";
+import { FormVehicles } from "../../components/Form/FormCreateVehicles";
+import ModalVehicles from "../../components/Modals/ModalCreateVehicles";
 
 export const AdvertiserPage = () => {
   return (
@@ -25,14 +28,14 @@ export const AdvertiserPage = () => {
             voluptate! Magnam, voluptatum.
           </small>
 
-          <Modal
+          <ModalVehicles
             size="default"
             color="border_blue"
             content="Criar Anúncio"
             type="button"
-          >
-            <h1>teste</h1>
-          </Modal>
+            children={<FormVehicles />}
+            device={"desktop"}
+          ></ModalVehicles>
         </div>
       </div>
       <div className="cards">

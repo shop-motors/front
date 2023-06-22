@@ -10,7 +10,13 @@ export const Button = ({
   disabled,
 }: iButtonProps) => {
   return (
-    <StyledButton size={size} color={color} onClick={onClick} type={type} disabled={disabled}>
+    <StyledButton
+      size={size}
+      color={color}
+      onClick={onClick}
+      type={type}
+      disabled={disabled}
+    >
       {content}
     </StyledButton>
   );
