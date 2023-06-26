@@ -26,7 +26,7 @@ interface iFormResgister {
   complement: string;
   password: string;
   confirmPassword: string;
-  is_seller: boolean
+  is_seller: boolean;
 }
 
 export const FormRegister = () => {
@@ -40,7 +40,10 @@ export const FormRegister = () => {
     formState: { errors, isDirty, isValid },
     setValue,
     setFocus,
-  } = useForm<iFormResgister>({ resolver: yupResolver(registerSchema) });
+  } = useForm<iFormResgister>({
+    mode: "onBlur",
+    resolver: yupResolver(registerSchema),
+  });
 
   const setAddress = async (event: React.FocusEvent<HTMLInputElement>) => {
     try {
@@ -64,15 +67,12 @@ export const FormRegister = () => {
   const handleRegisterUser: SubmitHandler<IUserRegister> = (
     data: IUserRegister
   ) => {
-    registerUser(data);
+    registerUser({ ...data, is_seller: isSeller });
   };
 
   return (
     <Container>
-      <Form
-        title="Cadastro"
-        onSubmit={handleSubmit(handleRegisterUser)}
-      >
+      <Form title="Cadastro" onSubmit={handleSubmit(handleRegisterUser)}>
         <h3 className="font-body-2-500">Informações Pessoais</h3>
 
         <Input

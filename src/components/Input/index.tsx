@@ -1,7 +1,6 @@
 import { InputHTMLAttributes } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { Container, InputStyles } from "./style";
-import { StepIndicatorProps } from "@chakra-ui/react";
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;

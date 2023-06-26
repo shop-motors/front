@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export interface iUserProviderProps {
   children: React.ReactNode;
 }
@@ -6,6 +8,7 @@ export interface IProviderValue {
   LoginUser: (formLogin: IUserLogin) => Promise<IuserResponse | undefined>;
   user: IuserResponse | null;
   registerUser: (data: IUserRegister) => Promise<void>;
+  updateUser: (data: IUserUpdate) => Promise<void>;
 }
 
 export interface IuserResp {
@@ -35,6 +38,15 @@ export interface IUserRegister {
   password: string;
   confirmPassword: string;
   is_seller: boolean;
+}
+
+export interface IUserUpdate {
+  name: string;
+  email: string;
+  cpf: string;
+  phone: string;
+  birth_date: string;
+  description: string;
 }
 
 export interface IUserLogin {
