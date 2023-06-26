@@ -7,6 +7,7 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   error: string | undefined;
   onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
+  register?: UseFormRegisterReturn<string>;
 }
 
 export const Input = ({
@@ -14,6 +15,7 @@ export const Input = ({
   placeholder,
   error,
   onBlur,
+  register,
   ...rest
 }: IInputProps) => {
   return (
@@ -21,6 +23,7 @@ export const Input = ({
       <label className="font-input-label">{label}</label>
       <InputStyles
         className="font-input-placeholder"
+        {...register}
         {...rest}
         placeholder={placeholder}
         error={error}

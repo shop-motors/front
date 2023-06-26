@@ -1,6 +1,6 @@
 import { Footer } from "../../components/Footer";
 import { FormRegister } from "../../components/Form/FormRegister";
-import { HeaderPage } from "../../components/Header";
+import { ModalEditUser } from "../../components/Modals/ModalEditUser";
 import { NavBar } from "../../components/Nav";
 import { Container } from "./style";
 
@@ -9,6 +9,7 @@ export const Register = () => {
     <Container>
       <NavBar />
         <FormRegister />
+        {/* <ModalEditUser /> */}
       <Footer />
     </Container>
   );

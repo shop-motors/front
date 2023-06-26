@@ -2,16 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.section`
   > form {
-    margin-top: 5rem;
+    padding: 0;
+    max-width: none;
 
     h3 {
       font-weight: 600;
     }
   }
 
-  @media (min-width: 728px) {
-    > form {
-      margin-top: 120px;
-    }
-  }
 `;
