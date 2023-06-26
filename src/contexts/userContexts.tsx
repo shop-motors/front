@@ -14,7 +14,7 @@ export const UserContexts = createContext({} as IProviderValue);
 export const UserProviders = ({ children }: iUserProviderProps) => {
   const [user, setUser] = useState<IuserResponse | null>(null);
   const navigate = useNavigate();
-  const token = localStorage.getItem("@token");
+  const token = localStorage.getItem("@TOKEN");
 
   // async () => {
   //   try {

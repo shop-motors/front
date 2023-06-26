@@ -11,6 +11,8 @@ export const ContainerDiv = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
+  height: 100%;
+  margin-top: 30px;
   & .displayNone {
     display: none;
     @media (min-width: 768px) {
@@ -29,6 +31,7 @@ export const UlCard = styled.ul`
   flex-direction: row;
   overflow-x: scroll;
   width: 100vw;
+  height: 100%;
 
   ::-webkit-scrollbar {
     width: 5px;
@@ -54,9 +57,11 @@ export const UlCard = styled.ul`
 export const LiCard = styled.li`
   width: 80%;
   max-width: 250px;
-  margin: 3rem 0 0 1.5rem;
   height: 300px;
+  margin-left: 10px;
   img {
+    width: 240px;
+    height: 170px;
     background-color: var(--color-gray-7);
   }
 
@@ -70,7 +75,6 @@ export const LiCard = styled.li`
     font-weight: 400;
     font-size: 12px;
     line-height: 24px;
-    width: 250px;
   }
 `;
 
@@ -110,7 +114,7 @@ export const DivPrice = styled.div`
   div {
     display: flex;
     flex-direction: row;
-    width: 30%;
+    width: 100%;
     max-width: 100px;
     gap: 5px;
     text-align: center;
