@@ -5,9 +5,11 @@ import { createContext, useState, useEffect, useContext } from "react";
 import {
   CarProviderValue,
   ICarPriverProps,
+  Imarca,
   Iproducts,
 } from "../interfaces/carInterface";
 import { UserContexts } from "./userContexts";
+import { marca } from "../data/data";
 /* import * as i from "../interfaces/UserInterfaces"; */
 
 export const CarsContext = createContext({} as CarProviderValue);
@@ -15,7 +17,8 @@ export const CarProviders = ({ children }: ICarPriverProps) => {
   const { user } = useContext(UserContexts);
   const token = localStorage.getItem("@TOKEN");
   const [cars, setCars] = useState<Iproducts[]>([]);
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState<string>("todos");
+  const [marcas, setmarcas] = useState<Imarca[]>(marca);
 
   const GetCarsHome = async () => {
     try {
@@ -31,6 +34,15 @@ export const CarProviders = ({ children }: ICarPriverProps) => {
     GetCarsHome();
   }, []);
 
+  const filterMarcas = () => {
+    const marcasFilter = cars.filter((car) =>
+      filter === "todos" ? true : car.model === filter
+    );
+
+    setCars(marcasFilter);
+  };
+
+  filterMarcas();
 
   const createAdvertiser = async (body: any) => {
     try {
@@ -56,6 +68,8 @@ export const CarProviders = ({ children }: ICarPriverProps) => {
   };
 
   return (
-    <CarsContext.Provider value={{ cars }}>{children}</CarsContext.Provider>
+    <CarsContext.Provider value={{ cars, setFilter, marcas }}>
+      {children}
+    </CarsContext.Provider>
   );
 };

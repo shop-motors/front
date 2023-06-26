@@ -4,8 +4,14 @@ export interface ICarPriverProps {
 
 export interface CarProviderValue {
   cars: Iproducts[];
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
+  marcas: Imarca[];
 }
 
+export interface Imarca {
+  label: string;
+  value: string;
+}
 export interface Iproducts {
   id: string;
   brand: string;
