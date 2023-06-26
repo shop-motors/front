@@ -3,9 +3,6 @@ import { StyledProducts } from "./style";
 import ImgProfile from "../../images/leia.jpeg";
 import { CardAdmin } from "../../components/Cards";
 import { Footer } from "../../components/Footer";
-import Modal from "../../components/Modals";
-import { useContext } from "react";
-import { Input } from "../../components/Input";
 import { FormVehicles } from "../../components/Form/FormCreateVehicles";
 import ModalVehicles from "../../components/Modals/ModalCreateVehicles";
 

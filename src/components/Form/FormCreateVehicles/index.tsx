@@ -7,7 +7,6 @@ import { vehiclesSchema } from "../FormCreateVehicles/createVehicles.schema";
 import { useContext, useEffect, useState } from "react";
 import { StyledVehiclesForm } from "./style";
 import { ModalButtonContext } from "../../../pages/contexts/modalContext";
-import { error } from "console";
 
 interface iFormVehicles {
   brand: string;
@@ -20,33 +19,36 @@ interface iFormVehicles {
   price: string;
   description: string;
   cover_img: string;
-  img_url: string;
+  galleryImages: string;
 }
 
 export const FormVehicles = () => {
   const [isSeller, setIsSeller] = useState(false);
   const { modal, setModal } = useContext(ModalButtonContext);
+  const [images, setImages] = useState([] as string[]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setImages([...images, event.target.value]);
+  };
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
-    setValue,
-    setFocus,
+    formState: { errors },
   } = useForm<iFormVehicles>({ resolver: yupResolver(vehiclesSchema) });
 
   useEffect(() => {
     console.log(errors);
   }, [errors]);
 
-  const submitData = (data: iFormVehicles) => {
-    console.log(data);
+  const submitVehicles = (formData: iFormVehicles) => {
+    console.log({ ...formData, galleryImages: images });
   };
 
   return (
     <StyledVehiclesForm
       title="Criar Anúncio"
-      onSubmit={handleSubmit(submitData)}
+      onSubmit={handleSubmit(submitVehicles)}
     >
       <div className="formHeader">
         <h2>Criar Anúncio</h2>
@@ -130,15 +132,13 @@ export const FormVehicles = () => {
       />
       <Input
         label="1° Imagem da galeria"
-        register={register("img_url")}
+        onBlur={handleChange}
         placeholder="https://image.com"
-        error={errors.img_url && errors.img_url.message}
       />
       <Input
         label="2° Imagem da galeria"
-        register={register("img_url")}
+        onBlur={handleChange}
         placeholder="Ex: https://image.com"
-        error={errors.img_url && errors.img_url.message}
       />
 
       <div className="divButtons">

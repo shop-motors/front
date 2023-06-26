@@ -11,5 +11,5 @@ export const vehiclesSchema = yup.object().shape({
   price: yup.number().required("* campo obrigatório"),
   description: yup.string().required("* campo obrigatório"),
   cover_img: yup.string().required("* campo obrigatório"),
-  img_url: yup.string().required("* campo obrigatório"),
+  galleryImages: yup.array().of(yup.string()).optional(),
 });

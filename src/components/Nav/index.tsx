@@ -10,21 +10,29 @@ import Logo from "../../assets/Motors shop.png";
 import { GrMenu } from "react-icons/gr";
 import ImgProfile from "../../images/leia.jpeg";
 import { Button } from "../Buttons";
+import { Link } from "react-router-dom";
 
 export const NavBar = () => {
   return (
     <DivContainer>
-      <DivTitle>
-        <img src={Logo} alt="logo da pagina" />
-      </DivTitle>
+      <Link to={"/"}>
+        <DivTitle>
+          <img src={Logo} alt="logo da pagina" />
+        </DivTitle>
+      </Link>
+
       <ButtonMenu>
         <button>
           <GrMenu />
         </button>
       </ButtonMenu>
       <DivButtons>
-        <a>fazer login</a>
-        <Button size="default" color="gray6" content={"Cadastrar"} />
+        <Link to={"/login"}>
+          <a href="">fazer login</a>
+        </Link>
+        <Link to={"/register"}>
+          <Button size="default" color="gray6" content={"Cadastrar"} type={undefined} />
+        </Link>
       </DivButtons>
     </DivContainer>
   );

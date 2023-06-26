@@ -19,9 +19,9 @@ export const Container = styled.fieldset`
 
 export const InputStyles = styled.input<iInputProps>`
   width: 100%;
-  border: 0.125rem solid var(--color-gray-7) !important;
+  border: .0938rem solid var(--color-gray-7) !important;
   border-radius: 0.25rem;
-  padding: 1rem 0.75rem;
+  padding: 0.75rem 1rem;
   border-color: ${({ error }) => error && "var(--color-alert1) !important"};
 
   :focus {
