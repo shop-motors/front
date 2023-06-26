@@ -3,6 +3,7 @@ import {
   IProviderValue,
   IUserLogin,
   IUserRegister,
+  IUserUpdate,
   IuserResponse,
   iUserProviderProps,
 } from "../interfaces/userInterface";
@@ -58,8 +59,24 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
     }
   };
 
+  const updateUser = async (data: IUserUpdate) => {
+    try {
+      const response = await api.patch("login", data)
+
+      console.log(response)
+
+      navigate("/login");
+
+      toast.success("Usuário criado!");
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Algo deu errado");
+    }
+  };
+
   return (
-    <UserContexts.Provider value={{ LoginUser, user, registerUser }}>
+    <UserContexts.Provider value={{ LoginUser, user, registerUser, updateUser }}>
       {children}
     </UserContexts.Provider>
   );

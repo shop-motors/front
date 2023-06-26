@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Container } from "./styles";
 import { Button } from "../../Buttons";
 import { IoClose } from "react-icons/io5";
+import { ModalGenericContext } from "./context";
 
 interface iModalGeneric {
   title: string;
@@ -39,7 +40,7 @@ export const ModalGeneric = ({
   button_size,
   button_type,
 }: iModalGeneric) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen } = useContext(ModalGenericContext);
 
   return (
     <Container>

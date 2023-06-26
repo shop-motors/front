@@ -1,3 +1,4 @@
+import { FormUpdateUser } from "../../Form/FormUpdateUser";
 import { ModalGeneric } from "../ModalGeneric";
 
 export const ModalEditUser = () => {
@@ -9,7 +10,7 @@ export const ModalEditUser = () => {
       button_size="default"
       button_type="button"
     >
-      <div></div>
+      <FormUpdateUser />
     </ModalGeneric>
   );
 };

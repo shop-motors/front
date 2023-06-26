@@ -7,10 +7,10 @@ import { Container } from "./style";
 export const Register = () => {
   return (
     <Container>
-      {/* <NavBar /> */}
-        {/* <FormRegister /> */}
-        <ModalEditUser />
-      {/* <Footer /> */}
+      <NavBar />
+        <FormRegister />
+        {/* <ModalEditUser /> */}
+      <Footer />
     </Container>
   );
 };
