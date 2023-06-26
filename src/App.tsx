@@ -4,19 +4,21 @@ import { PageRoutes } from "./routes";
 import { ToastConfig } from "./components/ToastConfig";
 import { ModalButtonProvider } from "./pages/contexts/modalContext/index";
 import { UserProviders } from "./contexts/userContexts";
-import { ModalGenericProvider } from "./components/Modals/ModalGeneric/context";
+import { CarProviders } from "./contexts/carsContext";
+
+
 
 export const App = () => {
   return (
     <ModalButtonProvider>
-      <ModalGenericProvider>
-        <BrowserRouter>
-          <ToastConfig />
-          <UserProviders>
+      <BrowserRouter>
+        <ToastConfig />
+        <UserProviders>
+          <CarProviders>
             <PageRoutes />
-          </UserProviders>
-        </BrowserRouter>
-      </ModalGenericProvider>
+          </CarProviders>
+        </UserProviders>
+      </BrowserRouter>
     </ModalButtonProvider>
   );
 };

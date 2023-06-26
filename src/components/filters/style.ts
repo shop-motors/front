@@ -6,6 +6,7 @@ export const DivMain = styled.div`
   flex-direction: column;
 `;
 export const UlFilters = styled.ul`
+margin-top: 70px;
   /* display: none; */
   @media (min-width: 768px) {
     display: flex;
