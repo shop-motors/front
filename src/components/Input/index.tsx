@@ -5,9 +5,10 @@ import { Container, InputStyles } from "./style";
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   placeholder: string;
-  error: string | undefined;
+  error?: string | undefined;
   onBlur?: React.FocusEventHandler<HTMLInputElement> | undefined;
   register?: UseFormRegisterReturn<string>;
+  /* onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined */
 }
 
 export const Input = ({
@@ -28,6 +29,7 @@ export const Input = ({
         placeholder={placeholder}
         error={error}
         onBlur={onBlur}
+        /* onChange={() => console.log()} */
       />
       {error && <small>{error}</small>}
     </Container>

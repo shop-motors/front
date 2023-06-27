@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import StyledModalDiv from "./style";
-import { Button } from "../Buttons/index";
-import { ModalProps } from "../../pages/contexts/modalContext/contextTypes";
-import { ModalButtonContext } from "../../pages/contexts/modalContext";
+import { Button } from "../../Buttons/index";
+import { ModalProps } from "../../../pages/contexts/modalContext/contextTypes";
+import { ModalButtonContext } from "../../../pages/contexts/modalContext";
 import { ModalComponent } from "./style";
 
-const Modal: React.FC<ModalProps> = ({
+const ModalVehicles: React.FC<ModalProps> = ({
   children,
   content,
   size,
@@ -24,19 +24,10 @@ const Modal: React.FC<ModalProps> = ({
       />
       {modal && (
         <StyledModalDiv className="modalContent">
-          <div className="divContent">
-            <button
-              type="button"
-              className="buttonCloseModal"
-              onClick={() => setModal(false)}
-            >
-              X
-            </button>
-            {children}
-          </div>
+          <div className="divContent">{children}</div>
         </StyledModalDiv>
       )}
     </ModalComponent>
   );
 };
-export default Modal;
+export default ModalVehicles;

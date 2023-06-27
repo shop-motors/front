@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ImgCar from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1 (1).png";
 import { Button } from "../Buttons";
 import Modal from "../Modals";
@@ -15,6 +16,9 @@ import {
   UlCard,
   UlCardAdmin,
 } from "./style";
+/* import { CarsContext } from "../../contexts/carsContext"; */
+import { apiKenzieCars } from "../../services/api";
+import { IVehicles } from "../../interfaces/vehiclesInterface";
 import { CarsContext } from "../../contexts/carsContext";
 
 export const Card = () => {
@@ -73,239 +77,53 @@ export const Card = () => {
 //-------------------------------------------------------
 
 export const CardAdmin = () => {
+  const [vehiclesList, setVehiclesList] = useState(Array());
+
+  console.log(vehiclesList);
+
+  useEffect(() => {
+    const vehiclesLoad = async () => {
+      try {
+        const { data } = await apiKenzieCars.get("/");
+        console.log(data);
+        var cars = [...data.chevrolet, ...data.fiat, ...data.ford];
+        setVehiclesList(cars);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    vehiclesLoad();
+  }, []);
+
+  console.log(vehiclesList.length);
+
   return (
     <UlCardAdmin>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
-      <LiCard>
-        <img src={ImgCar} alt="imagem de carro" />
-        <DivLi>
-          <h3>Porshe - Taycan</h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-            repellendus non labor...
-          </p>
-          <DivUsuario>
-            <span>R</span>
-            <p>Usuario</p>
-          </DivUsuario>
-          <DivPrice>
-            <div>
-              <p>0 km</p>
-              <p>2019</p>
-            </div>
-            <span>R$ 500.000.000</span>
-          </DivPrice>
-        </DivLi>
-      </LiCard>
+      {vehiclesList.map((item: any) => (
+        <>
+          <LiCard>
+            <img src={ImgCar} alt="imagem de carro" />
+            <DivLi>
+              <h3>{item.name}</h3>
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
+                repellendus non labor...
+              </p>
+              <DivUsuario>
+                <span>R</span>
+                <p>Usuario</p>
+              </DivUsuario>
+              <DivPrice>
+                <div>
+                  <p>0 km</p>
+                  <p>2019</p>
+                </div>
+                <span>R$ 500.000.000</span>
+              </DivPrice>
+            </DivLi>
+          </LiCard>
+        </>
+      ))}
     </UlCardAdmin>
   );
 };

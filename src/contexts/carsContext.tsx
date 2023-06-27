@@ -31,7 +31,6 @@ export const CarProviders = ({ children }: ICarPriverProps) => {
     GetCarsHome();
   }, []);
 
-
   const createAdvertiser = async (body: any) => {
     try {
       const { data, status } = await api.post("register/", body);
