@@ -1,10 +1,15 @@
+import { filter } from "@chakra-ui/react";
 import { DivMain, LikmPrice, UlFilters } from "./style";
 
 export const Filters = () => {
+  const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    console.log(e.currentTarget); // This will log the content of the clicked element
+  };
+  
   return (
     <DivMain>
-      <UlFilters>
-        <li>
+      <UlFilters >
+        <li onClick={(e) => handleClick(e)}>
           <h3>Marca</h3>
           <span>Genaral motorsport</span>
           <span>Fiat</span>

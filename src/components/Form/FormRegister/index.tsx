@@ -1,13 +1,15 @@
 import { Form } from "..";
 import { Input } from "../../Input";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Buttons";
 import { registerSchema } from "./registerSchema";
 import { apiCEP } from "../../../services/api";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { InputGroup } from "../../Input/style";
 import { Container } from "./style";
+import { UserContexts } from "../../../contexts/userContexts";
+import { IUserRegister } from "../../../interfaces/userInterface";
 
 interface iFormResgister {
   name: string;
@@ -24,11 +26,13 @@ interface iFormResgister {
   complement: string;
   password: string;
   confirmPassword: string;
+  is_seller: boolean;
 }
 
 export const FormRegister = () => {
   const [isSeller, setIsSeller] = useState(false);
   const [selectedButton, setSelectedButton] = useState(true);
+  const { registerUser } = useContext(UserContexts);
 
   const {
     register,
@@ -36,7 +40,10 @@ export const FormRegister = () => {
     formState: { errors, isDirty, isValid },
     setValue,
     setFocus,
-  } = useForm<iFormResgister>({ resolver: yupResolver(registerSchema) });
+  } = useForm<iFormResgister>({
+    mode: "onBlur",
+    resolver: yupResolver(registerSchema),
+  });
 
   const setAddress = async (event: React.FocusEvent<HTMLInputElement>) => {
     try {
@@ -57,14 +64,15 @@ export const FormRegister = () => {
     }
   };
 
+  const handleRegisterUser: SubmitHandler<IUserRegister> = (
+    data: IUserRegister
+  ) => {
+    registerUser({ ...data, is_seller: isSeller });
+  };
+
   return (
     <Container>
-      <Form
-        title="Cadastro"
-        onSubmit={handleSubmit((data) =>
-          console.log({ ...data, is_seller: isSeller })
-        )}
-      >
+      <Form title="Cadastro" onSubmit={handleSubmit(handleRegisterUser)}>
         <h3 className="font-body-2-500">Informações Pessoais</h3>
 
         <Input
@@ -78,6 +86,7 @@ export const FormRegister = () => {
           register={register("email")}
           placeholder="Ex: samuel@kenzie.com.br"
           error={errors.email && errors.email.message}
+          type="email"
         />
         <Input
           label="CPF"

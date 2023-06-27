@@ -1,4 +1,3 @@
-import { Form } from "..";
 import { Input } from "../../Input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -26,6 +25,7 @@ export const FormVehicles = () => {
   const [isSeller, setIsSeller] = useState(false);
   const { modal, setModal } = useContext(ModalButtonContext);
   const [images, setImages] = useState([] as string[]);
+  const [brands, setBrands] = useState([] as string[]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
@@ -40,6 +40,23 @@ export const FormVehicles = () => {
   useEffect(() => {
     console.log(errors);
   }, [errors]);
+
+  /* --------------------------------------------------------------------------------------- */
+
+  useEffect(() => {
+    // Fazer a chamada da API para obter as marcas dos veículos
+    fetch("https://kenzie-kars.herokuapp.com/cars")
+      .then((response) => response.json())
+      .then((data) => {
+        // Armazenar as marcas obtidas no estado
+        setBrands(data.brands);
+      })
+      .catch((error) => {
+        console.error("Erro ao obter as marcas dos veículos:", error);
+      });
+  }, []);
+
+  /* --------------------------------------------------------------------------------------- */
 
   const submitVehicles = (formData: iFormVehicles) => {
     console.log({ ...formData, galleryImages: images });
@@ -62,18 +79,57 @@ export const FormVehicles = () => {
       </div>
 
       <h3 className="font-body-2-50">Informações do Veículo</h3>
-      <Input
+
+      {/* -------------------------------------------------------------------------------------------------- */}
+
+      <label className="font-input-label" htmlFor="brand">
+        Marca
+      </label>
+      <select
+        className="font-input-placeholder"
+        id="brand"
+        {...register("brand")}
+        defaultValue=""
+      >
+        <option value="" disabled hidden>
+          Selecione a Marca
+        </option>
+        <option /* key={"index"} value={"brand"} */>Brand</option>
+        <option /* key={"index"} value={"brand"} */>das</option>
+        <option /* key={"index"} value={"brand"} */>veevev</option>
+      </select>
+
+      <label className="font-input-label" htmlFor="brand">
+        Modelo
+      </label>
+      <select
+        className="font-input-placeholder"
+        id="brand"
+        {...register("brand")}
+        defaultValue=""
+      >
+        <option value="" disabled hidden>
+          Selecione a Marca
+        </option>
+        <option /* key={"index"} value={"brand"} */>Brand</option>
+        <option /* key={"index"} value={"brand"} */>das</option>
+        <option /* key={"index"} value={"brand"} */>veevev</option>
+      </select>
+
+      {/* -------------------------------------------------------------------------------------------------- */}
+
+      {/* <Input
         label="Marca"
         register={register("brand")}
         placeholder="Selecione a Marca"
         error={errors.brand && errors.brand.message}
-      />
-      <Input
+      /> */}
+      {/*   <Input
         label="Modelo"
         register={register("model")}
         placeholder="Selecione o modelo"
         error={errors.model && errors.model.message}
-      />
+      /> */}
       <div className="formDiv">
         <Input
           label="Ano"

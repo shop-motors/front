@@ -1,57 +1,42 @@
-/* import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   IVehicles,
   IVehiclesProviderProps,
 } from "../interfaces/vehiclesInterface";
 import { apiKenzieCars } from "../services/api";
-import { api } from "../services/api";
-import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
+interface IVehiclesContext {
+  vehiclesList: IVehicles[];
+  createNew: (newData: IVehicles) => Promise<void>;
+}
 
-export const VehiclesContext = createContext({} as IVehicles);
+export const VehiclesContext = createContext({} as IVehiclesContext);
 
 export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
-  const [vehiclesList, setVehiclesList] = useState(Array());
-  const [vehicles, setVehicles] = useState<IVehicles>();
-  const navigate = useNavigate();
+  const [vehiclesList, setVehiclesList] = useState<IVehicles[]>([]);
 
-  const CreateAdvertiser = async (formVehicles: IVehicles | null) => {
+  console.log(vehiclesList);
+
+  const createNew = async (newData: IVehicles) => {
     const token = localStorage.getItem("@TOKEN");
     try {
-      const { data } = await api.post<IVehicles>("/advertiser", formVehicles, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setVehicles([...vehicles, data]);
+      const { data } = await apiKenzieCars.post<IVehicles>(
+        "/vehicles",
+        newData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setVehiclesList([...vehiclesList, data]);
     } catch (error) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    const vehiclesLoad = async () => {
-      try {
-        const { data } = await apiKenzieCars.get("/");
-        console.log(data);
-        var cars = [];
-        cars.push(data.chevrolet);
-        cars.push(data.fiat);
-        setVehiclesList(cars);
-
-
-        
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    vehiclesLoad();
-  }, []);
-
   return (
-    <VehiclesContext.Provider value={{ setVehicles, vehicles }}>
+    <VehiclesContext.Provider value={{ vehiclesList, createNew }}>
       {children}
     </VehiclesContext.Provider>
   );
-}; */
+};

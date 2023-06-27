@@ -8,6 +8,7 @@ export interface IVehicles {
   price: number;
   description: string;
   cover_img: string;
+  galleryImages: string;
   galery_id: number;
 }
 
