@@ -79,13 +79,11 @@ export const Card = () => {
 export const CardAdmin = () => {
   const [vehiclesList, setVehiclesList] = useState(Array());
 
-  console.log(vehiclesList);
-
   useEffect(() => {
     const vehiclesLoad = async () => {
       try {
         const { data } = await apiKenzieCars.get("/");
-        console.log(data);
+
         var cars = [...data.chevrolet, ...data.fiat, ...data.ford];
         setVehiclesList(cars);
       } catch (error) {
@@ -95,12 +93,10 @@ export const CardAdmin = () => {
     vehiclesLoad();
   }, []);
 
-  console.log(vehiclesList.length);
-
   return (
     <UlCardAdmin>
-      {vehiclesList.map((item: any) => (
-        <>
+      {vehiclesList.map((item: any, index: number) => (
+        <div key={item.name}>
           <LiCard>
             <img src={ImgCar} alt="imagem de carro" />
             <DivLi>
@@ -122,7 +118,7 @@ export const CardAdmin = () => {
               </DivPrice>
             </DivLi>
           </LiCard>
-        </>
+        </div>
       ))}
     </UlCardAdmin>
   );

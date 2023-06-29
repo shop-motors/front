@@ -6,6 +6,8 @@ import { vehiclesSchema } from "../FormCreateVehicles/createVehicles.schema";
 import { useContext, useEffect, useState } from "react";
 import { StyledVehiclesForm } from "./style";
 import { ModalButtonContext } from "../../../pages/contexts/modalContext";
+import { VehiclesContext } from "../../../contexts/vehiclesContext";
+import { IBrand } from "../../../interfaces/vehiclesInterface";
 
 interface iFormVehicles {
   brand: string;
@@ -22,10 +24,10 @@ interface iFormVehicles {
 }
 
 export const FormVehicles = () => {
-  const [isSeller, setIsSeller] = useState(false);
   const { modal, setModal } = useContext(ModalButtonContext);
   const [images, setImages] = useState([] as string[]);
-  const [brands, setBrands] = useState([] as string[]);
+  const { vehiclesList, createNew, setVehiclesList } =
+    useContext(VehiclesContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
@@ -35,28 +37,14 @@ export const FormVehicles = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<iFormVehicles>({ resolver: yupResolver(vehiclesSchema) });
+
+  const selectedBrand = watch("brand");
 
   useEffect(() => {
     console.log(errors);
   }, [errors]);
-
-  /* --------------------------------------------------------------------------------------- */
-
-  useEffect(() => {
-    // Fazer a chamada da API para obter as marcas dos veículos
-    fetch("https://kenzie-kars.herokuapp.com/cars")
-      .then((response) => response.json())
-      .then((data) => {
-        // Armazenar as marcas obtidas no estado
-        setBrands(data.brands);
-      })
-      .catch((error) => {
-        console.error("Erro ao obter as marcas dos veículos:", error);
-      });
-  }, []);
-
-  /* --------------------------------------------------------------------------------------- */
 
   const submitVehicles = (formData: iFormVehicles) => {
     console.log({ ...formData, galleryImages: images });
@@ -80,56 +68,37 @@ export const FormVehicles = () => {
 
       <h3 className="font-body-2-50">Informações do Veículo</h3>
 
-      {/* -------------------------------------------------------------------------------------------------- */}
+      <div className="select">
+        <label className="font-input-label" htmlFor="brand">
+          Brand
+        </label>
+        <select
+          className="font-input-placeholder"
+          id="brand"
+          {...register("brand")}
+          defaultValue=""
+        >
+          {Object.keys(vehiclesList as IBrand)?.map((brand) => (
+            <option value={brand}>{brand}</option>
+          ))}
+        </select>
 
-      <label className="font-input-label" htmlFor="brand">
-        Marca
-      </label>
-      <select
-        className="font-input-placeholder"
-        id="brand"
-        {...register("brand")}
-        defaultValue=""
-      >
-        <option value="" disabled hidden>
-          Selecione a Marca
-        </option>
-        <option /* key={"index"} value={"brand"} */>Brand</option>
-        <option /* key={"index"} value={"brand"} */>das</option>
-        <option /* key={"index"} value={"brand"} */>veevev</option>
-      </select>
+        <label className="font-input-label" htmlFor="brand">
+          Modelo
+        </label>
+        <select
+          className="font-input-placeholder"
+          id="model"
+          {...register("model")}
+          defaultValue=""
+        >
+          {vehiclesList &&
+            vehiclesList[selectedBrand]?.map((model) => (
+              <option value={model.name}>{model.name}</option>
+            ))}
+        </select>
+      </div>
 
-      <label className="font-input-label" htmlFor="brand">
-        Modelo
-      </label>
-      <select
-        className="font-input-placeholder"
-        id="brand"
-        {...register("brand")}
-        defaultValue=""
-      >
-        <option value="" disabled hidden>
-          Selecione a Marca
-        </option>
-        <option /* key={"index"} value={"brand"} */>Brand</option>
-        <option /* key={"index"} value={"brand"} */>das</option>
-        <option /* key={"index"} value={"brand"} */>veevev</option>
-      </select>
-
-      {/* -------------------------------------------------------------------------------------------------- */}
-
-      {/* <Input
-        label="Marca"
-        register={register("brand")}
-        placeholder="Selecione a Marca"
-        error={errors.brand && errors.brand.message}
-      /> */}
-      {/*   <Input
-        label="Modelo"
-        register={register("model")}
-        placeholder="Selecione o modelo"
-        error={errors.model && errors.model.message}
-      /> */}
       <div className="formDiv">
         <Input
           label="Ano"
@@ -208,10 +177,7 @@ export const FormVehicles = () => {
           >
             Cancelar
           </button>
-          {/* 
-          <button color="brand3" content="Criar anúncio" type="submit">
-            Enviar
-          </button> */}
+
           <Button
             type="submit"
             color="brand3"

@@ -35,9 +35,7 @@ export const FormRecoverPasswordEmail = () => {
     console.log(errors);
   }, [errors]);
 
-  const submitRecover = (formData: IRecoverEmail) => {
-    console.log(formData);
-  };
+  const submitRecover = (formData: IRecoverEmail) => {};
 
   return (
     <StyledRecoverPasswordEmailForm
@@ -93,9 +91,7 @@ export const FormRecoverPassword = () => {
     console.log(errors);
   }, [errors]);
 
-  const submitRecover = (formData: IRecoverPassword) => {
-    console.log(formData);
-  };
+  const submitRecover = (formData: IRecoverPassword) => {};
 
   return (
     <StyledRecoverPasswordForm

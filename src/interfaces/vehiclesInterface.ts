@@ -1,4 +1,5 @@
 export interface IVehicles {
+  item: any;
   brand: string;
   model: string;
   year: string;
@@ -10,6 +11,18 @@ export interface IVehicles {
   cover_img: string;
   galleryImages: string;
   galery_id: number;
+}
+
+export interface IBrand {
+  [key: string]: [ImodelName];
+}
+
+interface ImodelName {
+  name: string;
+}
+
+interface IEvent {
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 export interface IVehiclesProviderProps {
