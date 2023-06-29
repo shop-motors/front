@@ -19,9 +19,13 @@ export const CarProviders = ({ children }: ICarPriverProps) => {
 
   const GetCarsHome = async () => {
     try {
-      const response = await api.get("vehicles");
+      const response = await api.get("vehicles", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setCars(response.data);
-      console.log(response.data);
+      /* console.log(response.data); */
     } catch (error) {
       setCars([]);
     }
@@ -40,7 +44,7 @@ export const CarProviders = ({ children }: ICarPriverProps) => {
       return data;
     } catch (error) {
       const message = error as AxiosError<any>;
-      console.log(message);
+      /* console.log(message); */
       if (message.response?.data.car_name[0]) {
         message.response?.data.car_name[0] ===
           "user with this Advertiser already exists." &&

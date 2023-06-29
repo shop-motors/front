@@ -5,8 +5,7 @@ import { ToastConfig } from "./components/ToastConfig";
 import { ModalButtonProvider } from "./pages/contexts/modalContext/index";
 import { UserProviders } from "./contexts/userContexts";
 import { CarProviders } from "./contexts/carsContext";
-
-
+import { VehiclesProvider } from "./contexts/vehiclesContext";
 
 export const App = () => {
   return (
@@ -15,7 +14,9 @@ export const App = () => {
         <ToastConfig />
         <UserProviders>
           <CarProviders>
-            <PageRoutes />
+            <VehiclesProvider>
+              <PageRoutes />
+            </VehiclesProvider>
           </CarProviders>
         </UserProviders>
       </BrowserRouter>

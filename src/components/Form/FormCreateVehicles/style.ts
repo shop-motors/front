@@ -6,7 +6,23 @@ export const StyledVehiclesForm = styled.form`
   gap: 20px;
   flex-direction: column;
 
+  .select {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
   #brand {
+    border-radius: 4px;
+    color: var(--color-gray-2);
+    border: red;
+    padding: 12px;
+    outline: transparent;
+    border: 2px;
+    border-color: var(--color-gray-1);
+  }
+
+  #model {
     border-radius: 4px;
     color: var(--color-gray-2);
     border: red;
