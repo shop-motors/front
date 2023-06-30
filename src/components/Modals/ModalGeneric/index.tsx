@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Container } from "./styles";
 import { Button } from "../../Buttons";
 import { IoClose } from "react-icons/io5";

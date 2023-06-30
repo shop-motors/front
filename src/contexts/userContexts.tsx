@@ -45,9 +45,7 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
 
   const registerUser = async (data: IUserRegister) => {
     try {
-      const response = await api.post("login", data)
-
-      console.log(response)
+      await api.post("users", data)
 
       navigate("/login");
 
@@ -61,22 +59,30 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
 
   const updateUser = async (data: IUserUpdate) => {
     try {
-      const response = await api.patch("login", data)
+      await api.patch("users", data)
 
-      console.log(response)
-
-      navigate("/login");
-
-      toast.success("Usuário criado!");
+      toast.success("Atualização concluída!");
     } catch (error) {
       console.log(error);
 
-      toast.error("Algo deu errado");
+      toast.error("Erro na atualização");
+    }
+  };
+
+  const deleteUser = async () => {
+    try {
+      await api.patch("users" + user?.user.id)
+
+      toast.success("Usuário deletado");
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Erro ao deletar usuários");
     }
   };
 
   return (
-    <UserContexts.Provider value={{ LoginUser, user, registerUser, updateUser }}>
+    <UserContexts.Provider value={{ LoginUser, user, registerUser, updateUser, deleteUser}}>
       {children}
     </UserContexts.Provider>
   );
