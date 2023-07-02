@@ -1,75 +1,108 @@
-import { filter } from "@chakra-ui/react";
-import { DivMain, LikmPrice, UlFilters } from "./style";
+import { DivInputs, DivMain, LikmPrice, UlFilters } from "./style";
+import { useContext } from "react";
+import { CarsContext } from "../../contexts/carsContext";
+import { BtnCloseFilter } from "../Buttons/btnsCloseFilter";
 
 export const Filters = () => {
-  const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
-    console.log(e.currentTarget); // This will log the content of the clicked element
-  };
-  
+  const { cars, setCars, setClose } = useContext(CarsContext);
+
   return (
     <DivMain>
-      <UlFilters >
-        <li onClick={(e) => handleClick(e)}>
-          <h3>Marca</h3>
-          <span>Genaral motorsport</span>
-          <span>Fiat</span>
-          <span>Ford</span>
-          <span>Honda</span>
-          <span>Porshe</span>
-          <span>Volswagen</span>
-        </li>
+      <UlFilters onClick={()=> setClose(true)}>
+        <h3>Marcas</h3>
+        {Array.from(new Set(cars.map((car) => car.brand))).map(
+          (marca, index) => (
+            <li
+              key={index}
+              onClick={() => setCars(cars.filter((car) => car.brand === marca))}
+            >
+              <span>{marca}</span>
+            </li>
+          )
+        )}
 
-        <li>
-          <h3>Modelo</h3>
-          <span>Civic</span>
-          <span>Corolla</span>
-          <span>Cruze</span>
-          <span>Fit</span>
-          <span>Gol</span>
-          <span>Ka</span>
-          <span>Onix</span>
-          <span>Porshe 718</span>
-        </li>
-        <li>
-          <h3>Cor</h3>
-          <span>Azul</span>
-          <span>Branca</span>
-          <span>Cinza</span>
-          <span>Prata</span>
-          <span>Preta</span>
-          <span>Verde</span>
-        </li>
-        <li>
-          <h3>Ano</h3>
-          <span>2023</span>
-          <span>2022</span>
-          <span>2021</span>
-          <span>2018</span>
-          <span>2015</span>
-          <span>2011</span>
-          <span>2010</span>
-        </li>
-        <li>
-          <h3>Combustível</h3>
-          <span>Diesel</span>
-          <span>Etanol</span>
-          <span>Gasolina</span>
-          <span>Flex</span>
-        </li>
-        <LikmPrice>
-          <h3>Km</h3>
+        <h3>Modelo</h3>
+        {Array.from(new Set(cars.map((car) => car.model))).map(
+          (marca, index) => (
+            <li
+              key={index}
+              onClick={() => setCars(cars.filter((car) => car.model === marca))}
+            >
+              <span>{marca}</span>
+            </li>
+          )
+        )}
+
+        <h3>Cor</h3>
+        {Array.from(new Set(cars.map((car) => car.color))).map(
+          (marca, index) => (
+            <li
+              key={index}
+              onClick={() => setCars(cars.filter((car) => car.color === marca))}
+            >
+              <span>{marca}</span>
+            </li>
+          )
+        )}
+
+        <h3>Ano</h3>
+        {Array.from(new Set(cars.map((car) => car.year))).map(
+          (marca, index) => (
+            <li
+              key={index}
+              onClick={() => setCars(cars.filter((car) => car.year === marca))}
+            >
+              <span>{marca}</span>
+            </li>
+          )
+        )}
+
+        <h3>Combustível</h3>
+        {Array.from(new Set(cars.map((car) => car.fuel))).map(
+          (marca, index) => (
+            <li
+              key={index}
+              onClick={() => setCars(cars.filter((car) => car.fuel === marca))}
+            >
+              <span>{marca}</span>
+            </li>
+          )
+        )}
+        <h3>Km</h3>
+        <DivInputs>
           <div>
-            <input type="number" placeholder="Mínimo" />
-            <input type="number" placeholder="Máximo" />
+            {Array.from(new Set(cars.map((car) => car.km))).map(
+              (marca, index) => (
+                <li
+                  key={index}
+                  onChange={() =>
+                    setCars(cars.filter((car) => car.km === marca))
+                  }
+                >
+                  <input type="text" placeholder="Miníma" />
+                </li>
+              )
+            )}
           </div>
-        </LikmPrice>
-        <LikmPrice>
-          <h3>Preço</h3>
+        </DivInputs>
+        <h3>Preço</h3>
+        <DivInputs>
           <div>
-            <input type="number" placeholder="Mínimo" />
-            <input type="number" placeholder="Máximo" />
+            {Array.from(new Set(cars.map((car) => car.price))).map(
+              (marca, index) => (
+                <LikmPrice
+                  key={index}
+                  onChange={() =>
+                    setCars(cars.filter((car) => car.price === marca))
+                  }
+                >
+                  <input type="text" placeholder="Miníma" />
+                </LikmPrice>
+              )
+            )}
           </div>
-        </LikmPrice>
+        </DivInputs>
+        <BtnCloseFilter />
       </UlFilters>
     </DivMain>
   );

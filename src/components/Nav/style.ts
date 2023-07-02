@@ -122,4 +122,11 @@ export const DivButtonsProfile = styled.div`
   }
 `;
 
+export const DisplayNone = styled.div`
+  display: none;
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
 export default DivButtonsProfile;
