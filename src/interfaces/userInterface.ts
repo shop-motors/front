@@ -9,6 +9,7 @@ export interface IProviderValue {
   user: IuserResponse | null;
   registerUser: (data: IUserRegister) => Promise<void>;
   updateUser: (data: IUserUpdate) => Promise<void>;
+  deleteUser: () => Promise<void>;
 }
 
 export interface IuserResp {
@@ -29,12 +30,14 @@ export interface IUserRegister {
   phone: string;
   birth_date: string;
   description: string;
-  zip_code: string;
-  state: string;
-  city: string;
-  street: string;
-  number: string;
-  complement: string;
+  address: {
+    zip_code: string;
+    state: string;
+    city: string;
+    street: string;
+    number: string;
+    complement: string;
+  };
   password: string;
   confirmPassword: string;
   is_seller: boolean;

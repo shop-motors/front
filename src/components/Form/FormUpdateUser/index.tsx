@@ -4,12 +4,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Buttons";
 import { updateSchema } from "./updateSchema";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { InputGroup } from "../../Input/style";
 import { Container } from "./style";
 import { UserContexts } from "../../../contexts/userContexts";
 import { IUserUpdate } from "../../../interfaces/userInterface";
 import { ModalGenericContext } from "../../Modals/ModalGeneric/context";
+import { ModalDeleteUser } from "../../Modals/MotalDeleteUser";
 
 interface iFormUpdate {
   name: string;
@@ -22,19 +23,25 @@ interface iFormUpdate {
 
 export const FormUpdateUser = () => {
   const { setIsOpen } = useContext(ModalGenericContext);
-  const { updateUser } = useContext(UserContexts);
+  const { updateUser, deleteUser } = useContext(UserContexts);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
   } = useForm<iFormUpdate>({
-    mode: "onBlur",
     resolver: yupResolver(updateSchema),
   });
 
   const handleUpdateUser: SubmitHandler<IUserUpdate> = (data: IUserUpdate) => {
     updateUser(data);
+  };
+
+  const handleDeleteUser = () => {
+    deleteUser()
+    setIsOpenModal(false);
+    setIsOpen(false)
   };
 
   return (
@@ -92,17 +99,26 @@ export const FormUpdateUser = () => {
             type="button"
             color="alert1"
             size="large"
-            content="Excluir Usuário"
+            content="Excluir usuário"
+            onClick={() => setIsOpenModal(true)}
           />
           <Button
             type="submit"
-            color={!isDirty || !isValid ? "brand3" : "brand1"}
+            // color={!isDirty || !isValid ? "brand3" : "brand1"}
+            color="brand1"
             size="large"
             content="Finalizar Cadastro"
             // disabled={!isDirty || !isValid}
           />
         </InputGroup>
       </Form>
+      {isOpenModal && (
+        <ModalDeleteUser
+          closeModal={() => setIsOpenModal(false)}
+          deleteUser={handleDeleteUser}
+          description="Realmente deseja excluir sua conta?"
+        />
+      )}
     </Container>
   );
 };

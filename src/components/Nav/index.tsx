@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { BtnsNav } from "../Buttons/buttonLogCad";
 import { useContext } from "react";
 import { CarsContext } from "../../contexts/carsContext";
+import { ModalUpdateUser } from "../Modals/ModalUpdateUser";
 
 export const NavBar = () => {
   const { openBtns } = useContext(CarsContext);
@@ -68,6 +69,7 @@ export const NavBarProfile = () => {
             <img src={ImgProfile} alt="" />
             <p>Leia Organa</p>
           </div>
+          <ModalUpdateUser />
         </DivButtonsProfile>
       </div>
     </DivContainerProfile>
