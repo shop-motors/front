@@ -18,12 +18,14 @@ interface iFormResgister {
   phone: string;
   birth_date: string;
   description: string;
-  zip_code: string;
-  state: string;
-  city: string;
-  street: string;
-  number: string;
-  complement: string;
+  address: {
+    zip_code: string;
+    state: string;
+    city: string;
+    street: string;
+    number: string;
+    complement: string;
+  };
   password: string;
   confirmPassword: string;
   is_seller: boolean;
@@ -53,12 +55,12 @@ export const FormRegister = () => {
 
       const { cep, logradouro, localidade, uf } = response.data;
 
-      setValue("zip_code", cep);
-      setValue("state", uf);
-      setValue("street", logradouro);
-      setValue("city", localidade);
+      setValue("address.zip_code", cep);
+      setValue("address.state", uf);
+      setValue("address.street", logradouro);
+      setValue("address.city", localidade);
 
-      setFocus("number");
+      setFocus("address.number");
     } catch (error) {
       console.log(error);
     }
@@ -117,46 +119,48 @@ export const FormRegister = () => {
 
         <Input
           label="CEP"
-          register={register("zip_code")}
+          register={register("address.zip_code")}
           placeholder="00000.000"
           onBlur={setAddress}
-          error={errors.zip_code && errors.zip_code.message}
+          error={errors.address?.zip_code && errors.address.zip_code.message}
         />
 
         <InputGroup>
           <Input
             label="Estado"
-            register={register("state")}
+            register={register("address.state")}
             placeholder="Digitar Estado"
-            error={errors.state && errors.state.message}
+            error={errors.address?.state && errors.address.state.message}
           />
           <Input
             label="Cidade"
-            register={register("city")}
+            register={register("address.city")}
             placeholder="Digitar cidade"
-            error={errors.city && errors.city.message}
+            error={errors.address?.city && errors.address.city.message}
           />
         </InputGroup>
 
         <Input
           label="Rua"
-          register={register("street")}
+          register={register("address.street")}
           placeholder="Digitar rua"
-          error={errors.street && errors.street.message}
+          error={errors.address?.street && errors.address.street.message}
         />
 
         <InputGroup>
           <Input
             label="Numero"
-            register={register("number")}
+            register={register("address.number")}
             placeholder="Digitar número"
-            error={errors.number && errors.number.message}
+            error={errors.address?.number && errors.address.number.message}
           />
           <Input
             label="Complemento"
-            register={register("complement")}
+            register={register("address.complement")}
             placeholder="Ex: apart 307"
-            error={errors.complement && errors.complement.message}
+            error={
+              errors.address?.complement && errors.address.complement.message
+            }
           />
         </InputGroup>
 
@@ -205,7 +209,6 @@ export const FormRegister = () => {
           color="brand1"
           size="large"
           content="Finalizar Cadastro"
-          disabled={!isDirty || !isValid}
         />
       </Form>
     </Container>
