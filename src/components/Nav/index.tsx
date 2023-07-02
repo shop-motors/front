@@ -11,6 +11,7 @@ import { GrMenu } from "react-icons/gr";
 import ImgProfile from "../../images/leia.jpeg";
 import { Button } from "../Buttons";
 import { Link } from "react-router-dom";
+import { ModalUpdateUser } from "../Modals/ModalUpdateUser";
 
 export const NavBar = () => {
   return (
@@ -55,6 +56,7 @@ export const NavBarProfile = () => {
             <img src={ImgProfile} alt="" />
             <p>Leia Organa</p>
           </div>
+          <ModalUpdateUser />
         </DivButtonsProfile>
       </div>
     </DivContainerProfile>

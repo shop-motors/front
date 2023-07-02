@@ -87,6 +87,8 @@ export const ButtonMenu = styled.div`
 `;
 
 export const DivButtonsProfile = styled.div`
+  position: relative;
+
   .imgProfile {
     display: flex;
     align-items: center;
@@ -101,6 +103,22 @@ export const DivButtonsProfile = styled.div`
     width: 43px;
     height: 43px;
     border-radius: 50px;
+  }
+
+  > div:last-child {
+    display: none;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--color-gray-9);
+    border-radius: 0.25rem;
+    position: absolute;
+    left: 0;
+  }
+
+  :hover {
+    > div:last-child {
+      display: block;
+    }
   }
 `;
 

@@ -1,7 +1,7 @@
 import { FormUpdateUser } from "../../Form/FormUpdateUser";
 import { ModalGeneric } from "../ModalGeneric";
 
-export const ModalEditUser = () => {
+export const ModalUpdateUser = () => {
   return (
     <ModalGeneric
       title="Editar perfil"
