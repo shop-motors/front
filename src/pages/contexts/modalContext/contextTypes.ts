@@ -31,7 +31,7 @@ export interface iButtonProps {
       | "border_ligth_gray"
       | "border_blue"
       | "disable";
-    onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+    onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined | () => void;
     type: "button" | "submit" | "reset" | undefined,
     disabled?: boolean
   }
