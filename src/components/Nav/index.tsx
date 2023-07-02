@@ -1,5 +1,6 @@
 import {
   ButtonMenu,
+  DisplayNone,
   DivButtons,
   DivButtonsProfile,
   DivContainer,
@@ -11,8 +12,12 @@ import { GrMenu } from "react-icons/gr";
 import ImgProfile from "../../images/leia.jpeg";
 import { Button } from "../Buttons";
 import { Link } from "react-router-dom";
+import { BtnsNav } from "../Buttons/buttonLogCad";
+import { useContext } from "react";
+import { CarsContext } from "../../contexts/carsContext";
 
 export const NavBar = () => {
+  const { openBtns } = useContext(CarsContext);
   return (
     <DivContainer>
       <Link to={"/"}>
@@ -23,7 +28,7 @@ export const NavBar = () => {
 
       <ButtonMenu>
         <button>
-          <GrMenu />
+          <GrMenu onClick={() => openBtns()} />
         </button>
       </ButtonMenu>
       <DivButtons>
@@ -31,9 +36,17 @@ export const NavBar = () => {
           <a href="">fazer login</a>
         </Link>
         <Link to={"/register"}>
-          <Button size="default" color="gray6" content={"Cadastrar"} type={undefined} />
+          <Button
+            size="default"
+            color="gray6"
+            content={"Cadastrar"}
+            type={undefined}
+          />
         </Link>
       </DivButtons>
+    
+        <BtnsNav />
+    
     </DivContainer>
   );
 };

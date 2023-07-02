@@ -1,8 +1,7 @@
 import ImgCar from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1 (1).png";
-import { Button } from "../Buttons";
 import Modal from "../Modals";
 import { Filters } from "../filters";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   ContainerDiv,
   DivBtnFilter,
@@ -16,9 +15,16 @@ import {
   UlCardAdmin,
 } from "./style";
 import { CarsContext } from "../../contexts/carsContext";
+import { ButtonPrevious } from "../Buttons/buttonPrevious";
 
 export const Card = () => {
-  const { cars } = useContext(CarsContext);
+  const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
+  const formatPrice = (price: any) => {
+    return price.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  };
 
   return (
     <DivMain>
@@ -28,7 +34,7 @@ export const Card = () => {
             <LiCard key={car.id}>
               <img src={car.cover_img} alt="imagem de carro" />
               <DivLi>
-                <h3>{car.brand}</h3>
+                <h3>{car.model}</h3>
                 <p>{car.description}</p>
                 <DivUsuario>
                   <span>R</span>
@@ -36,10 +42,10 @@ export const Card = () => {
                 </DivUsuario>
                 <DivPrice>
                   <div>
-                    <p>{`${car.km} km`}</p>
+                    <p>{`${car.km}km`}</p>
                     <p>{car.year}</p>
                   </div>
-                  <span>{`$${car.price}`}</span>
+                  <span>{formatPrice(parseFloat(`${car.price}`))}</span>
                 </DivPrice>
               </DivLi>
             </LiCard>
@@ -63,8 +69,11 @@ export const Card = () => {
       </ContainerDiv>
 
       <DivPagination>
-        <span>1 de 2</span>
-        <button>Seguinte </button>
+        <span>
+          {page} de {page}
+        </span>
+        <ButtonPrevious />
+        <button onClick={() => paginationCount()}>Seguinte </button>
       </DivPagination>
     </DivMain>
   );

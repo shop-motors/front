@@ -5,26 +5,29 @@ import { createContext, useState, useEffect, useContext } from "react";
 import {
   CarProviderValue,
   ICarPriverProps,
-  Imarca,
   Iproducts,
 } from "../interfaces/carInterface";
 import { UserContexts } from "./userContexts";
-import { marca } from "../data/data";
-/* import * as i from "../interfaces/UserInterfaces"; */
 
 export const CarsContext = createContext({} as CarProviderValue);
 export const CarProviders = ({ children }: ICarPriverProps) => {
   const { user } = useContext(UserContexts);
   const token = localStorage.getItem("@TOKEN");
   const [cars, setCars] = useState<Iproducts[]>([]);
-  const [filter, setFilter] = useState<string>("todos");
-  const [marcas, setmarcas] = useState<Imarca[]>(marca);
-
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(0);
+  const [pageAtual, setAtual] = useState(0);
+  const [anterior, setAnterior] = useState(false);
+  const [nav, setNav] = useState(false);
+  const [close, setClose] = useState(false);
+  const LIMIT = 12;
   const GetCarsHome = async () => {
     try {
-      const response = await api.get("vehicles");
-      setCars(response.data);
-      console.log(response.data);
+      const response = await api.get(`vehicles?page=${page}&limit=${LIMIT}`);
+      setCars(response.data.data);
+      setAtual(response.data.data.length);
+      setTotal(response.data.total);
+      setClose(false)
     } catch (error) {
       setCars([]);
     }
@@ -32,18 +35,39 @@ export const CarProviders = ({ children }: ICarPriverProps) => {
 
   useEffect(() => {
     GetCarsHome();
-  }, []);
+  }, [page, LIMIT]);
 
-  const filterMarcas = () => {
-    const marcasFilter = cars.filter((car) =>
-      filter === "todos" ? true : car.model === filter
-    );
-
-    setCars(marcasFilter);
+  const paginationCount = () => {
+    const totalPages = Math.ceil(total / LIMIT);
+    if (pageAtual === 0 || page >= totalPages - 1) {
+      return;
+    }
+    setAnterior(true);
+    setPage(page + 1);
+    GetCarsHome();
   };
 
-  filterMarcas();
+  const previousCount = () => {
+    if (page > 0) {
+      setPage(page - 1);
+      GetCarsHome();
+    }
+    if (page === 1) {
+      setAnterior(false);
+    }
+  };
 
+  const openBtns = () => {
+    setNav(true);
+    if (nav) {
+      setNav(false);
+    }
+  };
+
+  const closeFilter = () => {
+    GetCarsHome();
+    setClose(false);
+  };
   const createAdvertiser = async (body: any) => {
     try {
       const { data, status } = await api.post("register/", body);
@@ -68,7 +92,24 @@ export const CarProviders = ({ children }: ICarPriverProps) => {
   };
 
   return (
-    <CarsContext.Provider value={{ cars, setFilter, marcas }}>
+    <CarsContext.Provider
+      value={{
+        cars,
+        setCars,
+        LIMIT,
+        total,
+        paginationCount,
+        page,
+        pageAtual,
+        previousCount,
+        anterior,
+        nav,
+        openBtns,
+        close,
+        setClose,
+        closeFilter,
+      }}
+    >
       {children}
     </CarsContext.Provider>
   );
