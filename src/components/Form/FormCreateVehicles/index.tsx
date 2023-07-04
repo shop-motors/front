@@ -6,6 +6,7 @@ import { vehiclesSchema } from "../FormCreateVehicles/createVehicles.schema";
 import { useContext, useEffect, useState } from "react";
 import { StyledVehiclesForm } from "./style";
 import { ModalButtonContext } from "../../../pages/contexts/modalContext";
+
 import {
   VehiclesContext,
   iFormVehicles,
@@ -13,9 +14,28 @@ import {
 import { IBrand, IVehicles } from "../../../interfaces/vehiclesInterface";
 import { useNavigate } from "react-router-dom";
 
+import { VehiclesContext } from "../../../contexts/vehiclesContext";
+import { IBrand } from "../../../interfaces/vehiclesInterface";
+
+interface iFormVehicles {
+  brand: string;
+  model: string;
+  year: string;
+  fuel: string;
+  km: string;
+  color: string;
+  fipe_price: string;
+  price: string;
+  description: string;
+  cover_img: string;
+  galleryImages: string;
+}
+
+
 export const FormVehicles = () => {
   const { modal, setModal } = useContext(ModalButtonContext);
   const [images, setImages] = useState([] as string[]);
+
   const { vehiclesList, createNew, setVehiclesList, getNewDataForm } =
     useContext(VehiclesContext);
   const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
@@ -26,6 +46,10 @@ export const FormVehicles = () => {
     } catch (error) {}
   }, []);
 
+  const { vehiclesList, createNew, setVehiclesList } =
+    useContext(VehiclesContext);
+
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
   };
@@ -35,6 +59,7 @@ export const FormVehicles = () => {
     handleSubmit,
     formState: { errors },
     watch,
+
   } = useForm<iFormVehicles>(/* { resolver: yupResolver(vehiclesSchema) } */);
 
   const selectedBrand = watch("brand");
@@ -51,6 +76,18 @@ export const FormVehicles = () => {
     console.log("chegou aqui no submite 2");
     getNewDataForm();
     setModal(false);
+
+  } = useForm<iFormVehicles>({ resolver: yupResolver(vehiclesSchema) });
+
+  const selectedBrand = watch("brand");
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
+  const submitVehicles = (formData: iFormVehicles) => {
+    console.log({ ...formData, galleryImages: images });
+
   };
 
   return (
@@ -81,10 +118,15 @@ export const FormVehicles = () => {
           {...register("brand")}
           defaultValue=""
         >
+
           {Object.keys(vehiclesList as IBrand)?.map((brand, index) => (
             <option key={index} value={brand}>
               {brand}
             </option>
+
+          {Object.keys(vehiclesList as IBrand)?.map((brand) => (
+            <option value={brand}>{brand}</option>
+
           ))}
         </select>
 
@@ -98,10 +140,15 @@ export const FormVehicles = () => {
           defaultValue=""
         >
           {vehiclesList &&
+
             vehiclesList[selectedBrand]?.map((model, i) => (
               <option key={i} value={model.name}>
                 {model.name}
               </option>
+
+            vehiclesList[selectedBrand]?.map((model) => (
+              <option value={model.name}>{model.name}</option>
+
             ))}
         </select>
       </div>

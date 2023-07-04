@@ -26,25 +26,33 @@ export interface iFormVehicles {
   galleryImages: string[];
 }
 
+
 interface IVehiclesContext {
   vehiclesList: IBrand | undefined;
   setVehiclesList: Dispatch<SetStateAction<IBrand | undefined>>;
+
   createNew: (newData: iFormVehicles) => Promise<void>;
   dataFormVehicles: iFormVehicles[];
   setDataFormVehicles: Dispatch<SetStateAction<iFormVehicles[]>>;
   showCard: iFormVehicles | null;
   setShowCard: Dispatch<SetStateAction<iFormVehicles | null>>;
   getNewDataForm: () => Promise<void>;
+
+  createNew: (newData: IVehicles) => Promise<void>;
+
 }
 
 export const VehiclesContext = createContext({} as IVehiclesContext);
 
 export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const [vehiclesList, setVehiclesList] = useState<IBrand | undefined>();
+
   const [dataFormVehicles, setDataFormVehicles] = useState(
     [] as iFormVehicles[]
   );
   const [showCard, setShowCard] = useState<iFormVehicles | null>(null);
+
+
 
   useEffect(() => {
     const vehiclesLoad = async () => {
@@ -52,6 +60,9 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         const response = await apiKenzieCars.get<any>("cars");
         const data = response.data;
         setVehiclesList(data);
+
+        /* console.log(data); */
+
       } catch (error) {
         console.log(error);
       }
@@ -62,14 +73,21 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const getNewDataForm = async () => {
     const token = localStorage.getItem("@TOKEN");
     try {
+
       const response = await api.get("vehicles", {
+
+      const { data } = await api.post<IVehicles>("vehicles", newData, {
+
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
+
       setDataFormVehicles(response.data.data);
       console.log(response.data.data);
+
+
     } catch (error) {
       console.log(error);
     }
@@ -90,6 +108,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
   return (
     <VehiclesContext.Provider
+
       value={{
         vehiclesList,
         setDataFormVehicles,
@@ -100,6 +119,9 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         setShowCard,
         getNewDataForm,
       }}
+
+      value={{ vehiclesList, setVehiclesList, createNew }}
+
     >
       {children}
     </VehiclesContext.Provider>

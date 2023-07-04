@@ -4,6 +4,7 @@ import imgCar from "../../images/car.png";
 import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
 import { Footer } from "../../components/Footer";
+import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
 
 export const ProductsDetail = () => {
   return (
@@ -31,6 +32,7 @@ export const ProductsDetail = () => {
               <div className="buttonBuy">
                 <Button
                   /* onClick={() => userSell()} */
+                  type="button"
                   size="default"
                   color="brand1"
                   content={"Comprar"}
@@ -115,6 +117,7 @@ export const ProductsDetail = () => {
               </p>
               <Button
                 /* onClick={() => userSell()} */
+                type="button"
                 size="default"
                 color="gray0"
                 content={"Comprar"}
@@ -123,6 +126,7 @@ export const ProductsDetail = () => {
           </div>
         </div>
       </div>
+      <FormCreateCommentary />
       <Footer />
     </StyledProducts>
   );

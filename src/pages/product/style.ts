@@ -7,6 +7,7 @@ export const StyledProducts = styled.main`
   align-items: center;
   height: auto;
   background-color: var(--color-gray-5);
+  padding: 0 .75rem;
 
   .content {
     background-color: red;
