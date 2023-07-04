@@ -6,90 +6,45 @@ import { vehiclesSchema } from "../FormCreateVehicles/createVehicles.schema";
 import { useContext, useEffect, useState } from "react";
 import { StyledVehiclesForm } from "./style";
 import { ModalButtonContext } from "../../../pages/contexts/modalContext";
-
 import {
   VehiclesContext,
   iFormVehicles,
 } from "../../../contexts/vehiclesContext";
 import { IBrand, IVehicles } from "../../../interfaces/vehiclesInterface";
 import { useNavigate } from "react-router-dom";
-
-import { VehiclesContext } from "../../../contexts/vehiclesContext";
-import { IBrand } from "../../../interfaces/vehiclesInterface";
-
-interface iFormVehicles {
-  brand: string;
-  model: string;
-  year: string;
-  fuel: string;
-  km: string;
-  color: string;
-  fipe_price: string;
-  price: string;
-  description: string;
-  cover_img: string;
-  galleryImages: string;
-}
-
-
 export const FormVehicles = () => {
   const { modal, setModal } = useContext(ModalButtonContext);
   const [images, setImages] = useState([] as string[]);
-
   const { vehiclesList, createNew, setVehiclesList, getNewDataForm } =
     useContext(VehiclesContext);
   const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
   const navigate = useNavigate();
-
   useEffect(() => {
     try {
     } catch (error) {}
   }, []);
-
-  const { vehiclesList, createNew, setVehiclesList } =
-    useContext(VehiclesContext);
-
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
   };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-
   } = useForm<iFormVehicles>(/* { resolver: yupResolver(vehiclesSchema) } */);
-
   const selectedBrand = watch("brand");
-
   /*   const submitVehicles2 = (formData: iFormVehicles) => {
       console.log("chegou aqui no submite 2");
       setDataFormVehicles(formData);
       setModal(false);
       navigate("/advertiser");
       console.log(modal); */
-
   const submitedVehicles = (formData: iFormVehicles) => {
     createNew(formData);
     console.log("chegou aqui no submite 2");
     getNewDataForm();
     setModal(false);
-
-  } = useForm<iFormVehicles>({ resolver: yupResolver(vehiclesSchema) });
-
-  const selectedBrand = watch("brand");
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
-  const submitVehicles = (formData: iFormVehicles) => {
-    console.log({ ...formData, galleryImages: images });
-
   };
-
   return (
     <StyledVehiclesForm
       title="Criar Anúncio"
@@ -105,9 +60,7 @@ export const FormVehicles = () => {
           x
         </button>
       </div>
-
       <h3 className="font-body-2-50">Informações do Veículo</h3>
-
       <div className="select">
         <label className="font-input-label" htmlFor="brand">
           Brand
@@ -118,18 +71,12 @@ export const FormVehicles = () => {
           {...register("brand")}
           defaultValue=""
         >
-
           {Object.keys(vehiclesList as IBrand)?.map((brand, index) => (
             <option key={index} value={brand}>
               {brand}
             </option>
-
-          {Object.keys(vehiclesList as IBrand)?.map((brand) => (
-            <option value={brand}>{brand}</option>
-
           ))}
         </select>
-
         <label className="font-input-label" htmlFor="brand">
           Modelo
         </label>
@@ -140,19 +87,13 @@ export const FormVehicles = () => {
           defaultValue=""
         >
           {vehiclesList &&
-
             vehiclesList[selectedBrand]?.map((model, i) => (
               <option key={i} value={model.name}>
                 {model.name}
               </option>
-
-            vehiclesList[selectedBrand]?.map((model) => (
-              <option value={model.name}>{model.name}</option>
-
             ))}
         </select>
       </div>
-
       <div className="formDiv">
         <Input
           label="Ano"
@@ -167,7 +108,6 @@ export const FormVehicles = () => {
           error={errors.fuel && errors.fuel.message}
         />
       </div>
-
       <div className="formDiv">
         <Input
           label="Quilometragem"
@@ -202,7 +142,6 @@ export const FormVehicles = () => {
         placeholder="Ex: 50.000,00"
         error={errors.description && errors.description.message}
       />
-
       <Input
         label="Imagem da capa"
         register={register("cover_img")}
@@ -219,7 +158,6 @@ export const FormVehicles = () => {
         onBlur={handleChange}
         placeholder="Ex: https://image.com"
       />
-
       <div className="divButtons">
         <div className="buttons">
           <button
@@ -231,7 +169,6 @@ export const FormVehicles = () => {
           >
             Cancelar
           </button>
-
           <Button
             type="submit"
             color="brand3"
