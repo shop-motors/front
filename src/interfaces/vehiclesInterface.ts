@@ -31,10 +31,6 @@ interface IEvent {
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-export interface IBrand {
-  [key: string]: [ImodelName];
-}
-
 interface ImodelName {
   name: string;
 }

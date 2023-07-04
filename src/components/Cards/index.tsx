@@ -16,6 +16,7 @@ import {
 } from "./style";
 import { CarsContext } from "../../contexts/carsContext";
 import { ButtonPrevious } from "../Buttons/buttonPrevious";
+import { VehiclesContext } from "../../contexts/vehiclesContext";
 
 export const Card = () => {
   const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);

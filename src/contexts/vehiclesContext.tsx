@@ -38,8 +38,6 @@ interface IVehiclesContext {
   setShowCard: Dispatch<SetStateAction<iFormVehicles | null>>;
   getNewDataForm: () => Promise<void>;
 
-  createNew: (newData: IVehicles) => Promise<void>;
-
 }
 
 export const VehiclesContext = createContext({} as IVehiclesContext);
@@ -71,27 +69,28 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   }, []);
 
   const getNewDataForm = async () => {
-    const token = localStorage.getItem("@TOKEN");
-    try {
+//     const token = localStorage.getItem("@TOKEN");
+//     try {
 
-      const response = await api.get("vehicles", {
+//       const response = await api.get("vehicles", {
 
-      const { data } = await api.post<IVehicles>("vehicles", newData, {
+//       const { data } = await api.post<IVehicles>("vehicles", newData {
 
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-
-      setDataFormVehicles(response.data.data);
-      console.log(response.data.data);
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }))};
+      
 
 
-    } catch (error) {
-      console.log(error);
-    }
-  };
+//       setDataFormVehicles(response.data.data);
+//       console.log(response.data.data);
+
+// ()
+//     } catch (error) {
+//       console.log(error);
+//     }
+  }
 
   const createNew = async (newData: iFormVehicles) => {
     const token = localStorage.getItem("@TOKEN");
@@ -118,9 +117,8 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         showCard,
         setShowCard,
         getNewDataForm,
+        
       }}
-
-      value={{ vehiclesList, setVehiclesList, createNew }}
 
     >
       {children}
