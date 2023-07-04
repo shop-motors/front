@@ -21,6 +21,8 @@ export const CarProviders = ({ children }: ICarPriverProps) => {
   const [nav, setNav] = useState(false);
   const [close, setClose] = useState(false);
   const LIMIT = 12;
+
+  
   const GetCarsHome = async () => {
     try {
       const response = await api.get(`vehicles?page=${page}&limit=${LIMIT}`);

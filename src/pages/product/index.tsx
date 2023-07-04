@@ -4,7 +4,7 @@ import imgCar from "../../images/car.png";
 import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
 import { Footer } from "../../components/Footer";
-import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
+// import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
 
 export const ProductsDetail = () => {
   return (
@@ -126,7 +126,7 @@ export const ProductsDetail = () => {
           </div>
         </div>
       </div>
-      <FormCreateCommentary />
+      {/* <FormCreateCommentary /> */}
       <Footer />
     </StyledProducts>
   );
