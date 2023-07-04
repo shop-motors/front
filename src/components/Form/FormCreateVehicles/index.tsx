@@ -6,28 +6,25 @@ import { vehiclesSchema } from "../FormCreateVehicles/createVehicles.schema";
 import { useContext, useEffect, useState } from "react";
 import { StyledVehiclesForm } from "./style";
 import { ModalButtonContext } from "../../../pages/contexts/modalContext";
-import { VehiclesContext } from "../../../contexts/vehiclesContext";
-import { IBrand } from "../../../interfaces/vehiclesInterface";
-
-interface iFormVehicles {
-  brand: string;
-  model: string;
-  year: string;
-  fuel: string;
-  km: string;
-  color: string;
-  fipe_price: string;
-  price: string;
-  description: string;
-  cover_img: string;
-  galleryImages: string;
-}
+import {
+  VehiclesContext,
+  iFormVehicles,
+} from "../../../contexts/vehiclesContext";
+import { IBrand, IVehicles } from "../../../interfaces/vehiclesInterface";
+import { useNavigate } from "react-router-dom";
 
 export const FormVehicles = () => {
   const { modal, setModal } = useContext(ModalButtonContext);
   const [images, setImages] = useState([] as string[]);
-  const { vehiclesList, createNew, setVehiclesList } =
+  const { vehiclesList, createNew, setVehiclesList, getNewDataForm } =
     useContext(VehiclesContext);
+  const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    try {
+    } catch (error) {}
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
@@ -38,22 +35,28 @@ export const FormVehicles = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<iFormVehicles>({ resolver: yupResolver(vehiclesSchema) });
+  } = useForm<iFormVehicles>(/* { resolver: yupResolver(vehiclesSchema) } */);
 
   const selectedBrand = watch("brand");
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+  /*   const submitVehicles2 = (formData: iFormVehicles) => {
+      console.log("chegou aqui no submite 2");
+      setDataFormVehicles(formData);
+      setModal(false);
+      navigate("/advertiser");
+      console.log(modal); */
 
-  const submitVehicles = (formData: iFormVehicles) => {
-    console.log({ ...formData, galleryImages: images });
+  const submitedVehicles = (formData: iFormVehicles) => {
+    createNew(formData);
+    console.log("chegou aqui no submite 2");
+    getNewDataForm();
+    setModal(false);
   };
 
   return (
     <StyledVehiclesForm
       title="Criar Anúncio"
-      onSubmit={handleSubmit(submitVehicles)}
+      onSubmit={handleSubmit(submitedVehicles)}
     >
       <div className="formHeader">
         <h2>Criar Anúncio</h2>
@@ -78,8 +81,10 @@ export const FormVehicles = () => {
           {...register("brand")}
           defaultValue=""
         >
-          {Object.keys(vehiclesList as IBrand)?.map((brand) => (
-            <option value={brand}>{brand}</option>
+          {Object.keys(vehiclesList as IBrand)?.map((brand, index) => (
+            <option key={index} value={brand}>
+              {brand}
+            </option>
           ))}
         </select>
 
@@ -93,8 +98,10 @@ export const FormVehicles = () => {
           defaultValue=""
         >
           {vehiclesList &&
-            vehiclesList[selectedBrand]?.map((model) => (
-              <option value={model.name}>{model.name}</option>
+            vehiclesList[selectedBrand]?.map((model, i) => (
+              <option key={i} value={model.name}>
+                {model.name}
+              </option>
             ))}
         </select>
       </div>
