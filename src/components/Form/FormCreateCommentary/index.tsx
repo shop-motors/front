@@ -6,14 +6,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createCommentarySchema } from "./createCommentarySchema";
 import { Button } from "../../Buttons";
-import { useState } from "react";
-
-interface IComment {
-  content: string;
-}
+import { useContext } from "react";
+import { IComment, VehiclesContext } from "../../../contexts/vehiclesContext";
+import { UserContexts } from "../../../contexts/userContexts";
 
 export const FormCreateCommentary = () => {
-  const [currentSentence, setCurrentSentence] = useState("");
+  const { user } = useContext(UserContexts);
+  const { createCommentary } = useContext(VehiclesContext);
 
   const {
     register,
@@ -30,11 +29,10 @@ export const FormCreateCommentary = () => {
 
   const dataUserMock = {
     img: ImgProfile,
-    name: "Leia Organa",
   };
 
   const handleCreateCommentary: SubmitHandler<IComment> = (data: IComment) => {
-    console.log(data);
+    createCommentary(data);
   };
 
   const setSentences = (
@@ -45,13 +43,15 @@ export const FormCreateCommentary = () => {
 
   return (
     <Container>
-      <UserContainer>
-        <img
-          src={dataUserMock.img}
-          alt={`Imagem do Usuário ${dataUserMock.name}`}
-        />
-        <p>{dataUserMock.name}</p>
-      </UserContainer>
+      {user && (
+        <UserContainer>
+          <img
+            src={dataUserMock.img}
+            alt={`Imagem do Usuário ${user.user.name}`}
+          />
+          <p>{user.user.name}</p>
+        </UserContainer>
+      )}
 
       <Form onSubmit={handleSubmit(handleCreateCommentary)}>
         <Input
@@ -59,7 +59,13 @@ export const FormCreateCommentary = () => {
           register={register("content")}
           error={errors.content && errors.content.message}
         />
-        <Button color="brand1" content="Comentar" size="large" type="submit" />
+        <Button
+          color={!user? "gray6" : "brand1"}
+          content="Comentar"
+          size="large"
+          type="submit"
+          disabled={!user}
+        />
       </Form>
 
       <SentencesContainer>
