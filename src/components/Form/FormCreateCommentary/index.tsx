@@ -32,6 +32,7 @@ export const FormCreateCommentary = () => {
 
   const handleCreateCommentary: SubmitHandler<IComment> = (data: IComment) => {
     createCommentary(data);
+    console.log("gsdv")
   };
 
   const setSentences = (

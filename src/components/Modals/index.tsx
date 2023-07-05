@@ -25,13 +25,17 @@ const Modal: React.FC<ModalProps> = ({
       {modal && (
         <StyledModalDiv className="modalContent">
           <div className="divContent">
-            <button
-              type="button"
-              className="buttonCloseModal"
-              onClick={() => setModal(false)}
-            >
-              X
-            </button>
+            <div>
+              <p>Filtro</p>
+              <button
+                type="button"
+                className="buttonCloseModal"
+                onClick={() => setModal(false)}
+              >
+                X
+              </button>
+            </div>
+
             {children}
           </div>
         </StyledModalDiv>

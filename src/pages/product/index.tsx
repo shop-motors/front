@@ -6,15 +6,18 @@ import ImgProfile from "../../images/leia.jpeg";
 import { Footer } from "../../components/Footer";
 import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
 // import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext } from "react";
 import { captureRejectionSymbol } from "events";
-import { VehiclesContext } from '../../contexts/vehiclesContext';
+import { VehiclesContext } from "../../contexts/vehiclesContext";
+import { UserContexts } from "../../contexts/userContexts";
 
 export const ProductsDetail = () => {
-  const {showCard} = useContext(VehiclesContext)
-  useEffect(()=>{
-    console.log(showCard)
-  },[])
+  const { showCard } = useContext(VehiclesContext);
+  const { user } = useContext(UserContexts);
+  useEffect(() => {
+    console.log(showCard);
+    console.log(user);
+  }, []);
   return (
     <StyledProducts>
       <NavBarProfile />
