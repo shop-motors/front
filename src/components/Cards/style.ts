@@ -10,6 +10,7 @@ export const ContainerDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100vw;
   height: 100%;
   margin-top: 30px;
@@ -102,7 +103,7 @@ export const DivPrice = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  gap: 70px;
+  gap: 65px;
 
   span {
     font-weight: 500;
@@ -115,13 +116,14 @@ export const DivPrice = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
-    max-width: 100px;
     gap: 5px;
     text-align: center;
 
     p {
       color: var(--color-brand-1);
       background-color: var(--color-brand-4);
+      width: 100%;
+      font-size: 12px;
     }
   }
 `;
@@ -155,7 +157,9 @@ export const DivPagination = styled.div`
   text-align: center;
   gap: 15px;
   margin-top: 50px;
-
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
   span {
     color: var(--color-gray-3);
   }

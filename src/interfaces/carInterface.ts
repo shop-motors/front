@@ -4,14 +4,27 @@ export interface ICarPriverProps {
 
 export interface CarProviderValue {
   cars: Iproducts[];
+  setCars: React.Dispatch<React.SetStateAction<Iproducts[]>>;
+  LIMIT: number;
+  total: number;
+  paginationCount: () => void;
+  page: number;
+  pageAtual: number;
+  previousCount: () => void;
+  anterior: boolean;
+  nav: boolean;
+  openBtns: () => void;
+  close: boolean;
+  setClose: React.Dispatch<React.SetStateAction<boolean>>;
+  closeFilter: () => void
 }
-
 export interface Iproducts {
   id: string;
   brand: string;
   model: string;
   year: string;
   km: string;
+  fuel: string;
   color: string;
   fipe_price: number;
   price: number;

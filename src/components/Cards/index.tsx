@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
 import ImgCar from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1 (1).png";
-import { Button } from "../Buttons";
 import Modal from "../Modals";
 import { Filters } from "../filters";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   ContainerDiv,
   DivBtnFilter,
@@ -16,13 +14,18 @@ import {
   UlCard,
   UlCardAdmin,
 } from "./style";
-/* import { CarsContext } from "../../contexts/carsContext"; */
-import { apiKenzieCars } from "../../services/api";
-import { IVehicles } from "../../interfaces/vehiclesInterface";
 import { CarsContext } from "../../contexts/carsContext";
+import { ButtonPrevious } from "../Buttons/buttonPrevious";
+import { VehiclesContext } from "../../contexts/vehiclesContext";
 
 export const Card = () => {
-  const { cars } = useContext(CarsContext);
+  const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
+  const formatPrice = (price: any) => {
+    return price.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  };
 
   return (
     <DivMain>
@@ -32,7 +35,7 @@ export const Card = () => {
             <LiCard key={car.id}>
               <img src={car.cover_img} alt="imagem de carro" />
               <DivLi>
-                <h3>{car.brand}</h3>
+                <h3>{car.model}</h3>
                 <p>{car.description}</p>
                 <DivUsuario>
                   <span>R</span>
@@ -40,10 +43,10 @@ export const Card = () => {
                 </DivUsuario>
                 <DivPrice>
                   <div>
-                    <p>{`${car.km} km`}</p>
+                    <p>{`${car.km}km`}</p>
                     <p>{car.year}</p>
                   </div>
-                  <span>{`$${car.price}`}</span>
+                  <span>{formatPrice(parseFloat(`${car.price}`))}</span>
                 </DivPrice>
               </DivLi>
             </LiCard>
@@ -67,59 +70,51 @@ export const Card = () => {
       </ContainerDiv>
 
       <DivPagination>
-        <span>1 de 2</span>
-        <button>Seguinte </button>
+        <span>
+          {page} de {page}
+        </span>
+        <ButtonPrevious />
+        <button onClick={() => paginationCount()}>Seguinte </button>
       </DivPagination>
     </DivMain>
   );
 };
 
-//-------------------------------------------------------
 
 export const CardAdmin = () => {
   const [vehiclesList, setVehiclesList] = useState(Array());
+  const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
 
-  useEffect(() => {
-    const vehiclesLoad = async () => {
-      try {
-        const { data } = await apiKenzieCars.get("/");
-
-        var cars = [...data.chevrolet, ...data.fiat, ...data.ford];
-        setVehiclesList(cars);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    vehiclesLoad();
-  }, []);
+  console.log({ dataFormVehicles });
 
   return (
     <UlCardAdmin>
-      {vehiclesList.map((item: any, index: number) => (
-        <div key={item.name}>
-          <LiCard>
-            <img src={ImgCar} alt="imagem de carro" />
-            <DivLi>
-              <h3>{item.name}</h3>
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos
-                repellendus non labor...
-              </p>
-              <DivUsuario>
-                <span>R</span>
-                <p>Usuario</p>
-              </DivUsuario>
-              <DivPrice>
-                <div>
-                  <p>0 km</p>
-                  <p>2019</p>
-                </div>
-                <span>R$ 500.000.000</span>
-              </DivPrice>
-            </DivLi>
-          </LiCard>
-        </div>
-      ))}
+      {dataFormVehicles &&
+        dataFormVehicles?.map((item: any, index: number) => (
+          <div key={item.name}>
+            <LiCard>
+              <img src={item.cover_img} alt="imagem de carro" />
+              <DivLi>
+                <h3>{item.brand}</h3>
+                <p>{item.description}</p>
+                <DivUsuario>
+                  <span>R</span>
+                  <p>Usuario</p>
+                </DivUsuario>
+                <DivPrice>
+                  <div>
+                    <p>{item.km} km</p>
+                    <p>{item.year}</p>
+                  </div>
+                  <span>{item.price}</span>
+                </DivPrice>
+              </DivLi>
+            </LiCard>
+          </div>
+        ))}
     </UlCardAdmin>
   );
 };
+
+
+
