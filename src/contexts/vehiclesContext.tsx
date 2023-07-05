@@ -13,6 +13,7 @@ import {
 import { api, apiKenzieCars } from "../services/api";
 
 export interface iFormVehicles {
+  id?: number;
   brand: string;
   model: string;
   year: string;
@@ -35,7 +36,11 @@ interface IVehiclesContext {
   showCard: iFormVehicles | null;
   setShowCard: Dispatch<SetStateAction<iFormVehicles | null>>;
   getNewDataForm: () => Promise<void>;
+  createCommentary: (data: IComment) => Promise<void>
+}
 
+export interface IComment {
+  content: string;
 }
 
 export const VehiclesContext = createContext({} as IVehiclesContext);
@@ -77,6 +82,14 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     }
   };
 
+  const createCommentary = async (data: IComment) => {
+    try {
+      await api.post(`/comments/${showCard?.id}`, data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const createNew = async (newData: iFormVehicles) => {
     console.log(`Aqui vem o newData do createNew ${JSON.stringify(newData, null, 2)}`);
     const token = localStorage.getItem("@TOKEN");
@@ -106,6 +119,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         showCard,
         setShowCard,
         getNewDataForm,
+        createCommentary,
       }}
     >
       {children}
