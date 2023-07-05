@@ -5,8 +5,15 @@ import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
 import { Footer } from "../../components/Footer";
 // import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
+import { useEffect, useContext } from 'react';
+import { captureRejectionSymbol } from "events";
+import { VehiclesContext } from '../../contexts/vehiclesContext';
 
 export const ProductsDetail = () => {
+  const {showCard} = useContext(VehiclesContext)
+  useEffect(()=>{
+    console.log(showCard)
+  },[])
   return (
     <StyledProducts>
       <NavBarProfile />
