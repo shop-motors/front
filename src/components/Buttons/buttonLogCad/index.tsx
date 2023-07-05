@@ -13,7 +13,7 @@ export const BtnsNav = () => {
   return (
     <DivButtons>
       <Link to={"/login"}>
-        <a href="">fazer login</a>
+        fazer login
       </Link>
       <Link to={"/register"}>
         <Button
