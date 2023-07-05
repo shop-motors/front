@@ -8,33 +8,28 @@ export const Container = styled.section`
   align-self: flex-start;
   padding: 2.25rem 1.625rem;
   background-color: var(--color-gray-10);
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   width: 100%;
   max-width: 46.875rem;
 
   > form {
     padding: 0;
     width: 100%;
+    max-width: none;
 
     > h2 {
       display: none;
     }
 
-    > input {
-      width: 100%;
-    }
+    > div {
+      > button {
+        width: max-content;
+        align-self: flex-start;
 
-    > fieldset {
-      width: 100%;
-    }
-
-    > fieldset {
-      width: 100%;
-    }
-
-    > button {
-      width: max-content;
-      align-self: flex-start;
+        :hover {
+          width: max-content;
+        }
+      }
     }
   }
 `;
@@ -43,7 +38,7 @@ export const UserContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: .625rem;
+  gap: 0.625rem;
   width: max-content;
 
   img {
@@ -52,3 +47,23 @@ export const UserContainer = styled.div`
     border-radius: 50%;
   }
 `;
+
+export const SentencesContainer = styled.div`
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+
+  > button {
+    border: none;
+    padding: .25rem .75rem;
+    border-radius: 3.125rem;
+    background-color: var(--color-gray-7);
+    color: var(--color-gray-3);
+    font-weight: 600;
+    transition: .3s;
+
+    :hover {
+      color: var(--color-gray-1);
+    }
+  }
+`
