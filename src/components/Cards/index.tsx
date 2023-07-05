@@ -16,7 +16,8 @@ import {
 } from "./style";
 import { CarsContext } from "../../contexts/carsContext";
 import { ButtonPrevious } from "../Buttons/buttonPrevious";
-import { VehiclesContext } from "../../contexts/vehiclesContext";
+import { VehiclesContext, iFormVehicles } from '../../contexts/vehiclesContext';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const Card = () => {
   const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
@@ -82,17 +83,20 @@ export const Card = () => {
 
 
 export const CardAdmin = () => {
-  const [vehiclesList, setVehiclesList] = useState(Array());
-  const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
-
+  const { dataFormVehicles, setShowCard } = useContext(VehiclesContext);
+  const navigate = useNavigate()
   console.log({ dataFormVehicles });
-
+  const handleClick = (item: iFormVehicles) =>{
+    setShowCard(item)
+    navigate('/products')
+  }
   return (
     <UlCardAdmin>
       {dataFormVehicles &&
         dataFormVehicles?.map((item: any, index: number) => (
-          <div key={item.name}>
-            <LiCard>
+          <div key={item.index}>
+            {/* colocar um onclick na Li */}
+            <LiCard onClick={() => handleClick(item)}>
               <img src={item.cover_img} alt="imagem de carro" />
               <DivLi>
                 <h3>{item.brand}</h3>

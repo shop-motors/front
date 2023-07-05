@@ -36,6 +36,7 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
       toast.success("Você está logado");
       navigate("/products");
       window.localStorage.setItem("@TOKEN", response.data.token);
+      api.defaults.headers.common.authorization = `Bearer ${response.data.token}`
       return response.data;
     } catch (error) {
       console.log(error);

@@ -23,7 +23,7 @@ export const FormVehicles = () => {
     try {
     } catch (error) {}
   }, []);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.FocusEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
   };
   const {
@@ -40,11 +40,17 @@ export const FormVehicles = () => {
       navigate("/advertiser");
       console.log(modal); */
   const submitedVehicles = (formData: iFormVehicles) => {
-    createNew(formData);
+    const parsedData = {
+      ...formData,
+      galleryImages: images,
+    };
+
+    createNew(parsedData);
     console.log("chegou aqui no submite 2");
     getNewDataForm();
     setModal(false);
   };
+
   return (
     <StyledVehiclesForm
       title="Criar Anúncio"
@@ -125,13 +131,17 @@ export const FormVehicles = () => {
       <div className="formDiv">
         <Input
           label="Preço Tabela FIPE"
-          register={register("fipe_price")}
+          register={register("fipe_price", {
+            setValueAs: (value) => parseFloat(value),
+          })}
           placeholder="Ex: 48.000,00"
           error={errors.fipe_price && errors.fipe_price.message}
         />
         <Input
           label="Preço"
-          register={register("price")}
+          register={register("price", {
+            setValueAs: (value) => parseFloat(value),
+          })}
           placeholder="Ex: 50.000,00"
           error={errors.price && errors.price.message}
         />
