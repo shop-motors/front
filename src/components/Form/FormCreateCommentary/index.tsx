@@ -28,11 +28,13 @@ export const FormCreateCommentary = () => {
   ];
 
   const dataUserMock = {
+    name:"Lucas",
     img: ImgProfile,
   };
 
   const handleCreateCommentary: SubmitHandler<IComment> = (data: IComment) => {
     createCommentary(data);
+    console.log("gsdv")
   };
 
   const setSentences = (
@@ -43,13 +45,13 @@ export const FormCreateCommentary = () => {
 
   return (
     <Container>
-      {user && (
+      {dataUserMock && (
         <UserContainer>
           <img
             src={dataUserMock.img}
-            alt={`Imagem do Usuário ${user.user.name}`}
+            alt={`Imagem do Usuário ${dataUserMock.name}`}
           />
-          <p>{user.user.name}</p>
+          <p>{dataUserMock.name}</p>
         </UserContainer>
       )}
 
@@ -60,11 +62,11 @@ export const FormCreateCommentary = () => {
           error={errors.content && errors.content.message}
         />
         <Button
-          color={!user? "gray6" : "brand1"}
+          color={!dataUserMock? "gray6" : "brand1"}
           content="Comentar"
           size="large"
           type="submit"
-          disabled={!user}
+          disabled={!dataUserMock}
         />
       </Form>
 

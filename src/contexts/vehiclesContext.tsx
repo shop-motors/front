@@ -36,7 +36,7 @@ interface IVehiclesContext {
   showCard: iFormVehicles | null;
   setShowCard: Dispatch<SetStateAction<iFormVehicles | null>>;
   getNewDataForm: () => Promise<void>;
-  createCommentary: (data: IComment) => Promise<void>
+  createCommentary: (data: IComment) => Promise<void>;
 }
 
 export interface IComment {
@@ -84,29 +84,31 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
   const createCommentary = async (data: IComment) => {
     try {
-      await api.post(`/comments/${showCard?.id}`, data);
+      const response = await api.post(`/comments/${showCard?.id}`, data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
 
   const createNew = async (newData: iFormVehicles) => {
-    console.log(`Aqui vem o newData do createNew ${JSON.stringify(newData, null, 2)}`);
+    console.log(
+      `Aqui vem o newData do createNew ${JSON.stringify(newData, null, 2)}`
+    );
     const token = localStorage.getItem("@TOKEN");
     try {
-      const response  = await api.post<iFormVehicles>("vehicles", newData, {
+      const response = await api.post<iFormVehicles>("vehicles", newData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
-      setDataFormVehicles(prevState => [...prevState, response.data]);
-      console.log(response.data)
+
+      setDataFormVehicles((prevState) => [...prevState, response.data]);
+      console.log(response.data);
     } catch (error: any) {
       console.log(error.request.response);
     }
   };
-  
 
   return (
     <VehiclesContext.Provider
