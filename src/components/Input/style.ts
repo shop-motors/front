@@ -9,7 +9,6 @@ export const Container = styled.fieldset`
   flex-direction: column;
   gap: 0.5rem;
   border: none;
-  position: relative;
 
   small {
     color: var(--color-alert1);

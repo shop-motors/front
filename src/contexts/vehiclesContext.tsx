@@ -36,11 +36,22 @@ interface IVehiclesContext {
   showCard: iFormVehicles | null;
   setShowCard: Dispatch<SetStateAction<iFormVehicles | null>>;
   getNewDataForm: () => Promise<void>;
-  createCommentary: (data: IComment) => Promise<void>
+  createCommentary: (data: IComment) => Promise<void>;
+  getCommentaries: () => Promise<void>;
+  setListComments: Dispatch<SetStateAction<ICommentResponse[]>>;
+  listComments: ICommentResponse[];
 }
 
 export interface IComment {
   content: string;
+}
+
+export interface ICommentResponse {
+  content: string;
+  createdAt: string;
+  id: string;
+  updatedAt: string;
+  userId: string;
 }
 
 export const VehiclesContext = createContext({} as IVehiclesContext);
@@ -51,6 +62,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     [] as iFormVehicles[]
   );
   const [showCard, setShowCard] = useState<iFormVehicles | null>(null);
+  const [listComments, setListComments] = useState([] as ICommentResponse[]);
 
   useEffect(() => {
     const vehiclesLoad = async () => {
@@ -58,13 +70,23 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         const response = await apiKenzieCars.get<any>("cars");
         const data = response.data;
         setVehiclesList(data);
-
-        // console.log(data);
       } catch (error) {
         console.log(error);
       }
     };
     vehiclesLoad();
+
+    const getCommentaries = async () => {
+      try {
+        const response = await api.get(`/comments`);
+
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getCommentaries();
   }, []);
 
   const getNewDataForm = async () => {
@@ -83,30 +105,46 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   };
 
   const createCommentary = async (data: IComment) => {
+    const token = localStorage.getItem("@TOKEN");
     try {
-      await api.post(`/comments/${showCard?.id}`, data);
+      await api.post(`/comments/${showCard?.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCommentaries = async () => {
+    try {
+      const response = await api.get(`/comments`);
+
+      setListComments(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   const createNew = async (newData: iFormVehicles) => {
-    console.log(`Aqui vem o newData do createNew ${JSON.stringify(newData, null, 2)}`);
+    console.log(
+      `Aqui vem o newData do createNew ${JSON.stringify(newData, null, 2)}`
+    );
     const token = localStorage.getItem("@TOKEN");
     try {
-      const response  = await api.post<iFormVehicles>("vehicles", newData, {
+      const response = await api.post<iFormVehicles>("vehicles", newData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
-      setDataFormVehicles(prevState => [...prevState, response.data]);
-      console.log(response.data)
+
+      setDataFormVehicles((prevState) => [...prevState, response.data]);
+      console.log(response.data);
     } catch (error: any) {
       console.log(error.request.response);
     }
   };
-  
 
   return (
     <VehiclesContext.Provider
@@ -120,6 +158,9 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         setShowCard,
         getNewDataForm,
         createCommentary,
+        getCommentaries,
+        listComments,
+        setListComments
       }}
     >
       {children}

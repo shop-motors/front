@@ -8,10 +8,8 @@ import { createCommentarySchema } from "./createCommentarySchema";
 import { Button } from "../../Buttons";
 import { useContext } from "react";
 import { IComment, VehiclesContext } from "../../../contexts/vehiclesContext";
-import { UserContexts } from "../../../contexts/userContexts";
 
 export const FormCreateCommentary = () => {
-  const { user } = useContext(UserContexts);
   const { createCommentary } = useContext(VehiclesContext);
 
   const {
@@ -27,8 +25,9 @@ export const FormCreateCommentary = () => {
     "Recomendarei para meus amigos!",
   ];
 
-  const dataUserMock = {
+  const user = {
     img: ImgProfile,
+    name: "Alguém"
   };
 
   const handleCreateCommentary: SubmitHandler<IComment> = (data: IComment) => {
@@ -46,10 +45,10 @@ export const FormCreateCommentary = () => {
       {user && (
         <UserContainer>
           <img
-            src={dataUserMock.img}
-            alt={`Imagem do Usuário ${user.user.name}`}
+            src={user.img}
+            alt={`Imagem do Usuário ${user.name}`}
           />
-          <p>{user.user.name}</p>
+          <p>{user.name}</p>
         </UserContainer>
       )}
 
