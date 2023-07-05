@@ -16,8 +16,8 @@ import {
 } from "./style";
 import { CarsContext } from "../../contexts/carsContext";
 import { ButtonPrevious } from "../Buttons/buttonPrevious";
-import { VehiclesContext, iFormVehicles } from '../../contexts/vehiclesContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { VehiclesContext, iFormVehicles } from "../../contexts/vehiclesContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const Card = () => {
   const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
@@ -81,44 +81,54 @@ export const Card = () => {
   );
 };
 
-
 export const CardAdmin = () => {
   const { dataFormVehicles, setShowCard } = useContext(VehiclesContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   console.log({ dataFormVehicles });
-  const handleClick = (item: iFormVehicles) =>{
-    setShowCard(item)
-    navigate('/products')
-  }
+  const handleClick = (item: iFormVehicles) => {
+    setShowCard(item);
+    navigate("/products");
+  };
+
+  console.log(dataFormVehicles);
   return (
     <UlCardAdmin>
       {dataFormVehicles &&
         dataFormVehicles?.map((item: any, index: number) => (
-          <div key={item.index}>
+          <div key={item.id}>
             {/* colocar um onclick na Li */}
-            <LiCard onClick={() => handleClick(item)}>
-              <img src={item.cover_img} alt="imagem de carro" />
+            <li>
+              <img
+                className="cover_img"
+                src={item.cover_img}
+                alt="imagem de carro"
+              />
               <DivLi>
-                <h3>{item.brand}</h3>
+                <h3>
+                  {item.brand} - {item.model}
+                </h3>
                 <p>{item.description}</p>
                 <DivUsuario>
                   <span>R</span>
                   <p>Usuario</p>
                 </DivUsuario>
                 <DivPrice>
-                  <div>
+                  <div className="divP">
                     <p>{item.km} km</p>
                     <p>{item.year}</p>
+                    <span>R$ {item.price}</span>
                   </div>
-                  <span>{item.price}</span>
                 </DivPrice>
+                <div className="buttons">
+                  <button className="button">Editar</button>
+                  <button className="button" onClick={() => handleClick(item)}>
+                    Ver Detalhes
+                  </button>
+                </div>
               </DivLi>
-            </LiCard>
+            </li>
           </div>
         ))}
     </UlCardAdmin>
   );
 };
-
-
-

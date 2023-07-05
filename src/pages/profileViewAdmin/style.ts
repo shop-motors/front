@@ -6,8 +6,7 @@ export const StyledProducts = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
-  background-color: var(--color-gray-6);
+  background-color: var(--color-gray-7);
 
   .backgroundBlue {
     width: 100%;
@@ -53,6 +52,8 @@ export const StyledProducts = styled.main`
   }
   .cards {
     display: flex;
+    width: 90%;
+
     justify-content: center;
     margin-top: 90px;
   }
