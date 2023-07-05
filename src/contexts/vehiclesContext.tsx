@@ -50,7 +50,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   useEffect(() => {
     const vehiclesLoad = async () => {
       try {
-        const response = await apiKenzieCars.get<any>("cars");
+        const response = await apiKenzieCars.get<any>("vehicles");
         const data = response.data;
         setVehiclesList(data);
 
@@ -80,14 +80,13 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const createNew = async (newData: iFormVehicles) => {
     const token = localStorage.getItem("@TOKEN");
     try {
-      const data  = await api.post<iFormVehicles>("vehicles", newData, {
+      const response = await api.post<iFormVehicles>("vehicles", newData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      // setDataFormVehicles(data)
-      console.log(data)
+      setDataFormVehicles((prevState) => [...prevState, response.data]);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
