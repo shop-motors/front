@@ -47,7 +47,6 @@ export const VehiclesContext = createContext({} as IVehiclesContext);
 
 export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const [vehiclesList, setVehiclesList] = useState<IBrand | undefined>();
-
   const [dataFormVehicles, setDataFormVehicles] = useState(
     [] as iFormVehicles[]
   );
@@ -60,7 +59,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         const data = response.data;
         setVehiclesList(data);
 
-        /* console.log(data); */
+        // console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -92,20 +91,22 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   };
 
   const createNew = async (newData: iFormVehicles) => {
+    console.log(`Aqui vem o newData do createNew ${JSON.stringify(newData, null, 2)}`);
     const token = localStorage.getItem("@TOKEN");
     try {
-      const data = await api.post<iFormVehicles>("vehicles", newData, {
+      const response  = await api.post<iFormVehicles>("vehicles", newData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      // setDataFormVehicles(data)
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+  
+      setDataFormVehicles(prevState => [...prevState, response.data]);
+      console.log(response.data)
+    } catch (error: any) {
+      console.log(error.request.response);
     }
   };
+  
 
   return (
     <VehiclesContext.Provider
