@@ -12,12 +12,10 @@ import { VehiclesContext } from "../../contexts/vehiclesContext";
 import { UserContexts } from "../../contexts/userContexts";
 
 export const ProductsDetail = () => {
-  const { showCard } = useContext(VehiclesContext);
-  console.log(showCard);
+  const { showCard, listComments, getCommentaries } =
+    useContext(VehiclesContext);
   const { user } = useContext(UserContexts);
-  useEffect(() => {
-    console.log(user);
-  }, []);
+
   return (
     <StyledProducts>
       <NavBarProfile />
@@ -60,38 +58,24 @@ export const ProductsDetail = () => {
               </p>
             </div>
             {/* ------------------------------------------------------- */}
-            <div className="coments">
-              <h3>Comentários</h3>
-              <div className="comentProfile">
-                <img src={ImgProfile} alt="" />
-                <p>Fulana de Souza</p>
-                <div className="dateComent">
-                  <small>° há 3 dias</small>
+
+            {listComments.map((comment) => (
+              <div className="coments">
+                <h3>Comentários</h3>
+                <div className="comentProfile">
+                  <img src={ImgProfile} alt="" />
+                  <p>{comment.userId}</p>
+                  <div className="dateComent">
+                    <small>° há 3 dias</small>
+                  </div>
                 </div>
+                <p className="pDescription">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Libero expedita fugiat aliquam aspernatur et obcaecati cumque,
+                  perferendis quam! Dolor possimus accusamus .
+                </p>
               </div>
-              <p className="pDescription">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero
-                expedita fugiat aliquam aspernatur et obcaecati cumque,
-                perferendis quam! Dolor possimus accusamus .
-              </p>
-            </div>
-            {/* ------------------------------------ */}
-            <div className="typeComent">
-              <div className="comentProfile">
-                <img src={ImgProfile} alt="" />
-                <p>Fulana de Souza</p>
-                <div className="dateComent">
-                  <small>° há 3 dias</small>
-                </div>
-              </div>
-              <div className="commentBox">
-                <small>
-                  Carro muito confortável, foi uma ótima experiência de
-                  compra...
-                </small>
-              </div>
-            </div>
-            {/* ------------------------------------------------------- */}
+            ))}
             <div className="photos">
               <h3>Fotos</h3>
               <div className="photosCar">
