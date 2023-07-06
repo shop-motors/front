@@ -13,9 +13,9 @@ import { UserContexts } from "../../contexts/userContexts";
 
 export const ProductsDetail = () => {
   const { showCard } = useContext(VehiclesContext);
+  console.log(showCard);
   const { user } = useContext(UserContexts);
   useEffect(() => {
-    console.log(showCard);
     console.log(user);
   }, []);
   return (
