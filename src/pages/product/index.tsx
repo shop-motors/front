@@ -4,9 +4,20 @@ import imgCar from "../../images/car.png";
 import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
 import { Footer } from "../../components/Footer";
+import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
 // import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
+import { useEffect, useContext } from "react";
+import { captureRejectionSymbol } from "events";
+import { VehiclesContext } from "../../contexts/vehiclesContext";
+import { UserContexts } from "../../contexts/userContexts";
 
 export const ProductsDetail = () => {
+  const { showCard } = useContext(VehiclesContext);
+  console.log(showCard);
+  const { user } = useContext(UserContexts);
+  useEffect(() => {
+    console.log(user);
+  }, []);
   return (
     <StyledProducts>
       <NavBarProfile />
@@ -126,7 +137,7 @@ export const ProductsDetail = () => {
           </div>
         </div>
       </div>
-      {/* <FormCreateCommentary /> */}
+      <FormCreateCommentary />
       <Footer />
     </StyledProducts>
   );

@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Buttons";
 import { vehiclesSchema } from "../FormCreateVehicles/createVehicles.schema";
 import { useContext, useEffect, useState } from "react";
-import { StyledVehiclesForm } from "./style";
+import { StyledVehiclesForm } from "../FormCreateVehicles/style";
 import { ModalButtonContext } from "../../../pages/contexts/modalContext";
 import {
   VehiclesContext,
@@ -13,17 +13,18 @@ import {
 import { IBrand, IVehicles } from "../../../interfaces/vehiclesInterface";
 import { useNavigate } from "react-router-dom";
 
-export const FormVehicles = () => {
+export const FormUpdateVehicles = () => {
   const { modal, setModal } = useContext(ModalButtonContext);
   const [images, setImages] = useState([] as string[]);
-  const { vehiclesList, createNew, setVehiclesList, getNewDataForm } =
+  const { vehiclesList, patchAdvertiser, setVehiclesList, getNewDataForm } =
     useContext(VehiclesContext);
   const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
-  const navigate = useNavigate();
-  useEffect(() => {
-    try {
-    } catch (error) {}
-  }, []);
+  const { editId } = useContext(VehiclesContext);
+
+  const vehicleToEdit = dataFormVehicles.find(
+    (vehicle) => vehicle.id === editId
+  );
+
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
   };
@@ -32,19 +33,27 @@ export const FormVehicles = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<iFormVehicles>(/* { resolver: yupResolver(vehiclesSchema) } */);
+  } = useForm<iFormVehicles>({
+    defaultValues: vehicleToEdit,
+    resolver: yupResolver(vehiclesSchema),
+  });
+
   const selectedBrand = watch("brand");
 
   const submitedVehicles = (formData: iFormVehicles) => {
-    const parsedData = {
-      ...formData,
-      galleryImages: images,
-    };
+    try {
+      console.log("chegou aqui no submite 2");
+      const parsedData = {
+        ...formData,
+        galleryImages: images,
+      };
 
-    createNew(parsedData);
-    console.log("chegou aqui no submite 2");
-    getNewDataForm();
-    setModal(false);
+      patchAdvertiser(parsedData);
+      getNewDataForm();
+      setModal(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -53,7 +62,7 @@ export const FormVehicles = () => {
       onSubmit={handleSubmit(submitedVehicles)}
     >
       <div className="formHeader">
-        <h2>Criar Anúncio</h2>
+        <h2>Editar Anúncio</h2>
         <button
           type="button"
           className="buttonCloseModal"
@@ -100,6 +109,7 @@ export const FormVehicles = () => {
         <Input
           label="Ano"
           register={register("year")}
+          /*  value={} */
           placeholder="Ex: 2001"
           error={errors.year && errors.year.message}
         />
@@ -175,12 +185,21 @@ export const FormVehicles = () => {
           >
             Cancelar
           </button>
+          <button
+            color="alert1"
+            content="Deletar"
+            type="button"
+            className="buttonCloseModal"
+            onClick={() => setModal(false)}
+          >
+            Deletar
+          </button>
           <Button
             type="submit"
             color="brand3"
             size="default"
-            content="Criar anúncio"
-            disabled={Object.keys(errors).length > 0}
+            content="Editar anúncio"
+            /* disabled={Object.keys(errors).length > 0} */
           />
         </div>
       </div>

@@ -7,7 +7,7 @@ export const DivContainer = styled.div`
 `;
 const StyledModalDiv = styled.div`
   width: 100%;
-  height: 1000px;
+  height: 950px;
   display: flex;
   flex-direction: column;
   z-index: 20;

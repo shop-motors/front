@@ -23,8 +23,9 @@ export const UlFilters = styled.ul`
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow-y: scroll;
     @media (min-width: 768px) {
-      height: 45px;
+      height: 35px;
     }
   }
   h3 {
@@ -43,9 +44,9 @@ export const DivInputs = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 10px;
+  height: 30px;
 
-  div {
+  li {
     display: flex;
     flex-direction: row;
     gap: 7px;

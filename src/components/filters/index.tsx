@@ -8,7 +8,7 @@ export const Filters = () => {
 
   return (
     <DivMain>
-      <UlFilters onClick={()=> setClose(true)}>
+      <UlFilters onClick={() => setClose(true)}>
         <h3>Marcas</h3>
         {Array.from(new Set(cars.map((car) => car.brand))).map(
           (marca, index) => (
@@ -70,37 +70,17 @@ export const Filters = () => {
         )}
         <h3>Km</h3>
         <DivInputs>
-          <div>
-            {Array.from(new Set(cars.map((car) => car.km))).map(
-              (marca, index) => (
-                <li
-                  key={index}
-                  onChange={() =>
-                    setCars(cars.filter((car) => car.km === marca))
-                  }
-                >
-                  <input type="text" placeholder="Miníma" />
-                </li>
-              )
-            )}
-          </div>
+          <li onChange={() => setCars(cars.filter((car) => car.km))}>
+            <input type="text" placeholder="Miníma" />
+            <input type="text" placeholder="Máxíma" />
+          </li>
         </DivInputs>
         <h3>Preço</h3>
         <DivInputs>
-          <div>
-            {Array.from(new Set(cars.map((car) => car.price))).map(
-              (marca, index) => (
-                <LikmPrice
-                  key={index}
-                  onChange={() =>
-                    setCars(cars.filter((car) => car.price === marca))
-                  }
-                >
-                  <input type="text" placeholder="Miníma" />
-                </LikmPrice>
-              )
-            )}
-          </div>
+          <LikmPrice onChange={() => setCars(cars.filter((car) => car.price))}>
+            <input type="text" placeholder="Miníma" />
+            <input type="text" placeholder="Máxíma" />
+          </LikmPrice>
         </DivInputs>
         <BtnCloseFilter />
       </UlFilters>

@@ -60,6 +60,7 @@ export const LiCard = styled.li`
   max-width: 250px;
   height: 300px;
   margin-left: 10px;
+  background-color: var(--color-gray-7);
   img {
     width: 240px;
     height: 170px;
@@ -137,14 +138,64 @@ export const UlCardAdmin = styled.ul`
   flex-wrap: wrap;
   overflow-x: scroll;
   margin-left: 40px;
-  width: 90%;
+  width: 100%;
   margin-left: 60px;
-  gap: 50px;
+  gap: 40px;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 280px;
+    height: 460px;
+    margin-left: 10px;
+    background-color: var(--color-white);
+    object-fit: cover;
+    padding: 13px 13px 25px 13px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+
+    img {
+      width: 100%;
+      background-color: var(--color-gray-7);
+    }
+  }
+  .buttons {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    height: 40px;
+
+    .button {
+      font-size: var(--font-size-8);
+      width: 105px;
+      height: 38px;
+      color: var(--color-gray-1);
+      border-radius: 4px;
+      outline: none;
+      font-weight: 600;
+      background-color: var(--color-gray-10);
+      border: 2px solid var(--color-gray-1);
+    }
+  }
+
+  .divP {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    p {
+      padding: 5px;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+  }
 `;
 
 export const DivBtnFilter = styled.div`
   display: flex;
   margin-top: 40px;
+
   @media (min-width: 768px) {
     display: none;
   }

@@ -16,7 +16,11 @@ import {
 } from "./style";
 import { CarsContext } from "../../contexts/carsContext";
 import { ButtonPrevious } from "../Buttons/buttonPrevious";
-import { VehiclesContext } from "../../contexts/vehiclesContext";
+import { VehiclesContext, iFormVehicles } from "../../contexts/vehiclesContext";
+import { Navigate, useNavigate } from "react-router-dom";
+import ModalVehicles from "../Modals/ModalCreateVehicles";
+import { FormVehicles } from "../Form/FormCreateVehicles";
+import { FormUpdateVehicles } from "../Form/FormUpdateAdvertiser";
 
 export const Card = () => {
   const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
@@ -80,41 +84,67 @@ export const Card = () => {
   );
 };
 
-
 export const CardAdmin = () => {
-  const [vehiclesList, setVehiclesList] = useState(Array());
-  const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
+  const { dataFormVehicles, setShowCard } = useContext(VehiclesContext);
+  const { showCard } = useContext(VehiclesContext);
+  console.log(`aqui ${showCard}`);
+  const navigate = useNavigate();
+  /* console.log({ dataFormVehicles }); */
+  const handleClick = (item: iFormVehicles) => {
+    console.log(`aqui ${showCard}`);
+    setShowCard(item);
+    navigate("/products");
+  };
 
-  console.log({ dataFormVehicles });
-
+  /* console.log(dataFormVehicles); */
   return (
     <UlCardAdmin>
       {dataFormVehicles &&
         dataFormVehicles?.map((item: any, index: number) => (
-          <div key={item.name}>
-            <LiCard>
-              <img src={item.cover_img} alt="imagem de carro" />
+          <div key={item.id}>
+            {/* colocar um onclick na Li */}
+            <li>
+              <img
+                className="cover_img"
+                src={item.cover_img}
+                alt="imagem de carro"
+              />
               <DivLi>
-                <h3>{item.brand}</h3>
+                <h3>
+                  {item.brand} - {item.model}
+                </h3>
                 <p>{item.description}</p>
                 <DivUsuario>
                   <span>R</span>
                   <p>Usuario</p>
                 </DivUsuario>
                 <DivPrice>
-                  <div>
+                  <div className="divP">
                     <p>{item.km} km</p>
                     <p>{item.year}</p>
+                    <span>R$ {item.price}</span>
                   </div>
-                  <span>{item.price}</span>
                 </DivPrice>
+                <div className="buttons">
+                  <ModalVehicles
+                    id={item.id}
+                    size="default"
+                    color="border_dark_gray"
+                    content="Editar"
+                    type="button"
+                    children={<FormUpdateVehicles />}
+                    device={"desktop"}
+                    disabled={false}
+                  ></ModalVehicles>
+
+                  <button className="button" onClick={() => handleClick(item)}>
+                    Ver Detalhes
+                  </button>
+                </div>
               </DivLi>
-            </LiCard>
+            </li>
           </div>
         ))}
     </UlCardAdmin>
   );
 };
-
-
-

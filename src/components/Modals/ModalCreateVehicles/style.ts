@@ -47,6 +47,7 @@ const StyledModalDiv = styled.div`
 `;
 
 export const ModalComponent = styled.div<iDevice>`
+  min-width: 0;
   @media (${({ device }) =>
       device === "desktop" ? "max-width: 767px" : "min-width: 768px"}) {
     display: none;
