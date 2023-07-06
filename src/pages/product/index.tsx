@@ -19,6 +19,10 @@ export const ProductsDetail = () => {
   return (
     <StyledProducts>
       <NavBarProfile />
+
+      {showCard?.comments.length! > 0 && showCard?.comments.map((comment)=>{
+        return <div>{comment.content}</div>
+      })}
       <div className="content">
         <div className="backgroundBlue">
           <div className="products">
