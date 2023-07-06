@@ -25,15 +25,7 @@ export const AdvertiserPage = () => {
             voluptate! Magnam, voluptatum.
           </small>
 
-          <ModalVehicles
-            size="default"
-            color="border_blue"
-            content="Criar Anúncio"
-            type="button"
-            device={"desktop"}
-          >
-            <FormVehicles/>
-          </ModalVehicles>
+          <FormVehicles />
         </div>
       </div>
       <div className="cards">

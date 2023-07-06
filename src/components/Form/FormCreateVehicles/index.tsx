@@ -73,11 +73,12 @@ export const FormVehicles = () => {
           {...register("brand")}
           defaultValue=""
         >
-          {Object.keys(vehiclesList as IBrand)?.map((brand, index) => (
-            <option key={index} value={brand}>
-              {brand}
-            </option>
-          ))}
+          {vehiclesList &&
+            Object.keys(vehiclesList as IBrand)?.map((brand, index) => (
+              <option key={index} value={brand}>
+                {brand}
+              </option>
+            ))}
         </select>
         <label className="font-input-label" htmlFor="model">
           Modelo
