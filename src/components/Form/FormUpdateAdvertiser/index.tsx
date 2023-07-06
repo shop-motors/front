@@ -11,7 +11,6 @@ import {
   iFormVehicles,
 } from "../../../contexts/vehiclesContext";
 import { IBrand, IVehicles } from "../../../interfaces/vehiclesInterface";
-import { useNavigate } from "react-router-dom";
 
 export const FormUpdateVehicles = () => {
   const { modal, setModal } = useContext(ModalButtonContext);
@@ -25,11 +24,16 @@ export const FormUpdateVehicles = () => {
     (vehicle) => vehicle.id === editId
   );
 
+  //Usar o useffect pra monitorar o estado de imagens
+  //se tiver alteração ensse estado, usar o setValue do form pra definir
+  //galleryImg como primeiro argumento, segundo argumento o images(estado)
+
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
   };
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
     watch,
@@ -38,13 +42,18 @@ export const FormUpdateVehicles = () => {
     resolver: yupResolver(vehiclesSchema),
   });
 
+  useEffect(() => {
+    // Monitora o estado de 'images'
+    setValue("galleryImages", images);
+  }, [images, setValue]);
+
   const selectedBrand = watch("brand");
 
-  const submitedVehicles = (formData: iFormVehicles) => {
+  const submitedVehiclesUpdate = (formUpdateData: iFormVehicles) => {
     try {
-      console.log("chegou aqui no submite 2");
+      console.log("chegou aqui no submitedVehicles");
       const parsedData = {
-        ...formData,
+        ...formUpdateData,
         galleryImages: images,
       };
 
@@ -55,11 +64,12 @@ export const FormUpdateVehicles = () => {
       console.log(error);
     }
   };
-
+  /*  console.log(errors);
+   */
   return (
     <StyledVehiclesForm
       title="Criar Anúncio"
-      onSubmit={handleSubmit(submitedVehicles)}
+      onSubmit={handleSubmit(submitedVehiclesUpdate)}
     >
       <div className="formHeader">
         <h2>Editar Anúncio</h2>
@@ -199,6 +209,7 @@ export const FormUpdateVehicles = () => {
             color="brand3"
             size="default"
             content="Editar anúncio"
+            id={editId!}
             /* disabled={Object.keys(errors).length > 0} */
           />
         </div>
