@@ -153,11 +153,15 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const patchAdvertiser = async (data: iFormVehicles) => {
     const token = localStorage.getItem("@TOKEN");
     try {
-      const response = await api.patch<iFormVehicles>("vehicles", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.patch<iFormVehicles>(
+        `vehicles/${editId}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setDataFormVehicles((prevState) => [...prevState, response.data]);
       console.log(response.data);
     } catch (error: any) {

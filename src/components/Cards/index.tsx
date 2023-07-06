@@ -24,6 +24,7 @@ import { FormUpdateVehicles } from "../Form/FormUpdateAdvertiser";
 
 export const Card = () => {
   const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
+
   const formatPrice = (price: any) => {
     return price.toLocaleString("pt-BR", {
       style: "currency",
@@ -101,7 +102,7 @@ export const CardAdmin = () => {
     <UlCardAdmin>
       {dataFormVehicles &&
         dataFormVehicles?.map((item: any, index: number) => (
-          <div key={item.id}>
+          <div key={item.name}>
             {/* colocar um onclick na Li */}
             <li>
               <img
