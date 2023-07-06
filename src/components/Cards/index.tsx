@@ -18,6 +18,9 @@ import { CarsContext } from "../../contexts/carsContext";
 import { ButtonPrevious } from "../Buttons/buttonPrevious";
 import { VehiclesContext, iFormVehicles } from "../../contexts/vehiclesContext";
 import { Navigate, useNavigate } from "react-router-dom";
+import ModalVehicles from "../Modals/ModalCreateVehicles";
+import { FormVehicles } from "../Form/FormCreateVehicles";
+import { FormUpdateVehicles } from "../Form/FormUpdateAdvertiser";
 
 export const Card = () => {
   const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
@@ -83,14 +86,17 @@ export const Card = () => {
 
 export const CardAdmin = () => {
   const { dataFormVehicles, setShowCard } = useContext(VehiclesContext);
+  const { showCard } = useContext(VehiclesContext);
+  console.log(`aqui ${showCard}`);
   const navigate = useNavigate();
-  console.log({ dataFormVehicles });
+  /* console.log({ dataFormVehicles }); */
   const handleClick = (item: iFormVehicles) => {
+    console.log(`aqui ${showCard}`);
     setShowCard(item);
     navigate("/products");
   };
 
-  console.log(dataFormVehicles);
+  /* console.log(dataFormVehicles); */
   return (
     <UlCardAdmin>
       {dataFormVehicles &&
@@ -120,7 +126,17 @@ export const CardAdmin = () => {
                   </div>
                 </DivPrice>
                 <div className="buttons">
-                  <button className="button">Editar</button>
+                  <ModalVehicles
+                    id={item.id}
+                    size="default"
+                    color="border_dark_gray"
+                    content="Editar"
+                    type="button"
+                    children={<FormUpdateVehicles />}
+                    device={"desktop"}
+                    disabled={false}
+                  ></ModalVehicles>
+
                   <button className="button" onClick={() => handleClick(item)}>
                     Ver Detalhes
                   </button>

@@ -173,6 +173,7 @@ export const UlCardAdmin = styled.ul`
       color: var(--color-gray-1);
       border-radius: 4px;
       outline: none;
+      font-weight: 600;
       background-color: var(--color-gray-10);
       border: 2px solid var(--color-gray-1);
     }

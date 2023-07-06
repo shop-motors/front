@@ -13,7 +13,7 @@ import {
 import { api, apiKenzieCars } from "../services/api";
 
 export interface iFormVehicles {
-  id?: number;
+  id?: string;
   brand: string;
   model: string;
   year: string;
@@ -40,6 +40,9 @@ interface IVehiclesContext {
   getCommentaries: () => Promise<void>;
   setListComments: Dispatch<SetStateAction<ICommentResponse[]>>;
   listComments: ICommentResponse[];
+  editId: string | null;
+  setEditId: Dispatch<SetStateAction<string | null>>;
+  patchAdvertiser: (data: iFormVehicles) => Promise<void>;
 }
 
 export interface IComment {
@@ -63,6 +66,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   );
   const [showCard, setShowCard] = useState<iFormVehicles | null>(null);
   const [listComments, setListComments] = useState([] as ICommentResponse[]);
+  const [editId, setEditId] = useState<string | null>(null);
 
   useEffect(() => {
     const vehiclesLoad = async () => {
@@ -146,6 +150,21 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     }
   };
 
+  const patchAdvertiser = async (data: iFormVehicles) => {
+    const token = localStorage.getItem("@TOKEN");
+    try {
+      const response = await api.patch<iFormVehicles>("vehicles", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setDataFormVehicles((prevState) => [...prevState, response.data]);
+      console.log(response.data);
+    } catch (error: any) {
+      console.log(error.request.response);
+    }
+  };
+
   return (
     <VehiclesContext.Provider
       value={{
@@ -160,7 +179,10 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         createCommentary,
         getCommentaries,
         listComments,
-        setListComments
+        setListComments,
+        editId,
+        setEditId,
+        patchAdvertiser,
       }}
     >
       {children}
