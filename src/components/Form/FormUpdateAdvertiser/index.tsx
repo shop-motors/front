@@ -11,7 +11,6 @@ import {
   iFormVehicles,
 } from "../../../contexts/vehiclesContext";
 import { IBrand, IVehicles } from "../../../interfaces/vehiclesInterface";
-
 export const FormUpdateVehicles = () => {
   const { modal, setModal } = useContext(ModalButtonContext);
   const [images, setImages] = useState([] as string[]);
@@ -19,15 +18,12 @@ export const FormUpdateVehicles = () => {
     useContext(VehiclesContext);
   const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
   const { editId } = useContext(VehiclesContext);
-
   const vehicleToEdit = dataFormVehicles.find(
     (vehicle) => vehicle.id === editId
   );
-
   //Usar o useffect pra monitorar o estado de imagens
   //se tiver alteração ensse estado, usar o setValue do form pra definir
   //galleryImg como primeiro argumento, segundo argumento o images(estado)
-
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
   };
@@ -41,14 +37,11 @@ export const FormUpdateVehicles = () => {
     defaultValues: vehicleToEdit,
     resolver: yupResolver(vehiclesSchema),
   });
-
   useEffect(() => {
     // Monitora o estado de 'images'
     setValue("galleryImages", images);
   }, [images, setValue]);
-
   const selectedBrand = watch("brand");
-
   const submitedVehiclesUpdate = (formUpdateData: iFormVehicles) => {
     try {
       console.log("chegou aqui no submitedVehicles");
@@ -56,7 +49,6 @@ export const FormUpdateVehicles = () => {
         ...formUpdateData,
         galleryImages: images,
       };
-
       patchAdvertiser(parsedData);
       getNewDataForm();
       setModal(false);
@@ -68,11 +60,11 @@ export const FormUpdateVehicles = () => {
    */
   return (
     <StyledVehiclesForm
-      title="Criar Anúncio"
+      title="Editar Anúncio"
       onSubmit={handleSubmit(submitedVehiclesUpdate)}
     >
       <div className="formHeader">
-        <h2>Editar Anúncio</h2>
+        <h2>Testar</h2>
         <button
           type="button"
           className="buttonCloseModal"

@@ -32,7 +32,7 @@ export const FormVehicles = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<iFormVehicles>(/* { resolver: yupResolver(vehiclesSchema) } */);
+  } = useForm<iFormVehicles>({ resolver: yupResolver(vehiclesSchema) });
   const selectedBrand = watch("brand");
 
   const submitedVehicles = (formData: iFormVehicles) => {
