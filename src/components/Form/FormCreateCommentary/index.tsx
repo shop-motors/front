@@ -11,13 +11,9 @@ import { UserContexts } from "../../../contexts/userContexts";
 import { CardUser } from "../../CardUser";
 
 export const FormCreateCommentary = () => {
-  const { createCommentary } = useContext(VehiclesContext);
+  const { createCommentary, retriveVehicles } = useContext(VehiclesContext);
   const { userLoged } = useContext(UserContexts);
-
-  useEffect(()=> {
-
-  }, [])
-
+ 
   const {
     register,
     handleSubmit,
@@ -34,6 +30,8 @@ export const FormCreateCommentary = () => {
 
   const handleCreateCommentary: SubmitHandler<IComment> = (data: IComment) => {
     createCommentary(data);
+
+    retriveVehicles()
     reset();
   };
 

@@ -51,6 +51,18 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
     }
   };
 
+  const verifyUserLoged = () => {
+    const token = localStorage.getItem("@TOKEN");
+
+    if (token) {
+      const decoded: IDecoded = jwt_decode(token);
+
+      retriverUser(decoded.sub, token);
+    } else {
+      navigate("/login");
+    }
+  };
+
   const LoginUser = async (formLogin: IUserLogin) => {
     try {
       const response = await api.post<IuserResponse>("login", formLogin);
@@ -124,6 +136,7 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
         updateUser,
         deleteUser,
         userLoged,
+        verifyUserLoged,
       }}
     >
       {children}

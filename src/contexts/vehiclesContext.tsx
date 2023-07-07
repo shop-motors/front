@@ -2,6 +2,7 @@ import {
   Dispatch,
   SetStateAction,
   createContext,
+  useContext,
   useEffect,
   useState,
 } from "react";
@@ -10,6 +11,7 @@ import {
   IVehiclesProviderProps,
 } from "../interfaces/vehiclesInterface";
 import { api, apiKenzieCars } from "../services/api";
+import { UserContexts } from "./userContexts";
 
 export interface iFormVehicles {
   id?: string;
@@ -42,9 +44,12 @@ interface IVehiclesContext {
   editId: string | null;
   setEditId: Dispatch<SetStateAction<string | null>>;
   patchAdvertiser: (data: iFormVehicles) => Promise<void>;
+  retriveVehicles: () => Promise<void>;
   updateCommentary: (data: IComment, id: string) => Promise<void>;
   deleteCommentary: (id: string) => Promise<void>;
-  deleteCar: (id: string)=> Promise<void>
+  deleteCar: (id: string) => Promise<void>;
+  getVehiclesToShowCards: () => Promise<void>;
+  retriveVehicle: (id: string) => Promise<void>
 }
 
 export interface IComment {
@@ -67,16 +72,43 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     [] as iFormVehicles[]
   );
   const [showCard, setShowCard] = useState<iFormVehicles | null>(null);
+  const token = localStorage.getItem("@TOKEN");
   const [listComments, setListComments] = useState([] as ICommentResponse[]);
   const [editId, setEditId] = useState<string | null>(null);
+  const { verifyUserLoged } = useContext(UserContexts);
 
-  const token = localStorage.getItem("@TOKEN");
+  useEffect(() => {
+    const vehiclesLoad = async () => {
+      try {
+        const response = await apiKenzieCars.get<any>("vehicles");
+        const data = response.data;
+        setVehiclesList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    vehiclesLoad();
+  }, []);
 
   const getVehiclesToShowCards = async () => {
     const responseShowCards = await api.get("/vehicles");
     setDataFormVehicles(responseShowCards.data.data);
     setShowCard(responseShowCards.data.data);
   };
+
+  const retriveVehicle = async (id:string) => {
+    const token = localStorage.getItem("@TOKEN");
+    try {
+      const response = await api.get(`vehicles/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setShowCard(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const getNewDataForm = async () => {
     const token = localStorage.getItem("@TOKEN");
@@ -96,21 +128,25 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const createCommentary = async (data: IComment) => {
     const token = localStorage.getItem("@TOKEN");
     try {
-      await api.post(`/comments/${showCard?.id}`, data, {
+      const response = await api.post(`comments/${showCard?.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-
   const updateCommentary = async (data: IComment, id: string) => {
     const token = localStorage.getItem("@TOKEN");
 
     try {
+      const response = await api.get(`comments`);
+      console.log(response.data);
+      setListComments(response.data);
+
       await api.patch(`/comments/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -135,6 +171,19 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     }
   };
 
+  const retriveVehicles = async () => {
+    try {
+      const response = await api.get(`vehicles/${showCard?.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setShowCard(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const createNew = async (newData: iFormVehicles) => {
     const token = localStorage.getItem("@TOKEN");
     try {
@@ -153,7 +202,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         if (vehicleIndex !== -1) {
           updatedVehicles[vehicleIndex] = response.data;
         }
-                return updatedVehicles;
+        return updatedVehicles;
       });
 
       console.log(response.data);
@@ -163,7 +212,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   };
 
   const deleteCar = async (id: string) => {
-    console.log(showCard)
+    console.log(showCard);
     const token = localStorage.getItem("@TOKEN");
     try {
       await api.delete(`/vehicles/${id}`, {
@@ -171,23 +220,25 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       setDataFormVehicles((prevState) => {
-        const updatedVehicles = prevState.filter((vehicle) => vehicle.id !== id);
-  
+        const updatedVehicles = prevState.filter(
+          (vehicle) => vehicle.id !== id
+        );
+
         if (updatedVehicles.length > 0) {
-          setShowCard(updatedVehicles[0]); 
+          setShowCard(updatedVehicles[0]);
         } else {
-          setShowCard(null); 
+          setShowCard(null);
         }
-  
+
         return updatedVehicles;
       });
     } catch (error) {
       console.error(error);
     }
   };
-  
+
   const patchAdvertiser = async (data: iFormVehicles) => {
     const token = localStorage.getItem("@TOKEN");
     try {
@@ -220,7 +271,8 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     }
   };
 
-   const getCommentaries = async () => {
+  
+  const getCommentaries = async () => {
     try {
       const response = await api.get(`/comments`);
 
@@ -245,6 +297,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     getCommentaries();
 
     if (token) {
+      verifyUserLoged()
       getVehiclesToShowCards();
     }
   }, []);
@@ -269,7 +322,10 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         patchAdvertiser,
         updateCommentary,
         deleteCommentary,
-        deleteCar
+        deleteCar,
+        getVehiclesToShowCards,
+        retriveVehicle,
+        retriveVehicles
       }}
     >
       {children}

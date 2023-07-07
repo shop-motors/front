@@ -93,7 +93,12 @@ export const CardAdmin = () => {
   const navigate = useNavigate();
 
   const handleClick = (item: iFormVehicles) => {
-    console.log(`aqui ${showCard}`);
+    if (item.id) {
+      localStorage.setItem("@IDVEHICLE", item.id);
+    } else {
+      console.log("Id não adicionado no local storage");
+    }
+
     setShowCard(item);
     navigate("/products");
   };
