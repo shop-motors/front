@@ -4,6 +4,7 @@ import {
   DivContainerGalery,
   DivDescrição,
   DivGalery,
+  DivImg,
   DivKmYears,
   HeaderPage,
   StyledProducts,
@@ -21,22 +22,18 @@ import { UserContexts } from "../../contexts/userContexts";
 import { ModalEditCommentary } from "../../components/Modals/MotalEditCommentary";
 
 export const ProductsDetail = () => {
-
-  const { showCard, listComments, getCommentaries, setShowCard } =
-    useContext(VehiclesContext);
-  const { user } = useContext(UserContexts);
-  console.log(showCard);
-
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [idCommentary, setIdCommentary] = useState("");
-  const { showCard } = useContext(VehiclesContext);
+  const { showCard, CardProducts } = useContext(VehiclesContext);
   const { user } = useContext(UserContexts);
   return (
     <StyledProducts>
       <NavBarProfile />
       <HeaderPage>
         <DivCar>
-          <img src={imgCar} alt="imagem de carro" />
+          <DivImg>
+            <img src={CardProducts?.cover_img} alt="imagem de carro" />
+          </DivImg>
           <UlCars>
             <li>
               <h2>Mercedes benz A 200 cgi advance sedan mercedes benz a 200</h2>
@@ -84,8 +81,7 @@ export const ProductsDetail = () => {
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea enim
           veniam voluptas excepturi,jdbjfsdjjjjjjjjjjjjjjjjjjjjr
-          iddkmdsdkspaodksaopkdsoapd
-          jsdkkkjnfclkdsfm
+          iddkmdsdkspaodksaopkdsoapd jsdkkkjnfclkdsfm
         </p>
       </DivDescrição>
 

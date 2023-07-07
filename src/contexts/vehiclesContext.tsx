@@ -43,17 +43,16 @@ interface IVehiclesContext {
   editId: string | null;
   setEditId: Dispatch<SetStateAction<string | null>>;
   patchAdvertiser: (data: iFormVehicles) => Promise<void>;
-
-  retriveVehicles: () => Promise<void>;
-}
-
-export interface Ivehicles extends iFormVehicles {
-  comments: ICommentResponse[];
-
   updateCommentary: (data: IComment, id: string) => Promise<void>;
   deleteCommentary: (id: string) => Promise<void>;
-  deleteCar: (id: string)=> Promise<void>
+  deleteCar: (id: string) => Promise<void>;
+  retriveVehicles: () => Promise<void>;
+  setCardProducts: Dispatch<SetStateAction<iFormVehicles | null>>;
+  CardProducts: iFormVehicles | null;
+}
 
+export interface Ivehicles {
+  comments: ICommentResponse[];
 }
 
 export interface IComment {
@@ -76,9 +75,9 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     [] as iFormVehicles[]
   );
   const [showCard, setShowCard] = useState<Ivehicles | null>(null);
-  const token = localStorage.getItem("@TOKEN");
   const [listComments, setListComments] = useState([] as ICommentResponse[]);
   const [editId, setEditId] = useState<string | null>(null);
+  const [CardProducts, setCardProducts] = useState<iFormVehicles | null>(null);
 
   useEffect(() => {
     const vehiclesLoad = async () => {
@@ -119,7 +118,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const createCommentary = async (data: IComment) => {
     try {
       const response = await api.post(
-        `comments/261cd8e8-f136-4e38-88e9-afb645b191b8`,
+        `comments/b1fc7892-f006-47cb-8bc8-f7b4df040c8c`,
         data,
         {
           headers: {
@@ -133,12 +132,10 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     }
   };
 
-
   const updateCommentary = async (data: IComment, id: string) => {
     const token = localStorage.getItem("@TOKEN");
 
     try {
-
       const response = await api.get(`comments`);
       console.log(response.data);
       setListComments(response.data);
@@ -162,7 +159,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
           Authorization: `Bearer ${token}`,
         },
       });
-
     } catch (error) {
       console.log(error);
     }
@@ -171,7 +167,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const retriveVehicles = async () => {
     try {
       const response = await api.get(
-        `vehicles/261cd8e8-f136-4e38-88e9-afb645b191b8`,
+        `vehicles/b1fc7892-f006-47cb-8bc8-f7b4df040c8c`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -203,7 +199,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         if (vehicleIndex !== -1) {
           updatedVehicles[vehicleIndex] = response.data;
         }
-                return updatedVehicles;
+        return updatedVehicles;
       });
 
       console.log(response.data);
@@ -213,7 +209,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   };
 
   const deleteCar = async (id: string) => {
-    console.log(showCard)
+    console.log(showCard);
     const token = localStorage.getItem("@TOKEN");
     try {
       await api.delete(`/vehicles/${id}`, {
@@ -221,34 +217,28 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       setDataFormVehicles((prevState) => {
-        const updatedVehicles = prevState.filter((vehicle) => vehicle.id !== id);
-  
+        const updatedVehicles = prevState.filter(
+          (vehicle) => vehicle.id !== id
+        );
+
         if (updatedVehicles.length > 0) {
-          setShowCard(updatedVehicles[0]); 
+          setShowCard(updatedVehicles[0]);
         } else {
-          setShowCard(null); 
+          setShowCard(null);
         }
-  
+
         return updatedVehicles;
       });
     } catch (error) {
       console.error(error);
     }
   };
-  
+
   const patchAdvertiser = async (data: iFormVehicles) => {
     const token = localStorage.getItem("@TOKEN");
     try {
-
-      const response = await api.patch<iFormVehicles>("vehicles", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setDataFormVehicles((prevState) => [...prevState, response.data]);
-
       const response = await api.patch<iFormVehicles>(
         `vehicles/${editId}`,
         data,
@@ -272,15 +262,13 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         return updatedVehicles;
       });
 
-
       console.log(response.data);
     } catch (error: any) {
       console.log(error.request.response);
     }
   };
 
-
-   const getCommentaries = async () => {
+  const getCommentaries = async () => {
     try {
       const response = await api.get(`/comments`);
 
@@ -309,7 +297,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     }
   }, []);
 
-
   return (
     <VehiclesContext.Provider
       value={{
@@ -331,8 +318,9 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         retriveVehicles,
         updateCommentary,
         deleteCommentary,
-        deleteCar
-
+        deleteCar,
+        setCardProducts,
+        CardProducts,
       }}
     >
       {children}
