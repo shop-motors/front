@@ -4,6 +4,7 @@ import {
   DivContainerGalery,
   DivDescrição,
   DivGalery,
+  DivImg,
   DivKmYears,
   HeaderPage,
   StyledProducts,
@@ -32,7 +33,9 @@ export const ProductsDetail = () => {
       <NavBarProfile />
       <HeaderPage>
         <DivCar>
-          <img src={imgCar} alt="imagem de carro" />
+          <DivImg>
+            <img src={showCard?.cover_img} alt="imagem de carro" />
+          </DivImg>
           <UlCars>
             <li>
               <h2>Mercedes benz A 200 cgi advance sedan mercedes benz a 200</h2>
@@ -80,8 +83,7 @@ export const ProductsDetail = () => {
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea enim
           veniam voluptas excepturi,jdbjfsdjjjjjjjjjjjjjjjjjjjjr
-          iddkmdsdkspaodksaopkdsoapd
-          jsdkkkjnfclkdsfm
+          iddkmdsdkspaodksaopkdsoapd jsdkkkjnfclkdsfm
         </p>
       </DivDescrição>
 
