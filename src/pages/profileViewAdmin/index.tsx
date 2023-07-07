@@ -1,4 +1,4 @@
-import { NavBar, NavBarProfile } from "../../components/Nav";
+import { NavBarProfile } from "../../components/Nav";
 import { StyledProducts } from "./style";
 import ImgProfile from "../../images/leia.jpeg";
 import { CardAdmin } from "../../components/Cards";
@@ -30,9 +30,10 @@ export const AdvertiserPage = () => {
             color="border_blue"
             content="Criar Anúncio"
             type="button"
-            children={<FormVehicles />}
             device={"desktop"}
-          ></ModalVehicles>
+          >
+            <FormVehicles />
+          </ModalVehicles>
         </div>
       </div>
       <div className="cards">

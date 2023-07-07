@@ -15,18 +15,22 @@ import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
 import { Footer } from "../../components/Footer";
 import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
-// import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
-import { useEffect, useContext } from "react";
-import { captureRejectionSymbol } from "events";
+import { useContext, useState } from "react";
 import { VehiclesContext } from "../../contexts/vehiclesContext";
 import { UserContexts } from "../../contexts/userContexts";
+import { ModalEditCommentary } from "../../components/Modals/MotalEditCommentary";
 
 export const ProductsDetail = () => {
+
   const { showCard, listComments, getCommentaries, setShowCard } =
     useContext(VehiclesContext);
   const { user } = useContext(UserContexts);
   console.log(showCard);
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [idCommentary, setIdCommentary] = useState("");
+  const { showCard } = useContext(VehiclesContext);
+  const { user } = useContext(UserContexts);
   return (
     <StyledProducts>
       <NavBarProfile />
@@ -104,6 +108,13 @@ export const ProductsDetail = () => {
       </ul>
 
       <FormCreateCommentary />
+      {isOpenModal && (
+        <ModalEditCommentary
+          closeModal={() => setIsOpenModal(false)}
+          description="Editar Comentario"
+          id={idCommentary}
+        />
+      )}
       <Footer />
     </StyledProducts>
   );

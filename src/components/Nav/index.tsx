@@ -16,6 +16,8 @@ import { BtnsNav } from "../Buttons/buttonLogCad";
 import { useContext } from "react";
 import { CarsContext } from "../../contexts/carsContext";
 import { ModalUpdateUser } from "../Modals/ModalUpdateUser";
+import { UserContexts } from "../../contexts/userContexts";
+import { CardUser } from "../CardUser";
 
 export const NavBar = () => {
   const { openBtns } = useContext(CarsContext);
@@ -53,6 +55,8 @@ export const NavBar = () => {
 };
 
 export const NavBarProfile = () => {
+  const {userLoged} = useContext(UserContexts)
+  
   return (
     <DivContainerProfile>
       <div className="containerProfile">
@@ -65,10 +69,7 @@ export const NavBarProfile = () => {
           </button>
         </ButtonMenu>
         <DivButtonsProfile>
-          <div className="imgProfile">
-            <img src={ImgProfile} alt="" />
-            <p>Leia Organa</p>
-          </div>
+          {userLoged && <CardUser name={userLoged.name} />}
           <ModalUpdateUser />
         </DivButtonsProfile>
       </div>
