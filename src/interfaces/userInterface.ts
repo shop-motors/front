@@ -11,7 +11,7 @@ export interface IProviderValue {
   registerUser: (data: IUserRegister) => Promise<void>;
   updateUser: (data: IUserUpdate) => Promise<void>;
   deleteUser: () => Promise<void>;
-  userLoged: IUser
+  userLoged: IUser | null
 }
 
 export interface IuserResp {

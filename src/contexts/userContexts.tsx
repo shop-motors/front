@@ -33,7 +33,7 @@ export const UserContexts = createContext({} as IProviderValue);
 
 export const UserProviders = ({ children }: iUserProviderProps) => {
   const [user, setUser] = useState<IuserResponse | null>(null);
-  const [userLoged, setUserLoged] = useState({} as IUser);
+  const [userLoged, setUserLoged] = useState<IUser | null>(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("@TOKEN");
 
