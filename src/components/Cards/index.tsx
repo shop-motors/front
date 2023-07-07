@@ -1,4 +1,4 @@
-import ImgCar from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1 (1).png";
+
 import Modal from "../Modals";
 import { Filters } from "../filters";
 import { useContext, useState, useEffect } from "react";
@@ -13,6 +13,7 @@ import {
   LiCard,
   UlCard,
   UlCardAdmin,
+  StyledSectionLoadingImg
 } from "./style";
 import { CarsContext } from "../../contexts/carsContext";
 import { ButtonPrevious } from "../Buttons/buttonPrevious";
@@ -23,6 +24,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { FormUpdateVehicles } from "../Form/FormUpdateAdvertiser";
 import ModalUpdate from "../Modals/ModalUpdateVehicles";
+import exercise from "../../../public/exercise.webp"
 
 export const Card = () => {
   const { cars, paginationCount, page } = useContext(CarsContext);
@@ -105,8 +107,9 @@ export const CardAdmin = () => {
   };
 
   return (
+    dataFormVehicles && dataFormVehicles.length > 0 ?(
     <UlCardAdmin>
-      {dataFormVehicles &&
+      {
         dataFormVehicles.map((item: any, index: number) => (
           <div key={item.id}>
             <li>
@@ -150,7 +153,10 @@ export const CardAdmin = () => {
               </DivLi>
             </li>
           </div>
-        ))}
+        ))} 
     </UlCardAdmin>
-  );
-};
+  ): <StyledSectionLoadingImg>
+    <h2>Você não possui anúncios. Prepare-se para anunciar!</h2>
+  <img className=".imgExercise" src={exercise} alt="Prepare-se para anunciar!"/>
+</StyledSectionLoadingImg>
+)};

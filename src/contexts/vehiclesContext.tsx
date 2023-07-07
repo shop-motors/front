@@ -234,7 +234,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   };
 
   const deleteCar = async (id: string) => {
-    console.log(showCard);
     const token = localStorage.getItem("@TOKEN");
     try {
       await api.delete(`/vehicles/${id}`, {
@@ -250,6 +249,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
         return updatedVehicles;
       });
+      console.log(dataFormVehicles)
     } catch (error) {
       console.error(error);
     }
