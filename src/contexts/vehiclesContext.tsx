@@ -83,7 +83,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   useEffect(() => {
     const vehiclesLoad = async () => {
       try {
-        const response = await apiKenzieCars.get<any>("vehicles");
+        const response = await apiKenzieCars.get<any>("cars");
         const data = response.data;
         setVehiclesList(data);
       } catch (error) {
@@ -96,7 +96,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   useEffect(() => {
     const vehiclesLoad = async () => {
       try {
-        const response = await apiKenzieCars.get<any>("vehicles");
+        const response = await apiKenzieCars.get<any>("cars");
         const data = response.data;
         setVehiclesList(data);
       } catch (error) {
@@ -151,7 +151,9 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         },
       });
 
-      retriveVehicle(showCard?.id);
+      if (showCard?.id){
+        retriveVehicle(showCard.id);
+      }
 
       console.log(response.data);
     } catch (error) {
