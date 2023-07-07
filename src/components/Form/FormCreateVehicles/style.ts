@@ -53,6 +53,10 @@ export const StyledVehiclesForm = styled.form`
     display: flex;
     justify-content: end;
     width: 100%;
+
+    button {
+      font-size: var(--font-size-7);
+    }
   }
 
   .buttons {

@@ -1,7 +1,7 @@
 import ImgCar from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1 (1).png";
 import Modal from "../Modals";
 import { Filters } from "../filters";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   ContainerDiv,
   DivBtnFilter,
@@ -21,6 +21,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import ModalVehicles from "../Modals/ModalCreateVehicles";
 import { FormVehicles } from "../Form/FormCreateVehicles";
 import { FormUpdateVehicles } from "../Form/FormUpdateAdvertiser";
+import ModalUpdate from "../Modals/ModalUpdateVehicles";
 
 export const Card = () => {
   const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
@@ -87,22 +88,21 @@ export const Card = () => {
 
 export const CardAdmin = () => {
   const { dataFormVehicles, setShowCard } = useContext(VehiclesContext);
-  const { showCard } = useContext(VehiclesContext);
+  const { showCard, setDataFormVehicles } = useContext(VehiclesContext);
   console.log(`aqui ${showCard}`);
   const navigate = useNavigate();
-  /* console.log({ dataFormVehicles }); */
+
   const handleClick = (item: iFormVehicles) => {
     console.log(`aqui ${showCard}`);
     setShowCard(item);
     navigate("/products");
   };
 
-  /* console.log(dataFormVehicles); */
   return (
     <UlCardAdmin>
       {dataFormVehicles &&
-        dataFormVehicles?.map((item: any, index: number) => (
-          <div key={item.name}>
+        dataFormVehicles.map((item: any, index: number) => (
+          <div key={item.id}>
             {/* colocar um onclick na Li */}
             <li>
               <img
@@ -127,16 +127,16 @@ export const CardAdmin = () => {
                   </div>
                 </DivPrice>
                 <div className="buttons">
-                  <ModalVehicles
+                  <ModalUpdate
                     id={item.id}
                     size="default"
                     color="border_dark_gray"
                     content="Editar"
                     type="button"
-                    children={<FormUpdateVehicles />}
                     device={"desktop"}
-                    disabled={false}
-                  ></ModalVehicles>
+                  >
+                    <FormUpdateVehicles />
+                  </ModalUpdate>
 
                   <button className="button" onClick={() => handleClick(item)}>
                     Ver Detalhes

@@ -104,11 +104,9 @@ export const FormUpdateUser = () => {
           />
           <Button
             type="submit"
-            // color={!isDirty || !isValid ? "brand3" : "brand1"}
             color="brand1"
             size="large"
             content="Finalizar Cadastro"
-            // disabled={!isDirty || !isValid}
           />
         </InputGroup>
       </Form>

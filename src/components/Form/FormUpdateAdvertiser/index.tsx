@@ -11,15 +11,14 @@ import {
   iFormVehicles,
 } from "../../../contexts/vehiclesContext";
 import { IBrand, IVehicles } from "../../../interfaces/vehiclesInterface";
-
 export const FormUpdateVehicles = () => {
   const { modal, setModal } = useContext(ModalButtonContext);
   const [images, setImages] = useState([] as string[]);
   const { vehiclesList, patchAdvertiser, setVehiclesList, getNewDataForm } =
     useContext(VehiclesContext);
-  const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
+  const { dataFormVehicles, deleteCar } = useContext(VehiclesContext);
+  const { updateModal, setUpdateModal } = useContext(ModalButtonContext);
   const { editId } = useContext(VehiclesContext);
-
   const vehicleToEdit = dataFormVehicles.find(
     (vehicle) => vehicle.id === editId
   );
@@ -27,7 +26,6 @@ export const FormUpdateVehicles = () => {
   //Usar o useffect pra monitorar o estado de imagens
   //se tiver alteração ensse estado, usar o setValue do form pra definir
   //galleryImg como primeiro argumento, segundo argumento o images(estado)
-
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
   };
@@ -41,12 +39,10 @@ export const FormUpdateVehicles = () => {
     defaultValues: vehicleToEdit,
     resolver: yupResolver(vehiclesSchema),
   });
-
   useEffect(() => {
     // Monitora o estado de 'images'
     setValue("galleryImages", images);
   }, [images, setValue]);
-
   const selectedBrand = watch("brand");
 
   const submitedVehiclesUpdate = (formUpdateData: iFormVehicles) => {
@@ -56,10 +52,9 @@ export const FormUpdateVehicles = () => {
         ...formUpdateData,
         galleryImages: images,
       };
-
       patchAdvertiser(parsedData);
       getNewDataForm();
-      setModal(false);
+      setUpdateModal(false);
     } catch (error) {
       console.log(error);
     }
@@ -68,15 +63,15 @@ export const FormUpdateVehicles = () => {
    */
   return (
     <StyledVehiclesForm
-      title="Criar Anúncio"
+      title="Editar Anúncio"
       onSubmit={handleSubmit(submitedVehiclesUpdate)}
     >
       <div className="formHeader">
-        <h2>Editar Anúncio</h2>
+        <h2>Testar</h2>
         <button
           type="button"
           className="buttonCloseModal"
-          onClick={() => setModal(false)}
+          onClick={() => setUpdateModal(!updateModal)}
         >
           x
         </button>
@@ -191,7 +186,7 @@ export const FormUpdateVehicles = () => {
             content="Cancelar"
             type="button"
             className="buttonCloseModal"
-            onClick={() => setModal(false)}
+            onClick={() => setUpdateModal(!updateModal)}
           >
             Cancelar
           </button>
@@ -200,7 +195,9 @@ export const FormUpdateVehicles = () => {
             content="Deletar"
             type="button"
             className="buttonCloseModal"
-            onClick={() => setModal(false)}
+            onClick={() =>{ 
+              deleteCar(editId!)
+              setUpdateModal(!updateModal)}}
           >
             Deletar
           </button>

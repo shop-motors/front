@@ -40,20 +40,6 @@ export const Container = styled.section`
   }
 `;
 
-export const UserContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
-  width: max-content;
-
-  img {
-    width: 2.6875rem;
-    height: 2.6875rem;
-    border-radius: 50%;
-  }
-`;
-
 export const SentencesContainer = styled.div`
   display: flex;
   gap: 0.5rem;

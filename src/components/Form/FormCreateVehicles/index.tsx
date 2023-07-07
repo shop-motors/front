@@ -1,7 +1,6 @@
 import { Input } from "../../Input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "../../Buttons";
 import { vehiclesSchema } from "../FormCreateVehicles/createVehicles.schema";
 import { useContext, useEffect, useState } from "react";
 import { StyledVehiclesForm } from "./style";
@@ -10,41 +9,52 @@ import {
   VehiclesContext,
   iFormVehicles,
 } from "../../../contexts/vehiclesContext";
-import { IBrand, IVehicles } from "../../../interfaces/vehiclesInterface";
+import { IBrand } from "../../../interfaces/vehiclesInterface";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../Buttons";
 
 export const FormVehicles = () => {
-  const { modal, setModal } = useContext(ModalButtonContext);
+  const { setModal } = useContext(ModalButtonContext);
   const [images, setImages] = useState([] as string[]);
-  const { vehiclesList, createNew, setVehiclesList, getNewDataForm } =
+  const { vehiclesList, createNew, getNewDataForm } =
     useContext(VehiclesContext);
-  const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
-  const navigate = useNavigate();
-  useEffect(() => {
-    try {
-    } catch (error) {}
-  }, []);
+
   const handleChange = (event: React.FocusEvent<HTMLInputElement>) => {
     setImages([...images, event.target.value]);
   };
+  const navigate = useNavigate();
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<iFormVehicles>(/* { resolver: yupResolver(vehiclesSchema) } */);
+  } = useForm<iFormVehicles>({
+    mode: "onBlur",
+    resolver: yupResolver(vehiclesSchema),
+  });
+
+  useEffect(() => {
+    // Monitora o estado de 'images'
+    setValue("galleryImages", images);
+  }, [images, setValue]);
   const selectedBrand = watch("brand");
 
   const submitedVehicles = (formData: iFormVehicles) => {
-    const parsedData = {
-      ...formData,
-      galleryImages: images,
-    };
+    try {
+      const parsedData = {
+        ...formData,
+        galleryImages: images,
+      };
 
-    createNew(parsedData);
-    console.log("chegou aqui no submite 2");
-    getNewDataForm();
-    setModal(false);
+      createNew(parsedData);
+      console.log("chegou aqui no submite 2");
+      getNewDataForm();
+      setModal(false);
+      window.location.reload();
+    } catch (error) {
+      console.log(errors);
+    }
   };
 
   return (
@@ -73,11 +83,12 @@ export const FormVehicles = () => {
           {...register("brand")}
           defaultValue=""
         >
-          {Object.keys(vehiclesList as IBrand)?.map((brand, index) => (
-            <option key={index} value={brand}>
-              {brand}
-            </option>
-          ))}
+          {vehiclesList &&
+            Object.keys(vehiclesList as IBrand)?.map((brand, index) => (
+              <option key={index} value={brand}>
+                {brand}
+              </option>
+            ))}
         </select>
         <label className="font-input-label" htmlFor="model">
           Modelo
@@ -175,6 +186,7 @@ export const FormVehicles = () => {
           >
             Cancelar
           </button>
+
           <Button
             type="submit"
             color="brand3"
