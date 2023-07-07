@@ -1,7 +1,7 @@
 import ImgCar from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1 (1).png";
 import Modal from "../Modals";
 import { Filters } from "../filters";
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from "react";
 import {
   ContainerDiv,
   DivBtnFilter,
@@ -21,6 +21,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import ModalVehicles from "../Modals/ModalCreateVehicles";
 import { FormVehicles } from "../Form/FormCreateVehicles";
 import { FormUpdateVehicles } from "../Form/FormUpdateAdvertiser";
+import ModalUpdate from "../Modals/ModalUpdateVehicles";
 
 export const Card = () => {
   const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
@@ -97,7 +98,6 @@ export const CardAdmin = () => {
     navigate("/products");
   };
 
- 
   return (
     <UlCardAdmin>
       {dataFormVehicles &&
@@ -127,17 +127,16 @@ export const CardAdmin = () => {
                   </div>
                 </DivPrice>
                 <div className="buttons">
-                  <ModalVehicles
+                  <ModalUpdate
                     id={item.id}
                     size="default"
                     color="border_dark_gray"
                     content="Editar"
                     type="button"
                     device={"desktop"}
-                    disabled={false}
                   >
-                    <FormUpdateVehicles/>
-                  </ModalVehicles>
+                    <FormUpdateVehicles />
+                  </ModalUpdate>
 
                   <button className="button" onClick={() => handleClick(item)}>
                     Ver Detalhes

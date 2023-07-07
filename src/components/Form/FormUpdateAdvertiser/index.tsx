@@ -17,6 +17,7 @@ export const FormUpdateVehicles = () => {
   const { vehiclesList, patchAdvertiser, setVehiclesList, getNewDataForm } =
     useContext(VehiclesContext);
   const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
+  const { updateModal, setUpdateModal } = useContext(ModalButtonContext);
   const { editId } = useContext(VehiclesContext);
   const vehicleToEdit = dataFormVehicles.find(
     (vehicle) => vehicle.id === editId
@@ -42,6 +43,7 @@ export const FormUpdateVehicles = () => {
     setValue("galleryImages", images);
   }, [images, setValue]);
   const selectedBrand = watch("brand");
+
   const submitedVehiclesUpdate = (formUpdateData: iFormVehicles) => {
     try {
       console.log("chegou aqui no submitedVehicles");
@@ -51,7 +53,7 @@ export const FormUpdateVehicles = () => {
       };
       patchAdvertiser(parsedData);
       getNewDataForm();
-      setModal(false);
+      setUpdateModal(false);
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +70,7 @@ export const FormUpdateVehicles = () => {
         <button
           type="button"
           className="buttonCloseModal"
-          onClick={() => setModal(false)}
+          onClick={() => setUpdateModal(!updateModal)}
         >
           x
         </button>
@@ -183,7 +185,7 @@ export const FormUpdateVehicles = () => {
             content="Cancelar"
             type="button"
             className="buttonCloseModal"
-            onClick={() => setModal(false)}
+            onClick={() => setUpdateModal(!updateModal)}
           >
             Cancelar
           </button>

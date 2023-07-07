@@ -1,6 +1,8 @@
 export interface iModalButtonContext {
   modal: boolean;
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setUpdateModal: React.Dispatch<React.SetStateAction<boolean>>;
+  updateModal: boolean;
 }
 export interface iModalButtonProvider {
   children: React.ReactNode;

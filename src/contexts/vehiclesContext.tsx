@@ -7,11 +7,9 @@ import {
 } from "react";
 import {
   IBrand,
-  IVehicles,
   IVehiclesProviderProps,
 } from "../interfaces/vehiclesInterface";
 import { api, apiKenzieCars } from "../services/api";
-
 
 export interface iFormVehicles {
   id?: string;
@@ -68,15 +66,15 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const [showCard, setShowCard] = useState<iFormVehicles | null>(null);
   const [listComments, setListComments] = useState([] as ICommentResponse[]);
   const [editId, setEditId] = useState<string | null>(null);
+
   const token = localStorage.getItem("@TOKEN");
- 
-  
+
   const getVehiclesToShowCards = async () => {
-      const responseShowCards = await api.get("/vehicles");
-      setDataFormVehicles(responseShowCards.data.data);
-      setShowCard(responseShowCards.data.data);
-    };
-    
+    const responseShowCards = await api.get("/vehicles");
+    setDataFormVehicles(responseShowCards.data.data);
+    setShowCard(responseShowCards.data.data);
+  };
+
   const getNewDataForm = async () => {
     const token = localStorage.getItem("@TOKEN");
     try {
@@ -91,8 +89,8 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
       console.log(error);
     }
   };
-  
-   const createCommentary = async (data: IComment) => {
+
+  const createCommentary = async (data: IComment) => {
     const token = localStorage.getItem("@TOKEN");
     try {
       await api.post(`/comments/${showCard?.id}`, data, {
@@ -104,7 +102,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
       console.log(error);
     }
   };
-  
+
   const createNew = async (newData: iFormVehicles) => {
     console.log(
       `Aqui vem o newData do createNew ${JSON.stringify(newData, null, 2)}`
@@ -116,26 +114,26 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       setDataFormVehicles((prevState) => {
         const updatedVehicles = [...prevState];
         const vehicleIndex = updatedVehicles.findIndex(
           (vehicle) => vehicle.id === editId
         );
-  
+
         if (vehicleIndex !== -1) {
           updatedVehicles[vehicleIndex] = response.data;
         }
-  
+
         return updatedVehicles;
       });
-  
+
       console.log(response.data);
     } catch (error: any) {
       console.log(error.request.response);
     }
   };
-  
+
   const patchAdvertiser = async (data: iFormVehicles) => {
     const token = localStorage.getItem("@TOKEN");
     try {
@@ -153,15 +151,15 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         const vehicleIndex = updatedVehicles.findIndex(
           (vehicle) => vehicle.id === editId
         );
-  
+
         if (vehicleIndex !== -1) {
           updatedVehicles[vehicleIndex] = response.data;
           setShowCard(updatedVehicles[vehicleIndex]); // Update showCard here
         }
-  
+
         return updatedVehicles;
       });
-  
+
       console.log(response.data);
     } catch (error: any) {
       console.log(error.request.response);
@@ -171,32 +169,30 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const getCommentaries = async () => {
     try {
       const response = await api.get(`/comments`);
-  
+
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-useEffect(() => {
-  const vehiclesLoad = async () => {
-    try {
-      const response = await apiKenzieCars.get<any>("cars");
-      const data = response.data;
-      setVehiclesList(data);
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    const vehiclesLoad = async () => {
+      try {
+        const response = await apiKenzieCars.get<any>("cars");
+        const data = response.data;
+        setVehiclesList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    vehiclesLoad();
+
+    getCommentaries();
+
+    if (token) {
+      getVehiclesToShowCards();
     }
-  };
-vehiclesLoad()
-
-
-getCommentaries()
-
-if (token){
-  getVehiclesToShowCards()
-}
-}, [])
-
+  }, []);
 
   return (
     <VehiclesContext.Provider
