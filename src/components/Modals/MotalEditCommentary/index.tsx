@@ -4,20 +4,25 @@ import { Button } from "../../Buttons";
 import { InputGroup } from "../../Input/style";
 import { Form } from "../../Form";
 import { useForm } from "react-hook-form";
-import { IComment } from "../../../contexts/vehiclesContext";
+import { IComment, VehiclesContext } from "../../../contexts/vehiclesContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createCommentarySchema } from "../../Form/FormCreateCommentary/createCommentarySchema";
 import { Input } from "../../Input";
+import { useContext } from "react";
 
 interface ModalEditCommentaryProps {
   description: string;
   closeModal: () => void;
+  id: string;
 }
 
 export const ModalEditCommentary = ({
   description,
   closeModal,
+  id,
 }: ModalEditCommentaryProps) => {
+  const { updateCommentary } = useContext(VehiclesContext);
+
   const {
     register,
     handleSubmit,
@@ -25,7 +30,7 @@ export const ModalEditCommentary = ({
   } = useForm<IComment>({ resolver: yupResolver(createCommentarySchema) });
 
   const onSubmit = (data: IComment) => {
-    console.log(data);
+    updateCommentary(data, id);
   };
 
   return (

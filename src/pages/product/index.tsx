@@ -11,7 +11,8 @@ import { UserContexts } from "../../contexts/userContexts";
 import { ModalEditCommentary } from "../../components/Modals/MotalEditCommentary";
 
 export const ProductsDetail = () => {
-  const [isOpenModal, setIsOpenModal] = useState(true);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [idCommentary, setIdCommentary] = useState("");
   const { showCard } = useContext(VehiclesContext);
   const { user } = useContext(UserContexts);
 
@@ -139,6 +140,7 @@ export const ProductsDetail = () => {
         <ModalEditCommentary
           closeModal={() => setIsOpenModal(false)}
           description="Editar Comentario"
+          id={idCommentary}
         />
       )}
       <Footer />

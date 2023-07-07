@@ -43,6 +43,8 @@ interface IVehiclesContext {
   editId: string | null;
   setEditId: Dispatch<SetStateAction<string | null>>;
   patchAdvertiser: (data: iFormVehicles) => Promise<void>;
+  updateCommentary: (data: IComment, id: string) => Promise<void>;
+  deleteCommentary: (id: string) => Promise<void>;
 }
 
 export interface IComment {
@@ -80,16 +82,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     };
     vehiclesLoad();
 
-    const getCommentaries = async () => {
-      try {
-        const response = await api.get(`/comments`);
-
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     getCommentaries();
   }, []);
 
@@ -126,6 +118,34 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
       const response = await api.get(`/comments`);
 
       setListComments(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateCommentary = async (data: IComment, id: string) => {
+    const token = localStorage.getItem("@TOKEN");
+
+    try {
+      await api.patch(`/comments/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteCommentary = async (id: string) => {
+    const token = localStorage.getItem("@TOKEN");
+
+    try {
+      await api.delete(`/comments/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -187,6 +207,8 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         editId,
         setEditId,
         patchAdvertiser,
+        updateCommentary,
+        deleteCommentary
       }}
     >
       {children}
