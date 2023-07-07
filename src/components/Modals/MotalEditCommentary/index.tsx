@@ -14,12 +14,14 @@ interface ModalEditCommentaryProps {
   description: string;
   closeModal: () => void;
   id: string;
+  commentary: string;
 }
 
 export const ModalEditCommentary = ({
   description,
   closeModal,
   id,
+  commentary,
 }: ModalEditCommentaryProps) => {
   const { updateCommentary } = useContext(VehiclesContext);
 
@@ -27,10 +29,14 @@ export const ModalEditCommentary = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IComment>({ resolver: yupResolver(createCommentarySchema) });
+  } = useForm<IComment>({
+    defaultValues: { content: commentary },
+    resolver: yupResolver(createCommentarySchema),
+  });
 
   const onSubmit = (data: IComment) => {
     updateCommentary(data, id);
+    closeModal()
   };
 
   return (
