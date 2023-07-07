@@ -22,15 +22,9 @@ import { UserContexts } from "../../contexts/userContexts";
 import { ModalEditCommentary } from "../../components/Modals/MotalEditCommentary";
 
 export const ProductsDetail = () => {
-
-  const { showCard, listComments, getCommentaries, setShowCard } =
-    useContext(VehiclesContext);
-  const { user } = useContext(UserContexts);
-  console.log(showCard);
-
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [idCommentary, setIdCommentary] = useState("");
-  const { showCard } = useContext(VehiclesContext);
+  const { showCard, CardProducts } = useContext(VehiclesContext);
   const { user } = useContext(UserContexts);
   return (
     <StyledProducts>
@@ -38,7 +32,7 @@ export const ProductsDetail = () => {
       <HeaderPage>
         <DivCar>
           <DivImg>
-            <img src={showCard?.cover_img} alt="imagem de carro" />
+            <img src={CardProducts?.cover_img} alt="imagem de carro" />
           </DivImg>
           <UlCars>
             <li>
