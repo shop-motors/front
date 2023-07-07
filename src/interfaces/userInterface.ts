@@ -1,4 +1,5 @@
 import { type } from "os";
+import { IUser } from "../contexts/userContexts";
 
 export interface iUserProviderProps {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ export interface IProviderValue {
   registerUser: (data: IUserRegister) => Promise<void>;
   updateUser: (data: IUserUpdate) => Promise<void>;
   deleteUser: () => Promise<void>;
-  userId: string
+  userLoged: IUser | null
 }
 
 export interface IuserResp {

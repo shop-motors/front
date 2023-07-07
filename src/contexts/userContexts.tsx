@@ -19,13 +19,37 @@ export interface IDecoded {
   sub: string;
 }
 
+export interface IUser {
+  birth_date: string;
+  description: string;
+  cpf: string;
+  email: string;
+  id: string;
+  name: string;
+  phone: string;
+}
+
 export const UserContexts = createContext({} as IProviderValue);
 
 export const UserProviders = ({ children }: iUserProviderProps) => {
   const [user, setUser] = useState<IuserResponse | null>(null);
-  const [userId, setUserId] = useState("");
+  const [userLoged, setUserLoged] = useState<IUser | null>(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("@TOKEN");
+
+  const retriverUser = async (id: string, token: string) => {
+    try {
+      const response = await api.get("users/" + id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUserLoged(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const LoginUser = async (formLogin: IUserLogin) => {
     try {
@@ -35,7 +59,7 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
 
       setUser(response.data);
 
-      setUserId(decoded.sub);
+      retriverUser(decoded.sub, response.data.token);
 
       toast.success("Você está logado");
 
@@ -93,7 +117,14 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
 
   return (
     <UserContexts.Provider
-      value={{ LoginUser, user, registerUser, updateUser, deleteUser, userId }}
+      value={{
+        LoginUser,
+        user,
+        registerUser,
+        updateUser,
+        deleteUser,
+        userLoged,
+      }}
     >
       {children}
     </UserContexts.Provider>
