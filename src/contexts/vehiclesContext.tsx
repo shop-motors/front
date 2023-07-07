@@ -83,7 +83,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   useEffect(() => {
     const vehiclesLoad = async () => {
       try {
-        const response = await apiKenzieCars.get<any>("vehicles");
+        const response = await apiKenzieCars.get<any>("cars");
         const data = response.data;
         setVehiclesList(data);
       } catch (error) {
@@ -96,7 +96,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   useEffect(() => {
     const vehiclesLoad = async () => {
       try {
-        const response = await apiKenzieCars.get<any>("vehicles");
+        const response = await apiKenzieCars.get<any>("cars");
         const data = response.data;
         setVehiclesList(data);
       } catch (error) {
@@ -110,6 +110,8 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     const responseShowCards = await api.get("/vehicles");
     setDataFormVehicles(responseShowCards.data.data);
     setShowCard(responseShowCards.data.data);
+    console.log(dataFormVehicles);
+    console.log(showCard);
   };
 
   const retriveVehicle = async (id: string) => {
@@ -238,7 +240,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   };
 
   const deleteCar = async (id: string) => {
-    console.log(showCard);
     const token = localStorage.getItem("@TOKEN");
     try {
       await api.delete(`/vehicles/${id}`, {
@@ -254,6 +255,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
         return updatedVehicles;
       });
+      console.log(dataFormVehicles);
     } catch (error) {
       console.error(error);
     }

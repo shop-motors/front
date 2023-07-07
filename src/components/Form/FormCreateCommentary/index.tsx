@@ -41,7 +41,6 @@ export const FormCreateCommentary = () => {
       }, 3);
       navigate("/products");
     } else {
-      console.log("deu ruim");
       navigate("/advertiser");
     }
     reset();
