@@ -1,5 +1,15 @@
 import { NavBarProfile } from "../../components/Nav";
-import { StyledProducts } from "./style";
+import {
+  DivCar,
+  DivContainerGalery,
+  DivDescrição,
+  DivGalery,
+  DivKmYears,
+  HeaderPage,
+  StyledProducts,
+  UlCars,
+  UlProfile,
+} from "./style";
 import imgCar from "../../images/car.png";
 import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
@@ -12,119 +22,87 @@ import { VehiclesContext } from "../../contexts/vehiclesContext";
 import { UserContexts } from "../../contexts/userContexts";
 
 export const ProductsDetail = () => {
-  const { showCard, listComments, getCommentaries } =
+  const { showCard, listComments, getCommentaries, setShowCard } =
     useContext(VehiclesContext);
   const { user } = useContext(UserContexts);
+  console.log(showCard);
 
   return (
     <StyledProducts>
       <NavBarProfile />
-
-      {showCard?.comments.length! > 0 && showCard?.comments.map((comment)=>{
-        return <div>{comment.content}</div>
-      })}
-      <div className="content">
-        <div className="backgroundBlue">
-          <div className="products">
-            <div className="carDiv">
-              <img src={imgCar} alt="" />
-            </div>
-            <div className="infoCar">
-              <h3>
-                Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200{" "}
-              </h3>
-              <div className="pInfos">
-                <div className="buttonInfos">
+      <HeaderPage>
+        <DivCar>
+          <img src={imgCar} alt="imagem de carro" />
+          <UlCars>
+            <li>
+              <h2>Mercedes benz A 200 cgi advance sedan mercedes benz a 200</h2>
+              <DivKmYears>
+                <div>
                   <p>2013</p>
-                  <p>0 KM</p>
+                  <p> 0 KM</p>
                 </div>
-                <div className="price">
-                  <p>R$ 00.000,00</p>
-                </div>
-              </div>
-              <div className="buttonBuy">
-                <Button
-                  /* onClick={() => userSell()} */
-                  type="button"
-                  size="default"
-                  color="brand1"
-                  content={"Comprar"}
-                />
-              </div>
+                <span>R$00.00,00</span>
+              </DivKmYears>
+              <button>Comprar</button>
+            </li>
+          </UlCars>
+        </DivCar>
+        <DivContainerGalery>
+          <DivGalery>
+            <h3>Fotos</h3>
+            <div>
+              <img src={imgCar} alt="carro" />
+              <img src={imgCar} alt="carro" />
+              <img src={imgCar} alt="carro" />
+              <img src={imgCar} alt="carro" />
+              <img src={imgCar} alt="carro" />
+              <img src={imgCar} alt="carro" />
             </div>
-            <div className="description">
-              <h3>Descrição</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-                nostrum dignissimos minus. Esse, rerum autem. Voluptate ratione
-                tempora nisi aut eligendi corrupti quo, maiores ipsa, incidunt
-                tenetur velit, impedit aperiam.
-              </p>
-            </div>
-            {/* ------------------------------------------------------- */}
-
-            {listComments.map((comment) => (
-              <div className="coments">
-                <h3>Comentários</h3>
-                <div className="comentProfile">
-                  <img src={ImgProfile} alt="" />
-                  <p>{comment.userId}</p>
-                  <div className="dateComent">
-                    <small>° há 3 dias</small>
-                  </div>
-                </div>
-                <p className="pDescription">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Libero expedita fugiat aliquam aspernatur et obcaecati cumque,
-                  perferendis quam! Dolor possimus accusamus .
-                </p>
-              </div>
-            ))}
-            <div className="photos">
-              <h3>Fotos</h3>
-              <div className="photosCar">
-                <div>
-                  <img src={imgCar} alt="" />
-                </div>
-                <div>
-                  <img src={imgCar} alt="" />
-                </div>
-                <div>
-                  <img src={imgCar} alt="" />
-                </div>
-                <div>
-                  <img src={imgCar} alt="" />
-                </div>
-                <div>
-                  <img src={imgCar} alt="" />
-                </div>
-                <div>
-                  <img src={imgCar} alt="" />
-                </div>
-              </div>
-            </div>
-            <div className="profileDiv">
-              <div className="imgProfile">
-                <img src={ImgProfile} alt="" />
-                <p>Leia Organa</p>
-              </div>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-                nostrum dignissimos minus. Esse, rerum autem. Voluptate ratione
-                tempora nisi aut eligendi corrupti quo, maiores ipsa, incidunt
-                tenetur velit, impedit aperiam.
-              </p>
+          </DivGalery>
+          <UlProfile>
+            <li>
+              <img src={ImgProfile} alt="imagem de perfil" />
+              <h3>Samuel Leão</h3>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing </p>
               <Button
-                /* onClick={() => userSell()} */
-                type="button"
-                size="default"
+                size="large"
                 color="gray0"
-                content={"Comprar"}
+                content={"Ver todos anuncios"}
+                type={undefined}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </li>
+          </UlProfile>
+        </DivContainerGalery>
+      </HeaderPage>
+
+      <DivDescrição>
+        <h2>Descrição</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea enim
+          veniam voluptas excepturi,jdbjfsdjjjjjjjjjjjjjjjjjjjjr
+          iddkmdsdkspaodksaopkdsoapd
+          jsdkkkjnfclkdsfm
+        </p>
+      </DivDescrição>
+
+      <ul>
+        <h2>Comentarios</h2>
+        {showCard &&
+          showCard.comments &&
+          showCard.comments.map((comment) => {
+            return (
+              <li>
+                <div>
+                  <img src={ImgProfile} alt="imagem usuario" />
+                  <p>Julia lima</p>
+                  <span>há 5 dias</span>
+                </div>
+                <p>{comment.content}</p>
+              </li>
+            );
+          })}
+      </ul>
+
       <FormCreateCommentary />
       <Footer />
     </StyledProducts>

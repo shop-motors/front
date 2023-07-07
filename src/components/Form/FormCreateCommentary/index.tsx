@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { IComment, VehiclesContext } from "../../../contexts/vehiclesContext";
 
 export const FormCreateCommentary = () => {
-  const { createCommentary } = useContext(VehiclesContext);
+  const { createCommentary, retriveVehicles } = useContext(VehiclesContext);
 
   const {
     register,
@@ -32,6 +32,7 @@ export const FormCreateCommentary = () => {
 
   const handleCreateCommentary: SubmitHandler<IComment> = (data: IComment) => {
     createCommentary(data);
+    retriveVehicles()
     console.log("gsdv")
   };
 

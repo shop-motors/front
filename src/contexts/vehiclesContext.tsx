@@ -86,18 +86,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
       }
     };
     vehiclesLoad();
-
-    const getCommentaries = async () => {
-      try {
-        const response = await api.get(`comments`);
-
-        setShowCard(response.data)
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCommentaries();
   }, []);
 
   const getNewDataForm = async () => {
@@ -117,11 +105,16 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
   const createCommentary = async (data: IComment) => {
     try {
-      await api.post(`comments/${showCard?.id}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.post(
+        `comments/261cd8e8-f136-4e38-88e9-afb645b191b8`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
