@@ -1,4 +1,3 @@
-import ImgCar from "../../assets/EXTERIOR-frontSidePilotNear-1653845164710-removebg-preview 1 (1).png";
 import Modal from "../Modals";
 import { Filters } from "../filters";
 import { useContext, useState, useEffect } from "react";
@@ -13,18 +12,18 @@ import {
   LiCard,
   UlCard,
   UlCardAdmin,
+  StyledSectionLoadingImg,
 } from "./style";
 import { CarsContext } from "../../contexts/carsContext";
 import { ButtonPrevious } from "../Buttons/buttonPrevious";
 import { VehiclesContext, iFormVehicles } from "../../contexts/vehiclesContext";
-import { Navigate, useNavigate } from "react-router-dom";
-import ModalVehicles from "../Modals/ModalCreateVehicles";
-import { FormVehicles } from "../Form/FormCreateVehicles";
+import { useNavigate } from "react-router-dom";
 import { FormUpdateVehicles } from "../Form/FormUpdateAdvertiser";
 import ModalUpdate from "../Modals/ModalUpdateVehicles";
+import exercise from "../../../public/exercise.webp";
 
 export const Card = () => {
-  const { cars, paginationCount, page, pageAtual } = useContext(CarsContext);
+  const { cars, paginationCount, page } = useContext(CarsContext);
 
   const formatPrice = (price: any) => {
     return price.toLocaleString("pt-BR", {
@@ -87,65 +86,77 @@ export const Card = () => {
 };
 
 export const CardAdmin = () => {
-  const { dataFormVehicles, setShowCard } = useContext(VehiclesContext);
-  const { showCard, setDataFormVehicles } = useContext(VehiclesContext);
-  console.log(`aqui ${showCard}`);
+  const { dataFormVehicles, setShowCard, setCardProducts } =
+    useContext(VehiclesContext);
   const navigate = useNavigate();
 
   const handleClick = (item: iFormVehicles) => {
-    console.log(`aqui ${showCard}`);
+    if (item.id) {
+      localStorage.setItem("@IDVEHICLE", item.id);
+    } else {
+      console.log("Id não adicionado no local storage");
+    }
+
     setShowCard(item);
+    setCardProducts(item);
     navigate("/products");
   };
 
-  return (
+  return dataFormVehicles && dataFormVehicles.length > 0 ? (
     <UlCardAdmin>
-      {dataFormVehicles &&
-        dataFormVehicles.map((item: any, index: number) => (
-          <div key={item.id}>
-            {/* colocar um onclick na Li */}
-            <li>
-              <img
-                className="cover_img"
-                src={item.cover_img}
-                alt="imagem de carro"
-              />
-              <DivLi>
-                <h3>
-                  {item.brand} - {item.model}
-                </h3>
-                <p>{item.description}</p>
-                <DivUsuario>
-                  <span>R</span>
-                  <p>Usuario</p>
-                </DivUsuario>
-                <DivPrice>
-                  <div className="divP">
-                    <p>{item.km} km</p>
-                    <p>{item.year}</p>
-                    <span>R$ {item.price}</span>
-                  </div>
-                </DivPrice>
-                <div className="buttons">
-                  <ModalUpdate
-                    id={item.id}
-                    size="default"
-                    color="border_dark_gray"
-                    content="Editar"
-                    type="button"
-                    device={"desktop"}
-                  >
-                    <FormUpdateVehicles />
-                  </ModalUpdate>
-
-                  <button className="button" onClick={() => handleClick(item)}>
-                    Ver Detalhes
-                  </button>
+      {dataFormVehicles.map((item: any, index: number) => (
+        <div key={item.id}>
+          <li>
+            <img
+              className="cover_img"
+              src={item.cover_img}
+              alt="imagem de carro"
+            />
+            <DivLi>
+              <h3>
+                {item.brand} - {item.model}
+              </h3>
+              <p>{item.description}</p>
+              <DivUsuario>
+                <span>R</span>
+                <p>Usuario</p>
+              </DivUsuario>
+              <DivPrice>
+                <div className="divP">
+                  <p>{item.km} km</p>
+                  <p>{item.year}</p>
+                  <span>R$ {item.price}</span>
                 </div>
-              </DivLi>
-            </li>
-          </div>
-        ))}
+              </DivPrice>
+              <div className="buttons">
+                <ModalUpdate
+                  id={item.id}
+                  size="default"
+                  color="border_dark_gray"
+                  content="Editar"
+                  type="button"
+                  device={"desktop"}
+                >
+                  <FormUpdateVehicles />
+                </ModalUpdate>
+
+                <button className="button" onClick={() => handleClick(item)}>
+                  Ver Detalhes
+                </button>
+              </div>
+            </DivLi>
+          </li>
+        </div>
+      ))}
     </UlCardAdmin>
+  ) : (
+    <StyledSectionLoadingImg>
+      <h2>Você não possui anúncios. Prepare-se para anunciar!</h2>
+      <img
+        className=".imgExercise"
+        src={exercise}
+        alt="Prepare-se para anunciar!"
+      />
+    </StyledSectionLoadingImg>
   );
 };

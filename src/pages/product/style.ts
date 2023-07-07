@@ -7,7 +7,7 @@ export const StyledProducts = styled.main`
   height: 100%;
   background-color: var(--color-gray-7);
   @media (min-width: 768px) {
-  height: 1600px;
+    height: 1600px;
   }
 `;
 
@@ -18,24 +18,12 @@ export const HeaderPage = styled.header`
   width: 100vw;
   height: 70%;
   gap: 22px;
-  img {
-    margin: 0 auto;
-    margin-top: 60px;
-    border-radius: 4px;
-    width: 80%;
-    max-width: 600px;
-    height: 200px;
-    background-color: var(--color-gray-10);
-  }
 
   @media (min-width: 768px) {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
     height: 450px;
-    img {
-      height: 300px;
-    }
   }
 `;
 
@@ -47,8 +35,22 @@ export const DivCar = styled.div`
   gap: 10px;
   width: 100%;
   max-width: 900px;
+  object-fit: cover;
 `;
 
+export const DivImg = styled.div`
+  display: flex;
+  width: 66.5%;
+  align-items: center;
+  object-fit: cover;
+  background-color: var(--color-gray-10);
+  margin-top: 60px;
+  border-radius: 4px;
+  img {
+    margin: 0 auto;
+    width: 70%;
+  }
+`;
 export const UlCars = styled.ul`
   display: flex;
   flex-direction: column;
@@ -144,27 +146,26 @@ export const DivGalery = styled.div`
     height: 50%;
     width: 100%;
     max-width: 500px;
-    gap: 3px;
     background-color: var(--color-gray-10);
     margin-left: 8px;
     margin: 0 auto;
+    object-fit: cover;
+    gap: 5px;
+    img {
+      width: 30%;
+      max-width: 100px;
+      background-color: var(--color-gray-7);
+      border-radius: 4px;
+    }
   }
 
   h3 {
     font-size: 14px;
   }
-  img {
-    width: 25%;
-    height: 70px;
-    background-color: var(--color-gray-7);
-    border-radius: 4px;
-  }
 
   @media (min-width: 768px) {
     img {
       width: 70px;
-      margin: 0 auto;
-      margin-left: 20px;
     }
     div {
       height: 300px;

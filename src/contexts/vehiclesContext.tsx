@@ -2,6 +2,7 @@ import {
   Dispatch,
   SetStateAction,
   createContext,
+  useContext,
   useEffect,
   useState,
 } from "react";
@@ -10,6 +11,7 @@ import {
   IVehiclesProviderProps,
 } from "../interfaces/vehiclesInterface";
 import { api, apiKenzieCars } from "../services/api";
+import { UserContexts } from "./userContexts";
 
 export interface iFormVehicles {
   id?: string;
@@ -33,7 +35,7 @@ interface IVehiclesContext {
   createNew: (newData: iFormVehicles) => Promise<void>;
   dataFormVehicles: iFormVehicles[];
   setDataFormVehicles: Dispatch<SetStateAction<iFormVehicles[]>>;
-  showCard: Ivehicles | null;
+  showCard: iFormVehicles | null;
   setShowCard: Dispatch<SetStateAction<iFormVehicles | null>>;
   getNewDataForm: () => Promise<void>;
   createCommentary: (data: IComment) => Promise<void>;
@@ -46,13 +48,12 @@ interface IVehiclesContext {
   updateCommentary: (data: IComment, id: string) => Promise<void>;
   deleteCommentary: (id: string) => Promise<void>;
   deleteCar: (id: string) => Promise<void>;
+  getVehiclesToShowCards: () => Promise<void>;
+  retriveVehicle: (id: string) => Promise<void>;
   retriveVehicles: () => Promise<void>;
+  setCardProducts: Dispatch<SetStateAction<iFormVehicles | null>>;
+  CardProducts: iFormVehicles | null;
 }
-
-export interface Ivehicles {
-  comments: ICommentResponse[];
-}
-
 export interface IComment {
   content: string;
 }
@@ -76,11 +77,26 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const token = localStorage.getItem("@TOKEN");
   const [listComments, setListComments] = useState([] as ICommentResponse[]);
   const [editId, setEditId] = useState<string | null>(null);
+  const { verifyUserLoged } = useContext(UserContexts);
+  const [CardProducts, setCardProducts] = useState<iFormVehicles | null>(null);
 
   useEffect(() => {
     const vehiclesLoad = async () => {
       try {
-        const response = await apiKenzieCars.get<any>("vehicles");
+        const response = await apiKenzieCars.get<any>("cars");
+        const data = response.data;
+        setVehiclesList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    vehiclesLoad();
+  }, []);
+
+  useEffect(() => {
+    const vehiclesLoad = async () => {
+      try {
+        const response = await apiKenzieCars.get<any>("cars");
         const data = response.data;
         setVehiclesList(data);
       } catch (error) {
@@ -96,6 +112,22 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     setShowCard(responseShowCards.data.data);
     console.log(dataFormVehicles);
     console.log(showCard);
+  };
+
+  const retriveVehicle = async (id: string) => {
+    const token = localStorage.getItem("@TOKEN");
+
+    try {
+      const response = await api.get(`vehicles/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setShowCard(response.data);
+      console.log(response.data.cover_img);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getNewDataForm = async () => {
@@ -115,15 +147,16 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
   const createCommentary = async (data: IComment) => {
     try {
-      const response = await api.post(
-        `comments/261cd8e8-f136-4e38-88e9-afb645b191b8`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.post(`comments/${showCard?.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (showCard?.id) {
+        retriveVehicle(showCard.id);
+      }
+
       console.log(response.data);
     } catch (error) {
       console.log(error);
@@ -164,16 +197,12 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
   const retriveVehicles = async () => {
     try {
-      const response = await api.get(
-        `vehicles/261cd8e8-f136-4e38-88e9-afb645b191b8`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response.data);
-      setShowCard(response.data);
+      const response = await api.get(`vehicles/${showCard?.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // setShowCard(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -207,7 +236,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   };
 
   const deleteCar = async (id: string) => {
-    console.log(showCard);
     const token = localStorage.getItem("@TOKEN");
     try {
       await api.delete(`/vehicles/${id}`, {
@@ -221,14 +249,9 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
           (vehicle) => vehicle.id !== id
         );
 
-        if (updatedVehicles.length > 0) {
-          setShowCard(updatedVehicles[0]);
-        } else {
-          setShowCard(null);
-        }
-
         return updatedVehicles;
       });
+      console.log(dataFormVehicles);
     } catch (error) {
       console.error(error);
     }
@@ -291,6 +314,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     getCommentaries();
 
     if (token) {
+      verifyUserLoged();
       getVehiclesToShowCards();
     }
   }, []);
@@ -317,6 +341,10 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         updateCommentary,
         deleteCommentary,
         deleteCar,
+        getVehiclesToShowCards,
+        retriveVehicle,
+        setCardProducts,
+        CardProducts,
       }}
     >
       {children}

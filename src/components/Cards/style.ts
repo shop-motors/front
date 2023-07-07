@@ -226,4 +226,26 @@ export const DivPagination = styled.div`
     line-height: 30px;
     background-color: var(--color-white);
   }
-`;
+`
+export const StyledSectionLoadingImg = styled.section`
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+
+& h2{
+font-size: var(--font-size-3);
+padding-top: 1%;
+font-weight: var(--font-weigth-3);
+}
+
+
+& img{
+  width: 60%;
+  border-radius: 1%;
+  padding-top: 3%;
+}
+`
+
+;

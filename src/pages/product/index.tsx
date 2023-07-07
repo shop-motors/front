@@ -4,6 +4,7 @@ import {
   DivContainerGalery,
   DivDescrição,
   DivGalery,
+  DivImg,
   DivKmYears,
   HeaderPage,
   StyledProducts,
@@ -15,26 +16,43 @@ import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
 import { Footer } from "../../components/Footer";
 import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { VehiclesContext } from "../../contexts/vehiclesContext";
 import { UserContexts } from "../../contexts/userContexts";
 import { ModalEditCommentary } from "../../components/Modals/MotalEditCommentary";
+import { useNavigate } from "react-router-dom";
 
 export const ProductsDetail = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [idCommentary, setIdCommentary] = useState("");
-  const { showCard } = useContext(VehiclesContext);
-  const { user } = useContext(UserContexts);
-  console.log(showCard);
+  const { showCard, retriveVehicle } = useContext(VehiclesContext);
+  const { user, verifyUserLoged } = useContext(UserContexts);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const idVehicle = localStorage.getItem("@IDVEHICLE");
+
+    if (idVehicle) {
+      setTimeout(() => {
+        retriveVehicle(idVehicle);
+      }, 3);
+    } else {
+      console.log("deu ruim");
+      navigate("/advertiser");
+    }
+  }, []);
+
   return (
     <StyledProducts>
       <NavBarProfile />
       <HeaderPage>
         <DivCar>
-          <img src={imgCar} alt="imagem de carro" />
+          <DivImg>
+            <img src={showCard?.cover_img} alt="imagem de carro" />
+          </DivImg>
           <UlCars>
             <li>
-              <h2>Mercedes benz A 200 cgi advance sedan mercedes benz a 200</h2>
+              <h2>{showCard?.model}</h2>
               <DivKmYears>
                 <div>
                   <p>2013</p>
@@ -73,7 +91,6 @@ export const ProductsDetail = () => {
           </UlProfile>
         </DivContainerGalery>
       </HeaderPage>
-
       <DivDescrição>
         <h2>Descrição</h2>
         <p>
@@ -82,14 +99,13 @@ export const ProductsDetail = () => {
           iddkmdsdkspaodksaopkdsoapd jsdkkkjnfclkdsfm
         </p>
       </DivDescrição>
-
       <ul>
         <h2>Comentarios</h2>
         {showCard &&
           showCard.comments &&
-          showCard.comments.map((comment) => {
+          showCard.comments.map((comment, index) => {
             return (
-              <li>
+              <li key={index}>
                 <div>
                   <img src={ImgProfile} alt="imagem usuario" />
                   <p>Julia lima</p>
