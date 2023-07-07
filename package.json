@@ -1,4 +1,3 @@
-
 {
   "name": "kenzie-shoes-frontend",
   "private": true,
@@ -22,6 +21,7 @@
     "bcrypt": "^5.1.0",
     "components": "^0.1.0",
     "framer-motion": "^7.10.3",
+    "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
