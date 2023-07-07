@@ -11,16 +11,11 @@ import { UserContexts } from "../../../contexts/userContexts";
 import { CardUser } from "../../CardUser";
 
 export const FormCreateCommentary = () => {
-
   const { createCommentary, retriveVehicles } = useContext(VehiclesContext);
 
-  const { createCommentary } = useContext(VehiclesContext);
   const { userLoged } = useContext(UserContexts);
 
-  useEffect(()=> {
-
-  }, [])
-
+  useEffect(() => {}, []);
 
   const {
     register,
@@ -39,11 +34,10 @@ export const FormCreateCommentary = () => {
   const handleCreateCommentary: SubmitHandler<IComment> = (data: IComment) => {
     createCommentary(data);
 
-    retriveVehicles()
-    console.log("gsdv")
+    retriveVehicles();
+    console.log("gsdv");
 
     reset();
-
   };
 
   const setSentences = (
