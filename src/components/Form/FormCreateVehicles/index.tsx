@@ -11,6 +11,7 @@ import {
 } from "../../../contexts/vehiclesContext";
 import { IBrand } from "../../../interfaces/vehiclesInterface";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../Buttons";
 
 export const FormVehicles = () => {
   const { setModal } = useContext(ModalButtonContext);
@@ -185,21 +186,14 @@ export const FormVehicles = () => {
           >
             Cancelar
           </button>
-          <button
-            color="gray8"
-            content="Criar anúncio"
-            type="submit"
-            className="buttonCloseModal"
-          >
-            CRIAR ANUNCIO
-          </button>
-          {/* <Button
+
+          <Button
             type="submit"
             color="brand3"
             size="default"
             content="Criar anúncio"
             disabled={Object.keys(errors).length > 0}
-          /> */}
+          />
         </div>
       </div>
     </StyledVehiclesForm>
