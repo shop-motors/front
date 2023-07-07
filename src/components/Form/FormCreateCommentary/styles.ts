@@ -12,6 +12,12 @@ export const Container = styled.section`
   width: 100%;
   max-width: 46.875rem;
 
+  @media (min-width: 768px) {
+    align-self: center;
+    max-width: 37.6rem;
+    margin-right: 500px;
+  }
+
   > form {
     padding: 0;
     width: 100%;
@@ -36,20 +42,20 @@ export const Container = styled.section`
 
 export const SentencesContainer = styled.div`
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 
   > button {
     border: none;
-    padding: .25rem .75rem;
+    padding: 0.25rem 0.75rem;
     border-radius: 3.125rem;
     background-color: var(--color-gray-7);
     color: var(--color-gray-3);
     font-weight: 600;
-    transition: .3s;
+    transition: 0.3s;
 
     :hover {
       color: var(--color-gray-1);
     }
   }
-`
+`;

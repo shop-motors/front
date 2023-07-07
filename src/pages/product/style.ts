@@ -1,222 +1,240 @@
 import styled from "styled-components";
 
 export const StyledProducts = styled.main`
-  color: var(--color-gray-1);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: auto;
-  background-color: var(--color-gray-5);
-  padding: 0 .75rem;
-
-  .content {
-    background-color: red;
-    min-height: 2000px;
+  width: 100vw;
+  height: 100%;
+  background-color: var(--color-gray-7);
+  @media (min-width: 768px) {
+  height: 1600px;
   }
+`;
 
-  .backgroundBlue {
-    width: 100%;
-    height: 580px;
-    background-color: var(--color-brand-1);
-    display: flex;
-    justify-content: center;
-
-    margin-top: 40px;
-  }
-
-  .products {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 75%;
-    height: 2035px;
-    gap: 15px;
-    flex-wrap: wrap;
-  }
-
-  .carDiv {
-    background-color: var(--color-gray-10);
-    margin-top: 20px;
+export const HeaderPage = styled.header`
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-brand-1);
+  width: 100vw;
+  height: 70%;
+  gap: 22px;
+  img {
+    margin: 0 auto;
+    margin-top: 60px;
     border-radius: 4px;
-    width: 58%;
-    height: 320px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    object-fit: fill;
-
-    img {
-      width: 400px;
-    }
-  }
-  .infoCar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 80%;
+    max-width: 600px;
     height: 200px;
-    width: 58%;
-    padding: 20px 33px 20px 33px;
     background-color: var(--color-gray-10);
-    border-radius: 4px;
-    margin-bottom: 15px;
+  }
 
-    h3 {
-      margin-bottom: 20px;
-    }
-
-    .pInfos {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      margin-bottom: 23px;
-
-      .buttonInfos {
-        display: flex;
-        gap: 15px;
-        align-items: center;
-        width: auto;
-
-        p {
-          padding: 8px 12px 8px 12px;
-          color: var(--color-brand-1);
-          background-color: var(--color-brand-4);
-          border-radius: 4px;
-          font-weight: 600;
-        }
-      }
-      .price {
-        font-weight: 600;
-      }
+  @media (min-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    height: 450px;
+    img {
+      height: 300px;
     }
   }
-  .description {
+`;
+
+export const DivCar = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 900px;
+`;
+
+export const UlCars = styled.ul`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  max-width: 750px;
+  margin-top: 10px;
+  align-items: center;
+
+  li {
+    width: 80%;
+    height: 200px;
     display: flex;
     flex-direction: column;
+    background-color: var(--color-gray-10);
+    border-radius: 4px;
+    padding: 22px;
+    gap: 20px;
+
+    button {
+      width: 30%;
+      max-width: 60px;
+      padding: 5px;
+      background-color: var(--color-brand-2);
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--color-brand-4);
+    }
+    h2 {
+      font-size: 15px;
+    }
+  }
+`;
+
+export const DivKmYears = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  @media (min-width: 768px) {
     justify-content: space-between;
-    height: 170px;
-    width: 58%;
-    padding: 33px;
+    flex-direction: row;
+  }
+
+  div {
+    display: flex;
+    gap: 4px;
+
+    p {
+      font-size: 12px;
+      color: var(--color-brand-2);
+      background-color: var(--color-gray-5);
+    }
+  }
+
+  span {
+    font-size: 12px;
+  }
+`;
+
+export const DivContainerGalery = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  align-items: center;
+  @media (min-width: 768px) {
+    margin-top: 72px;
+  }
+`;
+
+export const DivGalery = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 80%;
+  max-width: 440px;
+  border-radius: 4px;
+  background-color: var(--color-gray-10);
+  text-align: start;
+  padding: 10px;
+
+  @media (min-width: 768px) {
+    height: 300px;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 50%;
+    width: 100%;
+    max-width: 500px;
+    gap: 3px;
     background-color: var(--color-gray-10);
+    margin-left: 8px;
+    margin: 0 auto;
+  }
+
+  h3 {
+    font-size: 14px;
+  }
+  img {
+    width: 25%;
+    height: 70px;
+    background-color: var(--color-gray-7);
     border-radius: 4px;
   }
 
-  .photos {
-    background-color: aqua;
-    height: 370px;
-    width: 36%;
-    margin-top: 20px;
-    background-color: var(--color-gray-10);
-    border-radius: 4px;
-    padding: 30px;
-
-    h3 {
-      margin-bottom: 20px;
+  @media (min-width: 768px) {
+    img {
+      width: 70px;
+      margin: 0 auto;
+      margin-left: 20px;
     }
-
-    .photosCar {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-
-      div {
-        background-color: var(--color-gray-7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100px;
-        border-radius: 4px;
-        padding: 0px 10px 0px 10px;
-        margin-bottom: 17px;
-      }
-      img {
-        width: 88px;
-      }
+    div {
+      height: 300px;
     }
   }
-  .profileDiv {
-    height: 400px;
-    width: 36%;
-    margin-top: 20px;
-    border-radius: 4px;
-    padding: 30px;
-    background-color: var(--color-gray-10);
+`;
+
+export const UlProfile = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 100%;
+  background-color: var(--color-gray-10);
+  border-radius: 4px;
+  margin-bottom: 20px;
+
+  li {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 30px;
-
-    .imgProfile {
-      font-weight: 600;
-    }
+    gap: 10px;
+    padding: 20px;
 
     img {
-      width: 80px;
+      width: 25%;
+      height: 70px;
       border-radius: 50%;
-      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 12px;
+      color: var(--color-gray-3);
     }
   }
-  //-------------------------------------------------------
-  .coments {
-    background-color: var(--color-gray-10);
-    overflow: scroll;
-    width: 58%; /* 
-    height: 670px; */
-    padding: 30px;
-    color: var(--color-gray-2);
-    border-radius: 4px;
-    background-color: yellow;
+`;
 
-    .comentProfile {
-      display: flex;
-      align-items: center;
-      margin-top: 30px;
-      gap: 15px;
-      margin-bottom: 20px;
-      font-weight: 600;
+export const DivDescrição = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-gray-10);
+  width: 90%;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  height: 100px;
+  margin: 0 auto;
+  max-width: 600px;
 
-      img {
-        width: 50px;
-        border-radius: 50%;
-      }
-    }
-    .dateComent {
-      color: var(--color-gray-4);
-    }
-
-    .pDescription {
-      margin-bottom: 40px;
-    }
+  h2 {
+    font-size: 14px;
+    margin-right: 170px;
   }
-  .typeComent {
-    background-color: var(--color-gray-10);
-    width: 58%;
-    height: 270px;
-    padding: 30px;
-    color: var(--color-gray-2);
-    border-radius: 4px;
 
-    .comentProfile {
-      display: flex;
-      align-items: center;
-      margin-top: 30px;
-      gap: 15px;
-      margin-bottom: 20px;
-      font-weight: 600;
+  p {
+    overflow-y: scroll;
+    width: 80%;
+    font-size: 12px;
+    color: var(--color-gray-3);
+  }
 
-      img {
-        width: 50px;
-        border-radius: 50%;
-      }
-    }
-    .commentBox {
-      border-color: var(--color-gray-1);
-      border: 2px;
-      height: 100px;
+  @media (min-width: 768px) {
+    margin-left: 180px;
+    margin-top: 100px;
+    h2 {
+      margin-right: 485px;
     }
   }
 `;

@@ -60,7 +60,7 @@ export const LiCard = styled.li`
   max-width: 250px;
   height: 300px;
   margin-left: 10px;
-  background-color: var(--color-gray-7);
+  padding: 4px;
   img {
     width: 240px;
     height: 170px;
