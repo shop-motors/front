@@ -5,19 +5,16 @@ import { Button } from "../../components/Buttons";
 import ImgProfile from "../../images/leia.jpeg";
 import { Footer } from "../../components/Footer";
 import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
-// import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
-import { useEffect, useContext } from "react";
-import { captureRejectionSymbol } from "events";
+import { useContext, useState } from "react";
 import { VehiclesContext } from "../../contexts/vehiclesContext";
 import { UserContexts } from "../../contexts/userContexts";
+import { ModalEditCommentary } from "../../components/Modals/MotalEditCommentary";
 
 export const ProductsDetail = () => {
+  const [isOpenModal, setIsOpenModal] = useState(true);
   const { showCard } = useContext(VehiclesContext);
-  console.log(showCard);
   const { user } = useContext(UserContexts);
-  useEffect(() => {
-    console.log(user);
-  }, []);
+
   return (
     <StyledProducts>
       <NavBarProfile />
@@ -138,6 +135,12 @@ export const ProductsDetail = () => {
         </div>
       </div>
       <FormCreateCommentary />
+      {isOpenModal && (
+        <ModalEditCommentary
+          closeModal={() => setIsOpenModal(false)}
+          description="Editar Comentario"
+        />
+      )}
       <Footer />
     </StyledProducts>
   );

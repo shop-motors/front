@@ -1,21 +1,27 @@
-import { Container, SentencesContainer, UserContainer } from "./styles";
+import { Container, SentencesContainer } from "./styles";
 import { Form } from "..";
 import { Input } from "../../Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createCommentarySchema } from "./createCommentarySchema";
 import { Button } from "../../Buttons";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { IComment, VehiclesContext } from "../../../contexts/vehiclesContext";
 import { UserContexts } from "../../../contexts/userContexts";
+import { CardUser } from "../../CardUser";
 
 export const FormCreateCommentary = () => {
   const { createCommentary } = useContext(VehiclesContext);
   const { userLoged } = useContext(UserContexts);
 
+  useEffect(()=> {
+
+  }, [])
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     setValue,
   } = useForm<IComment>({ resolver: yupResolver(createCommentarySchema) });
@@ -28,6 +34,7 @@ export const FormCreateCommentary = () => {
 
   const handleCreateCommentary: SubmitHandler<IComment> = (data: IComment) => {
     createCommentary(data);
+    reset();
   };
 
   const setSentences = (
@@ -38,12 +45,7 @@ export const FormCreateCommentary = () => {
 
   return (
     <Container>
-      {userLoged && (
-        <UserContainer>
-          <div>{userLoged.name[0].toLocaleUpperCase()}</div>
-          <p>{userLoged.name}</p>
-        </UserContainer>
-      )}
+      {userLoged && <CardUser name={userLoged.name} />}
 
       <Form onSubmit={handleSubmit(handleCreateCommentary)}>
         <Input

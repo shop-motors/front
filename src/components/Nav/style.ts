@@ -107,7 +107,7 @@ export const DivButtonsProfile = styled.div`
 
   > div:last-child {
     display: none;
-    width: 100%;
+    width: max-content;
     padding: 1rem;
     background-color: var(--color-gray-9);
     border-radius: 0.25rem;
