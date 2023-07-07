@@ -7,7 +7,6 @@ import {
 } from "react";
 import {
   IBrand,
-  IVehicles,
   IVehiclesProviderProps,
 } from "../interfaces/vehiclesInterface";
 import { api, apiKenzieCars } from "../services/api";
@@ -24,7 +23,7 @@ export interface iFormVehicles {
   price: number;
   description: string;
   cover_img: string;
-  galleryImages: string[];
+  galleryImages: (string | undefined)[];
 }
 
 interface IVehiclesContext {
@@ -68,30 +67,13 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const [listComments, setListComments] = useState([] as ICommentResponse[]);
   const [editId, setEditId] = useState<string | null>(null);
 
-  useEffect(() => {
-    const vehiclesLoad = async () => {
-      try {
-        const response = await apiKenzieCars.get<any>("cars");
-        const data = response.data;
-        setVehiclesList(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    vehiclesLoad();
+  const token = localStorage.getItem("@TOKEN");
 
-    const getCommentaries = async () => {
-      try {
-        const response = await api.get(`/comments`);
-
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCommentaries();
-  }, []);
+  const getVehiclesToShowCards = async () => {
+    const responseShowCards = await api.get("/vehicles");
+    setDataFormVehicles(responseShowCards.data.data);
+    setShowCard(responseShowCards.data.data);
+  };
 
   const getNewDataForm = async () => {
     const token = localStorage.getItem("@TOKEN");
@@ -121,16 +103,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     }
   };
 
-  const getCommentaries = async () => {
-    try {
-      const response = await api.get(`/comments`);
-
-      setListComments(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const createNew = async (newData: iFormVehicles) => {
     console.log(
       `Aqui vem o newData do createNew ${JSON.stringify(newData, null, 2)}`
@@ -143,7 +115,19 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         },
       });
 
-      setDataFormVehicles((prevState) => [...prevState, response.data]);
+      setDataFormVehicles((prevState) => {
+        const updatedVehicles = [...prevState];
+        const vehicleIndex = updatedVehicles.findIndex(
+          (vehicle) => vehicle.id === editId
+        );
+
+        if (vehicleIndex !== -1) {
+          updatedVehicles[vehicleIndex] = response.data;
+        }
+
+        return updatedVehicles;
+      });
+
       console.log(response.data);
     } catch (error: any) {
       console.log(error.request.response);
@@ -162,12 +146,53 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
           },
         }
       );
-      setDataFormVehicles((prevState) => [...prevState, response.data]);
+      setDataFormVehicles((prevState) => {
+        const updatedVehicles = [...prevState];
+        const vehicleIndex = updatedVehicles.findIndex(
+          (vehicle) => vehicle.id === editId
+        );
+
+        if (vehicleIndex !== -1) {
+          updatedVehicles[vehicleIndex] = response.data;
+          setShowCard(updatedVehicles[vehicleIndex]); // Update showCard here
+        }
+
+        return updatedVehicles;
+      });
+
       console.log(response.data);
     } catch (error: any) {
       console.log(error.request.response);
     }
   };
+
+  const getCommentaries = async () => {
+    try {
+      const response = await api.get(`/comments`);
+
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    const vehiclesLoad = async () => {
+      try {
+        const response = await apiKenzieCars.get<any>("cars");
+        const data = response.data;
+        setVehiclesList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    vehiclesLoad();
+
+    getCommentaries();
+
+    if (token) {
+      getVehiclesToShowCards();
+    }
+  }, []);
 
   return (
     <VehiclesContext.Provider
