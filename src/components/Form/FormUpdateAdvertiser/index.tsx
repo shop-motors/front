@@ -22,6 +22,7 @@ export const FormUpdateVehicles = () => {
   const vehicleToEdit = dataFormVehicles.find(
     (vehicle) => vehicle.id === editId
   );
+
   //Usar o useffect pra monitorar o estado de imagens
   //se tiver alteração ensse estado, usar o setValue do form pra definir
   //galleryImg como primeiro argumento, segundo argumento o images(estado)

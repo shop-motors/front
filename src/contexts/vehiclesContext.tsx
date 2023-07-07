@@ -122,8 +122,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         if (vehicleIndex !== -1) {
           updatedVehicles[vehicleIndex] = response.data;
         }
-
-        return updatedVehicles;
+                return updatedVehicles;
       });
 
       console.log(response.data);
