@@ -16,7 +16,7 @@ export const FormUpdateVehicles = () => {
   const [images, setImages] = useState([] as string[]);
   const { vehiclesList, patchAdvertiser, setVehiclesList, getNewDataForm } =
     useContext(VehiclesContext);
-  const { dataFormVehicles, setDataFormVehicles } = useContext(VehiclesContext);
+  const { dataFormVehicles, deleteCar } = useContext(VehiclesContext);
   const { updateModal, setUpdateModal } = useContext(ModalButtonContext);
   const { editId } = useContext(VehiclesContext);
   const vehicleToEdit = dataFormVehicles.find(
@@ -194,7 +194,9 @@ export const FormUpdateVehicles = () => {
             content="Deletar"
             type="button"
             className="buttonCloseModal"
-            onClick={() => setModal(false)}
+            onClick={() =>{ 
+              deleteCar(editId!)
+              setUpdateModal(!updateModal)}}
           >
             Deletar
           </button>

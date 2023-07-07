@@ -42,6 +42,7 @@ interface IVehiclesContext {
   editId: string | null;
   setEditId: Dispatch<SetStateAction<string | null>>;
   patchAdvertiser: (data: iFormVehicles) => Promise<void>;
+  deleteCar: (id: string)=> Promise<void>
 }
 
 export interface IComment {
@@ -104,9 +105,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   };
 
   const createNew = async (newData: iFormVehicles) => {
-    console.log(
-      `Aqui vem o newData do createNew ${JSON.stringify(newData, null, 2)}`
-    );
     const token = localStorage.getItem("@TOKEN");
     try {
       const response = await api.post<iFormVehicles>("vehicles", newData, {
@@ -134,6 +132,32 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     }
   };
 
+  const deleteCar = async (id: string) => {
+    console.log(showCard)
+    const token = localStorage.getItem("@TOKEN");
+    try {
+      await api.delete(`/vehicles/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      setDataFormVehicles((prevState) => {
+        const updatedVehicles = prevState.filter((vehicle) => vehicle.id !== id);
+  
+        if (updatedVehicles.length > 0) {
+          setShowCard(updatedVehicles[0]); 
+        } else {
+          setShowCard(null); 
+        }
+  
+        return updatedVehicles;
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   const patchAdvertiser = async (data: iFormVehicles) => {
     const token = localStorage.getItem("@TOKEN");
     try {
@@ -212,6 +236,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         editId,
         setEditId,
         patchAdvertiser,
+        deleteCar
       }}
     >
       {children}
