@@ -2,6 +2,7 @@ import {
   Dispatch,
   SetStateAction,
   createContext,
+  useContext,
   useEffect,
   useState,
 } from "react";
@@ -10,6 +11,7 @@ import {
   IVehiclesProviderProps,
 } from "../interfaces/vehiclesInterface";
 import { api, apiKenzieCars } from "../services/api";
+import { UserContexts } from "./userContexts";
 
 export interface iFormVehicles {
   id?: string;
@@ -33,8 +35,8 @@ interface IVehiclesContext {
   createNew: (newData: iFormVehicles) => Promise<void>;
   dataFormVehicles: iFormVehicles[];
   setDataFormVehicles: Dispatch<SetStateAction<iFormVehicles[]>>;
-  showCard: Ivehicles | null;
-  setShowCard: Dispatch<SetStateAction<Ivehicles | null>>;
+  showCard: iFormVehicles | null;
+  setShowCard: Dispatch<SetStateAction<iFormVehicles | null>>;
   getNewDataForm: () => Promise<void>;
   createCommentary: (data: IComment) => Promise<void>;
   getCommentaries: () => Promise<void>;
@@ -46,15 +48,12 @@ interface IVehiclesContext {
   updateCommentary: (data: IComment, id: string) => Promise<void>;
   deleteCommentary: (id: string) => Promise<void>;
   deleteCar: (id: string) => Promise<void>;
+  getVehiclesToShowCards: () => Promise<void>;
+  retriveVehicle: (id: string) => Promise<void>;
   retriveVehicles: () => Promise<void>;
   setCardProducts: Dispatch<SetStateAction<iFormVehicles | null>>;
   CardProducts: iFormVehicles | null;
 }
-
-export interface Ivehicles {
-  comments: ICommentResponse[];
-}
-
 export interface IComment {
   content: string;
 }
@@ -74,9 +73,11 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const [dataFormVehicles, setDataFormVehicles] = useState(
     [] as iFormVehicles[]
   );
-  const [showCard, setShowCard] = useState<Ivehicles | null>(null);
+  const [showCard, setShowCard] = useState<iFormVehicles | null>(null);
+  const token = localStorage.getItem("@TOKEN");
   const [listComments, setListComments] = useState([] as ICommentResponse[]);
   const [editId, setEditId] = useState<string | null>(null);
+  const { verifyUserLoged } = useContext(UserContexts);
   const [CardProducts, setCardProducts] = useState<iFormVehicles | null>(null);
 
   useEffect(() => {
@@ -92,12 +93,39 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     vehiclesLoad();
   }, []);
 
-  const token = localStorage.getItem("@TOKEN");
+  useEffect(() => {
+    const vehiclesLoad = async () => {
+      try {
+        const response = await apiKenzieCars.get<any>("vehicles");
+        const data = response.data;
+        setVehiclesList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    vehiclesLoad();
+  }, []);
 
   const getVehiclesToShowCards = async () => {
     const responseShowCards = await api.get("/vehicles");
     setDataFormVehicles(responseShowCards.data.data);
     setShowCard(responseShowCards.data.data);
+  };
+
+  const retriveVehicle = async (id: string) => {
+    const token = localStorage.getItem("@TOKEN");
+
+    try {
+      const response = await api.get(`vehicles/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setShowCard(response.data);
+      console.log(response.data.cover_img);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getNewDataForm = async () => {
@@ -117,15 +145,14 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
   const createCommentary = async (data: IComment) => {
     try {
-      const response = await api.post(
-        `comments/b1fc7892-f006-47cb-8bc8-f7b4df040c8c`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.post(`comments/${showCard?.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      retriveVehicle(showCard?.id);
+
       console.log(response.data);
     } catch (error) {
       console.log(error);
@@ -166,16 +193,12 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
   const retriveVehicles = async () => {
     try {
-      const response = await api.get(
-        `vehicles/b1fc7892-f006-47cb-8bc8-f7b4df040c8c`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response.data);
-      setShowCard(response.data);
+      const response = await api.get(`vehicles/${showCard?.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // setShowCard(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -222,12 +245,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         const updatedVehicles = prevState.filter(
           (vehicle) => vehicle.id !== id
         );
-
-        if (updatedVehicles.length > 0) {
-          setShowCard(updatedVehicles[0]);
-        } else {
-          setShowCard(null);
-        }
 
         return updatedVehicles;
       });
@@ -293,6 +310,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     getCommentaries();
 
     if (token) {
+      verifyUserLoged();
       getVehiclesToShowCards();
     }
   }, []);
@@ -319,6 +337,8 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         updateCommentary,
         deleteCommentary,
         deleteCar,
+        getVehiclesToShowCards,
+        retriveVehicle,
         setCardProducts,
         CardProducts,
       }}

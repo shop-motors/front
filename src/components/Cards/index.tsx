@@ -17,7 +17,6 @@ import {
 import { CarsContext } from "../../contexts/carsContext";
 import { ButtonPrevious } from "../Buttons/buttonPrevious";
 import {
-  Ivehicles,
   VehiclesContext,
   iFormVehicles,
 } from "../../contexts/vehiclesContext";
@@ -93,11 +92,16 @@ export const Card = () => {
 export const CardAdmin = () => {
   const { dataFormVehicles, setShowCard, showCard, setDataFormVehicles, setCardProducts } =
     useContext(VehiclesContext);
-  console.log(`aqui ${showCard}`);
   const navigate = useNavigate();
 
   const handleClick = (item: iFormVehicles) => {
-    console.log(`aqui ${showCard}`);
+    if (item.id) {
+      localStorage.setItem("@IDVEHICLE", item.id);
+    } else {
+      console.log("Id não adicionado no local storage");
+    }
+
+    setShowCard(item);
     setCardProducts(item);
     navigate("/products");
   };

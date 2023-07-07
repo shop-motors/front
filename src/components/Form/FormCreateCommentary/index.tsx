@@ -9,16 +9,12 @@ import { useContext, useEffect } from "react";
 import { IComment, VehiclesContext } from "../../../contexts/vehiclesContext";
 import { UserContexts } from "../../../contexts/userContexts";
 import { CardUser } from "../../CardUser";
+import { useNavigate } from "react-router";
 
 export const FormCreateCommentary = () => {
-
-  const { createCommentary, retriveVehicles } = useContext(VehiclesContext);
+  const { createCommentary, retriveVehicle } = useContext(VehiclesContext);
   const { userLoged } = useContext(UserContexts);
-
-  useEffect(()=> {
-
-  }, [])
-
+  const navigate = useNavigate();
 
   const {
     register,
@@ -35,13 +31,20 @@ export const FormCreateCommentary = () => {
   ];
 
   const handleCreateCommentary: SubmitHandler<IComment> = (data: IComment) => {
+    const idVehicle = localStorage.getItem("@IDVEHICLE");
+
     createCommentary(data);
 
-    retriveVehicles()
-    console.log("gsdv")
-
+    if (idVehicle) {
+      setTimeout(() => {
+        retriveVehicle(idVehicle);
+      }, 3);
+      navigate("/products");
+    } else {
+      console.log("deu ruim");
+      navigate("/advertiser");
+    }
     reset();
-
   };
 
   const setSentences = (
