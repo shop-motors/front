@@ -36,7 +36,7 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
   const [userLoged, setUserLoged] = useState<IUser | null>(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("@TOKEN");
-  
+
   const retriverUser = async (id: string, token: string) => {
     try {
       const response = await api.get("users/" + id, {
@@ -75,7 +75,7 @@ export const UserProviders = ({ children }: iUserProviderProps) => {
 
       toast.success("Você está logado");
 
-      navigate("/products");
+      navigate("/advertiser");
 
       window.localStorage.setItem("@TOKEN", response.data.token);
 

@@ -16,7 +16,10 @@ import {
 } from "./style";
 import { CarsContext } from "../../contexts/carsContext";
 import { ButtonPrevious } from "../Buttons/buttonPrevious";
-import { VehiclesContext, iFormVehicles } from "../../contexts/vehiclesContext";
+import {
+  VehiclesContext,
+  iFormVehicles,
+} from "../../contexts/vehiclesContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import ModalVehicles from "../Modals/ModalCreateVehicles";
 import { FormVehicles } from "../Form/FormCreateVehicles";
@@ -87,8 +90,8 @@ export const Card = () => {
 };
 
 export const CardAdmin = () => {
-  const { dataFormVehicles, setShowCard } = useContext(VehiclesContext);
-  const { showCard, setDataFormVehicles } = useContext(VehiclesContext);
+  const { dataFormVehicles, setShowCard, showCard, setDataFormVehicles, setCardProducts } =
+    useContext(VehiclesContext);
   console.log(`aqui ${showCard}`);
   const navigate = useNavigate();
 
@@ -100,6 +103,7 @@ export const CardAdmin = () => {
     }
 
     setShowCard(item);
+    setCardProducts(item);
     navigate("/products");
   };
 

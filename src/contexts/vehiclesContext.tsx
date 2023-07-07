@@ -22,6 +22,7 @@ export interface iFormVehicles {
   km: string;
   color: string;
   fipe_price: number;
+  comments: ICommentResponse[];
   price: number;
   description: string;
   cover_img: string;
@@ -44,14 +45,15 @@ interface IVehiclesContext {
   editId: string | null;
   setEditId: Dispatch<SetStateAction<string | null>>;
   patchAdvertiser: (data: iFormVehicles) => Promise<void>;
-  retriveVehicles: () => Promise<void>;
   updateCommentary: (data: IComment, id: string) => Promise<void>;
   deleteCommentary: (id: string) => Promise<void>;
   deleteCar: (id: string) => Promise<void>;
   getVehiclesToShowCards: () => Promise<void>;
   retriveVehicle: (id: string) => Promise<void>
+  retriveVehicles: () => Promise<void>;
+  setCardProducts: Dispatch<SetStateAction<iFormVehicles | null>>;
+  CardProducts: iFormVehicles | null;
 }
-
 export interface IComment {
   content: string;
 }
@@ -76,6 +78,20 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   const [listComments, setListComments] = useState([] as ICommentResponse[]);
   const [editId, setEditId] = useState<string | null>(null);
   const { verifyUserLoged } = useContext(UserContexts);
+  const [CardProducts, setCardProducts] = useState<iFormVehicles | null>(null);
+
+  useEffect(() => {
+    const vehiclesLoad = async () => {
+      try {
+        const response = await apiKenzieCars.get<any>("vehicles");
+        const data = response.data;
+        setVehiclesList(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    vehiclesLoad();
+  }, []);
 
   useEffect(() => {
     const vehiclesLoad = async () => {
@@ -126,7 +142,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
   };
 
   const createCommentary = async (data: IComment) => {
-    const token = localStorage.getItem("@TOKEN");
     try {
       const response = await api.post(`comments/${showCard?.id}`, data, {
         headers: {
@@ -271,7 +286,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     }
   };
 
-  
   const getCommentaries = async () => {
     try {
       const response = await api.get(`/comments`);
@@ -320,12 +334,14 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         editId,
         setEditId,
         patchAdvertiser,
+        retriveVehicles,
         updateCommentary,
         deleteCommentary,
         deleteCar,
         getVehiclesToShowCards,
         retriveVehicle,
-        retriveVehicles
+        setCardProducts,
+        CardProducts,
       }}
     >
       {children}
