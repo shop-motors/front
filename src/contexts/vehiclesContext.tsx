@@ -110,6 +110,8 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     const responseShowCards = await api.get("/vehicles");
     setDataFormVehicles(responseShowCards.data.data);
     setShowCard(responseShowCards.data.data);
+    console.log(dataFormVehicles);
+    console.log(showCard);
   };
 
   const retriveVehicle = async (id: string) => {
@@ -151,7 +153,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         },
       });
 
-      if (showCard?.id){
+      if (showCard?.id) {
         retriveVehicle(showCard.id);
       }
 
@@ -249,7 +251,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
 
         return updatedVehicles;
       });
-      console.log(dataFormVehicles)
+      console.log(dataFormVehicles);
     } catch (error) {
       console.error(error);
     }
