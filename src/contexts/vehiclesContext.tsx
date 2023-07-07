@@ -151,7 +151,9 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         },
       });
 
-      retriveVehicle(showCard?.id);
+      if (showCard?.id) {
+        retriveVehicle(showCard.id);
+      }
 
       console.log(response.data);
     } catch (error) {
@@ -163,15 +165,15 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     const token = localStorage.getItem("@TOKEN");
 
     try {
-      const response = await api.get(`comments`);
-      console.log(response.data);
-      setListComments(response.data);
-
       await api.patch(`/comments/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      if (showCard?.id) {
+        retriveVehicle(showCard.id);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -186,6 +188,10 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      if (showCard?.id) {
+        retriveVehicle(showCard.id);
+      }
     } catch (error) {
       console.log(error);
     }

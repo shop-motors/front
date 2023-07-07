@@ -17,7 +17,7 @@ import ImgProfile from "../../images/leia.jpeg";
 import { Footer } from "../../components/Footer";
 import { FormCreateCommentary } from "../../components/Form/FormCreateCommentary";
 import { useContext, useState, useEffect } from "react";
-import { VehiclesContext } from "../../contexts/vehiclesContext";
+import { VehiclesContext, iFormVehicles } from "../../contexts/vehiclesContext";
 import { UserContexts } from "../../contexts/userContexts";
 import { ModalEditCommentary } from "../../components/Modals/MotalEditCommentary";
 import { useNavigate } from "react-router-dom";
@@ -25,8 +25,10 @@ import { useNavigate } from "react-router-dom";
 export const ProductsDetail = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [idCommentary, setIdCommentary] = useState("");
-  const { showCard, retriveVehicle } = useContext(VehiclesContext);
-  const { user, verifyUserLoged } = useContext(UserContexts);
+  const [commentary, setCommentary] = useState("");
+  const { userLoged } = useContext(UserContexts);
+  const { showCard, retriveVehicle, deleteCommentary } =
+    useContext(VehiclesContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,6 +43,18 @@ export const ProductsDetail = () => {
       navigate("/advertiser");
     }
   }, []);
+
+  const handleClick = (id: string, commentary: string) => {
+    setIdCommentary(id);
+    setCommentary(commentary);
+    setIsOpenModal(true);
+  };
+
+  const handleDeleteCommetary = (id: string) => {
+    setIdCommentary(id);
+    deleteCommentary(id);
+    setIsOpenModal(false);
+  };
 
   return (
     <StyledProducts>
@@ -112,6 +126,18 @@ export const ProductsDetail = () => {
                   <span>há 5 dias</span>
                 </div>
                 <p>{comment.content}</p>
+                {userLoged?.id === comment.userId && (
+                  <div>
+                    <button
+                      onClick={() => handleClick(comment.id, comment.content)}
+                    >
+                      Editar
+                    </button>
+                    <button onClick={() => handleDeleteCommetary(comment.id)}>
+                      Excluir
+                    </button>
+                  </div>
+                )}
               </li>
             );
           })}
@@ -123,6 +149,7 @@ export const ProductsDetail = () => {
           closeModal={() => setIsOpenModal(false)}
           description="Editar Comentario"
           id={idCommentary}
+          commentary={commentary}
         />
       )}
       <Footer />
