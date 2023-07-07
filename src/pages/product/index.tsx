@@ -33,9 +33,11 @@ export const ProductsDetail = () => {
     const idVehicle = localStorage.getItem("@IDVEHICLE");
 
     if (idVehicle) {
-      retriveVehicle(idVehicle);
+      setTimeout(() => {
+        retriveVehicle(idVehicle);
+      }, 3);
     } else {
-      console.log("deu ruim")
+      console.log("deu ruim");
       navigate("/advertiser");
     }
   }, []);
@@ -50,7 +52,7 @@ export const ProductsDetail = () => {
           </DivImg>
           <UlCars>
             <li>
-              <h2>Mercedes benz A 200 cgi advance sedan mercedes benz a 200</h2>
+              <h2>{showCard?.model}</h2>
               <DivKmYears>
                 <div>
                   <p>2013</p>
@@ -101,9 +103,9 @@ export const ProductsDetail = () => {
         <h2>Comentarios</h2>
         {showCard &&
           showCard.comments &&
-          showCard.comments.map((comment) => {
+          showCard.comments.map((comment, index) => {
             return (
-              <li>
+              <li key={index}>
                 <div>
                   <img src={ImgProfile} alt="imagem usuario" />
                   <p>Julia lima</p>

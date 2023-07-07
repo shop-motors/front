@@ -49,7 +49,7 @@ interface IVehiclesContext {
   deleteCommentary: (id: string) => Promise<void>;
   deleteCar: (id: string) => Promise<void>;
   getVehiclesToShowCards: () => Promise<void>;
-  retriveVehicle: (id: string) => Promise<void>
+  retriveVehicle: (id: string) => Promise<void>;
   retriveVehicles: () => Promise<void>;
   setCardProducts: Dispatch<SetStateAction<iFormVehicles | null>>;
   CardProducts: iFormVehicles | null;
@@ -112,19 +112,21 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     setShowCard(responseShowCards.data.data);
   };
 
-  const retriveVehicle = async (id:string) => {
+  const retriveVehicle = async (id: string) => {
     const token = localStorage.getItem("@TOKEN");
+
     try {
       const response = await api.get(`vehicles/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      setShowCard(response.data)
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setShowCard(response.data);
+      console.log(response.data.cover_img);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const getNewDataForm = async () => {
     const token = localStorage.getItem("@TOKEN");
@@ -148,6 +150,9 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      retriveVehicle(showCard?.id);
+
       console.log(response.data);
     } catch (error) {
       console.log(error);
@@ -193,7 +198,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setShowCard(response.data);
+      // setShowCard(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -240,12 +245,6 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
         const updatedVehicles = prevState.filter(
           (vehicle) => vehicle.id !== id
         );
-
-        if (updatedVehicles.length > 0) {
-          setShowCard(updatedVehicles[0]);
-        } else {
-          setShowCard(null);
-        }
 
         return updatedVehicles;
       });
@@ -311,7 +310,7 @@ export const VehiclesProvider = ({ children }: IVehiclesProviderProps) => {
     getCommentaries();
 
     if (token) {
-      verifyUserLoged()
+      verifyUserLoged();
       getVehiclesToShowCards();
     }
   }, []);

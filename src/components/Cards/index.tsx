@@ -92,7 +92,6 @@ export const Card = () => {
 export const CardAdmin = () => {
   const { dataFormVehicles, setShowCard, showCard, setDataFormVehicles, setCardProducts } =
     useContext(VehiclesContext);
-  console.log(`aqui ${showCard}`);
   const navigate = useNavigate();
 
   const handleClick = (item: iFormVehicles) => {
